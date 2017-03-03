@@ -1,12 +1,12 @@
 import unittest
-from gateway.client import GateWayClient
+from gateway.client import Client
 
 
 class TestGateWayClient(unittest.TestCase):
     GATEWAY_CLIENT = None
 
     def setUp(self):
-        self.GATEWAY_CLIENT = GateWayClient()
+        self.GATEWAY_CLIENT = Client()
 
     def test_auth_builder_account_id_and_secret_key(self):
         """Will succeed"""

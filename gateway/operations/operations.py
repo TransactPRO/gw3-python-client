@@ -8,13 +8,22 @@ from gateway.builders.transaction_builder import SmsBuilder
 class Operations(object):
     __data_sets = None
     __operation_data = {}
-    __gate_validation_list = {}
+    __asked_operation = None
 
-    def __init__(self, __gate_operation_data_set, __gate_validation_list):
+    # Transactions types
+    SMS = '/sms'
+    HOLD_DMS = '/hold-dms'
+    CHARGE_DMS = '/charge-dms'
+    CANCEL = '/cancel'
+    MOTO_SMS = '/moto/sms'
+    MOTO_DMS = '/moto/dms'
+
+    def __init__(self, __gate_operation_data_set, __client_operations):
+        self.__asked_operations_dict = __client_operations
         self.__operation_data = __gate_operation_data_set
-        self.__gate_validation_list = __gate_validation_list
         pass
 
     def sms(self):
-        return SmsBuilder(self.__operation_data, self.__gate_validation_list)
+        self.__asked_operations_dict['current'] = self.SMS
+        return SmsBuilder(self.__operation_data)
 

@@ -3,12 +3,13 @@ Transact Pro Payment Gateway integration library.
 """
 
 import requests
-# import json
+
+import gateway
 from gateway.builders.authorization_builder import AuthorizationBuilder
 from gateway.operations.operations import Operations
 
 
-class GateWayClient:
+class Client:
     """
     Main Gate client class for using TransactPro API
 
@@ -24,51 +25,37 @@ class GateWayClient:
         __DATA_KEY: None
     }
 
+    __client_operations = {
+        'current': None,
+        'last': None
+    }
+
     def __init__(self):
-        # TODO ADD better validation system, mb in builder
-        self.__validation_list = []
         self.__dict_of_auth_data_set = {}
         self.__dict_of_operation_data_set = {}
         pass
 
     def create_auth_data(self):
-        return AuthorizationBuilder(self.__dict_of_auth_data_set, self.__validation_list)
+        return AuthorizationBuilder(self.__dict_of_auth_data_set)
 
     def set_operation(self):
-        return Operations(self.__dict_of_operation_data_set, self.__validation_list)
+        return Operations(self.__dict_of_operation_data_set, self.__client_operations)
 
     def build_request(self):
-        # TODO Think about validation in builder or in building req
-        # self.__validate_request_data(self.__dict_of_auth_data_set)
-        # self.__validate_request_data(self.__dict_of_operation_data_set)
-        # TODO ADD Custom exception raise
-        # json_payload = self.__wrap_to_json()
-        # print(json_payload)
         self.__gate_client_request[self.__AUTH_KEY] = self.__dict_of_auth_data_set
         self.__gate_client_request[self.__DATA_KEY] = self.__dict_of_operation_data_set
+        return self.__gate_client_request
 
-        r = requests.post('http://uriel.sk.fpngw3.env/v3.0/sms', json=self.__gate_client_request)
-        return r.json()
+    def make_request(self, request_json=None):
+        # TODO Add http client
+        """
+        Request data  in json format, for Transact Pro API
 
-    # def __wrap_to_json(self):
-    #     self.__gate_client_request[self.__AUTH_KEY] = self.__dict_of_auth_data_set
-    #     self.__gate_client_request[self.__DATA_KEY] = self.__dict_of_operation_data_set
-    #
-    #     try:
-    #         return json.dumps(self.__gate_client_request)
-    #     except:
-    #         raise
+        Args:
+            request_json (string): Transact Pro Merchant Account ID.
+        Returns:
+            :return: :class:`Response <Response>` object
+        """
+        r = requests.post(gateway.API_BASE_URL + self.__client_operations['current'], json=request_json)
+        return r
 
-    def __validate_request_data(self, data_set):
-        passed_fields = []
-        for field_name in self.__validation_list:
-            if field_name in data_set:
-                passed_fields.append(field_name)
-            else:
-                raise RuntimeError('Field (' + field_name + ') are empty in your request!')
-
-        try:
-            for v in passed_fields:
-                self.__validation_list.remove(v)
-        except:
-            raise
