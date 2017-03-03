@@ -3,7 +3,6 @@ Transact Pro Payment Gateway integration library.
 """
 
 import requests
-
 import gateway
 from gateway.builders.authorization_builder import AuthorizationBuilder
 from gateway.operations.operations import Operations
@@ -25,10 +24,7 @@ class Client:
         __DATA_KEY: None
     }
 
-    __client_operations = {
-        'current': None,
-        'last': None
-    }
+    __client_operations = {'current': None}
 
     def __init__(self):
         self.__dict_of_auth_data_set = {}
@@ -58,4 +54,3 @@ class Client:
         """
         r = requests.post(gateway.API_BASE_URL + self.__client_operations['current'], json=request_json)
         return r
-

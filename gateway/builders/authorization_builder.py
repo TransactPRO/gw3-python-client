@@ -9,29 +9,29 @@ class AuthorizationBuilder(object):
         self.__data_sets = RequestParameters
         self.__auth_data_set = __gate_auth_data_set
 
-    def add_account_id(self, account_id=None):
+    def add_account_id(self, id_number=None):
         """
         Transact Pro Merchant Account ID.
 
         Args:
-            account_id (int): Transact Pro Merchant Account ID.
+            id_number (int): Transact Pro Merchant Account ID.
         """
-        self.__auth_data_set[self.__data_sets.AUTH_DATA_ACCOUNT_ID] = account_id
+        self.__auth_data_set[self.__data_sets.AUTH_DATA_ACCOUNT_ID] = id_number
 
-    def add_secret_key(self, secret_key=None):
+    def add_secret_key(self, value=None):
         """
         Transact Pro Merchant Password
 
         Args:
-            secret_key (str): Transact Pro Merchant Password
+            value (str): Transact Pro Merchant Password
         """
-        self.__auth_data_set[self.__data_sets.AUTH_DATA_SECRET_KEY] = secret_key
+        self.__auth_data_set[self.__data_sets.AUTH_DATA_SECRET_KEY] = value
 
-    def add_session_id(self, session_id=None):
+    def add_session_id(self, id_value=None):
         """
         Transact Pro Gateway Session ID
 
         Args:
-            session_id (str): Transact Pro Gateway Session ID
+            id_value (str): Transact Pro Gateway Session ID
         """
-        self.__auth_data_set[self.__data_sets.AUTH_DATA_SECRET_KEY] = session_id
+        self.__auth_data_set[self.__data_sets.AUTH_DATA_SECRET_KEY] = id_value

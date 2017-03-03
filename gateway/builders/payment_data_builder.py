@@ -30,29 +30,29 @@ class PaymentDataBuilder(object):
         """
         self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_PAN: pan_number})
 
-    def add_pan_expiry_date(self, pan_exp_date=None):
+    def add_pan_expiry_date(self, mm_yy=None):
         """
         Add credit card expiry date in mm/yy format
 
         Args:
-            pan_exp_date (str): Credit card expiry date in mm/yy format
+            mm_yy (str): Credit card expiry date in mm/yy format
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_EXPIRE: pan_exp_date})
+        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_EXPIRE: mm_yy})
 
-    def add_pan_cvv_code(self, pan_cvv=None):
+    def add_pan_cvv_code(self, cvv_number=None):
         """
         Add credit card protection code
 
         Args:
-            pan_cvv (str): Credit card protection code
+            cvv_number (str): Credit card protection code
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_CVV: pan_cvv})
+        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_CVV: cvv_number})
 
-    def add_pan_cardholder_name(self, pan_cardholder_name=None):
+    def add_pan_cardholder_name(self, first_last_name=None):
         """
         Add cardholder Name and Surname
 
         Args:
-            pan_cardholder_name (str): Cardholder Name and Surname
+            first_last_name (str): Cardholder Name and Surname
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_CARDHOLDER_NAME: pan_cardholder_name})
+        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_CARDHOLDER_NAME: first_last_name})

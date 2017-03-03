@@ -21,20 +21,20 @@ class MoneyDataBuilder(object):
 
         self.__payment_data_set.update(self.__payment_data_structure)
 
-    def add_payment_amount(self, payment_amount=None):
+    def add_payment_amount(self, minor_value=None):
         """
         Add payment money amount in minor units
 
         Args:
-            payment_amount (str): Money amount in minor units
+            minor_value (int): Money amount in minor units
         """
-        self.__update_structure({self.__data_sets.MONEY_DATA_AMOUNT: payment_amount})
+        self.__update_structure({self.__data_sets.MONEY_DATA_AMOUNT: minor_value})
 
-    def add_payment_currency(self, payment_currency=None):
+    def add_payment_currency(self, iso_4217_ccy=None):
         """
         Add payment currency, ISO-4217 format
 
         Args:
-            payment_currency (int): Currency, ISO-4217 format
+            iso_4217_ccy (str): Currency, ISO-4217 format
         """
-        self.__update_structure({self.__data_sets.MONEY_DATA_CURRENCY: payment_currency})
+        self.__update_structure({self.__data_sets.MONEY_DATA_CURRENCY: iso_4217_ccy})
