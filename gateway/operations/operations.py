@@ -26,4 +26,3 @@ class Operations(object):
     def sms(self):
         self.__asked_operations_dict['current'] = self.SMS
         return SmsBuilder(self.__operation_data)
-
