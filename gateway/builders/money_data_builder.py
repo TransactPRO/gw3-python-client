@@ -1,25 +1,18 @@
-from gateway.data_sets.request_parameters import RequestParameters
-
-
 class MoneyDataBuilder(object):
-    __data_sets = None
-
+    """
+    Money data - information about payment request
+    """
     __MONEY_DATA_KEY = 'money-data'
-    __payment_data_structure = {
+    __money_data_structure = {
         __MONEY_DATA_KEY: None
     }
 
-    def __init__(self, __builder_data_set):
-        self.__payment_data_set = __builder_data_set
-        self.__data_sets = RequestParameters
-
-    def __update_structure(self, new_data_set):
-        if self.__payment_data_structure[self.__MONEY_DATA_KEY] is None:
-            self.__payment_data_structure[self.__MONEY_DATA_KEY] = new_data_set
-        else:
-            self.__payment_data_structure[self.__MONEY_DATA_KEY].update(new_data_set)
-
-        self.__payment_data_set.update(self.__payment_data_structure)
+    def __init__(self, __transaction_data_set):
+        from gateway.utils.data_structures_utils import DataStructuresUtils
+        from gateway.data_sets.request_parameters import RequestParameters
+        self.__data_structure_util = DataStructuresUtils
+        self.__req_params = RequestParameters
+        self.__money_data_set = __transaction_data_set
 
     def add_payment_amount(self, minor_value=None):
         """
@@ -28,7 +21,12 @@ class MoneyDataBuilder(object):
         Args:
             minor_value (int): Money amount in minor units
         """
-        self.__update_structure({self.__data_sets.MONEY_DATA_AMOUNT: minor_value})
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__money_data_set,
+            working_dict=self.__money_data_structure,
+            new_key=self.__MONEY_DATA_KEY,
+            new_dict={self.__req_params.MONEY_DATA_AMOUNT: minor_value}
+        )
 
     def add_payment_currency(self, iso_4217_ccy=None):
         """
@@ -37,4 +35,9 @@ class MoneyDataBuilder(object):
         Args:
             iso_4217_ccy (str): Currency, ISO-4217 format
         """
-        self.__update_structure({self.__data_sets.MONEY_DATA_CURRENCY: iso_4217_ccy})
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__money_data_set,
+            working_dict=self.__money_data_structure,
+            new_key=self.__MONEY_DATA_KEY,
+            new_dict={self.__req_params.MONEY_DATA_CURRENCY: iso_4217_ccy}
+        )

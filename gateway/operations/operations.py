@@ -1,11 +1,8 @@
-"""
-TransactPro Gateway 3 API s operations
-"""
-
-from gateway.builders.transaction_builder import SmsBuilder
-
-
 class Operations(object):
+    """
+    TransactPro Gateway 3 API s operations
+    """
+
     __data_sets = None
     __operation_data = {}
     __asked_operation = None
@@ -24,5 +21,15 @@ class Operations(object):
         pass
 
     def sms(self):
+        """
+        Single-Message transactions are used for immediate charge.
+
+        Callable public methods
+
+        payment_method_set()
+        money_data_set()
+        system_data_set()
+        """
         self.__asked_operations_dict['current'] = self.SMS
+        from gateway.builders.transaction_builder import SmsBuilder
         return SmsBuilder(self.__operation_data)

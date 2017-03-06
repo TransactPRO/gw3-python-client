@@ -31,7 +31,7 @@ required = [
     'requests'
 ]
 
-packages = ['gateway', 'gateway/builders', 'gateway/operations', 'gateway/data_sets']
+packages = ['gateway', 'gateway/builders', 'gateway/operations', 'gateway/data_sets', 'gateway/utils']
 
 setup(
     name='transact-pro/gw3',

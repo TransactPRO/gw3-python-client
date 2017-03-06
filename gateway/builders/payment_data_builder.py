@@ -1,25 +1,18 @@
-from gateway.data_sets.request_parameters import RequestParameters
-
-
 class PaymentDataBuilder(object):
-    __data_sets = None
-
+    """
+    Payment data - information about credit card
+    """
     __PAYMENT_METHOD_DATA_KEY = 'payment-method-data'
     __payment_data_structure = {
         __PAYMENT_METHOD_DATA_KEY: None
     }
 
-    def __init__(self, __builder_data_set):
-        self.__payment_data_set = __builder_data_set
-        self.__data_sets = RequestParameters
-
-    def __update_structure(self, new_data_set):
-        if self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY] is None:
-            self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY] = new_data_set
-        else:
-            self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY].update(new_data_set)
-
-        self.__payment_data_set.update(self.__payment_data_structure)
+    def __init__(self, __transaction_data_set):
+        from gateway.utils.data_structures_utils import DataStructuresUtils
+        from gateway.data_sets.request_parameters import RequestParameters
+        self.__data_structure_util = DataStructuresUtils
+        self.__req_params = RequestParameters
+        self.__payment_data_set = __transaction_data_set
 
     def add_pan_number(self, pan_number=None):
         """
@@ -28,7 +21,12 @@ class PaymentDataBuilder(object):
         Args:
             pan_number (str): Credit card number
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_PAN: pan_number})
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_set,
+            working_dict=self.__payment_data_structure,
+            new_key=self.__PAYMENT_METHOD_DATA_KEY,
+            new_dict={self.__req_params.PAYMENT_METHOD_DATA_PAN: pan_number}
+        )
 
     def add_pan_expiry_date(self, mm_yy=None):
         """
@@ -37,7 +35,12 @@ class PaymentDataBuilder(object):
         Args:
             mm_yy (str): Credit card expiry date in mm/yy format
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_EXPIRE: mm_yy})
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_set,
+            working_dict=self.__payment_data_structure,
+            new_key=self.__PAYMENT_METHOD_DATA_KEY,
+            new_dict={self.__req_params.PAYMENT_METHOD_DATA_EXPIRE: mm_yy}
+        )
 
     def add_pan_cvv_code(self, cvv_number=None):
         """
@@ -46,7 +49,12 @@ class PaymentDataBuilder(object):
         Args:
             cvv_number (str): Credit card protection code
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_CVV: cvv_number})
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_set,
+            working_dict=self.__payment_data_structure,
+            new_key=self.__PAYMENT_METHOD_DATA_KEY,
+            new_dict={self.__req_params.PAYMENT_METHOD_DATA_CVV: cvv_number}
+        )
 
     def add_pan_cardholder_name(self, first_last_name=None):
         """
@@ -55,4 +63,9 @@ class PaymentDataBuilder(object):
         Args:
             first_last_name (str): Cardholder Name and Surname
         """
-        self.__update_structure({self.__data_sets.PAYMENT_METHOD_DATA_CARDHOLDER_NAME: first_last_name})
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_set,
+            working_dict=self.__payment_data_structure,
+            new_key=self.__PAYMENT_METHOD_DATA_KEY,
+            new_dict={self.__req_params.PAYMENT_METHOD_DATA_CARDHOLDER_NAME: first_last_name}
+        )

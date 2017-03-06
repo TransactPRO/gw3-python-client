@@ -4,8 +4,6 @@ Transact Pro Payment Gateway integration library.
 
 import requests
 import gateway
-from gateway.builders.authorization_builder import AuthorizationBuilder
-from gateway.operations.operations import Operations
 
 
 class Client:
@@ -32,9 +30,11 @@ class Client:
         pass
 
     def create_auth_data(self):
+        from gateway.builders.authorization_builder import AuthorizationBuilder
         return AuthorizationBuilder(self.__dict_of_auth_data_set)
 
     def set_operation(self):
+        from gateway.operations.operations import Operations
         return Operations(self.__dict_of_operation_data_set, self.__client_operations)
 
     def build_request(self):

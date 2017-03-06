@@ -1,9 +1,7 @@
-"""
-Transact Pro APIs Request Parameters data sets
-"""
-
-
 class RequestParameters:
+    """
+    Transact Pro APIs Request Parameters data sets
+    """
     # Auth data sets
     AUTH_DATA_ACCOUNT_ID = 'account-id'
     AUTH_DATA_SECRET_KEY = 'secret-key'
@@ -50,8 +48,8 @@ class RequestParameters:
     MONEY_DATA_CURRENCY = 'currency'
 
     # System data sets
-    SYSTEM_USER_IP = 'data.system.user-ip'
-    SYSTEM_X_FORWARDED_FOR = 'data.system.x-forwarded-for'
+    SYSTEM_USER_IP = 'user-ip'
+    SYSTEM_X_FORWARDED_FOR = 'x-forwarded-for'
 
     def __init__(self):
         pass
