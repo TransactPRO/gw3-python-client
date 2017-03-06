@@ -22,7 +22,7 @@ class Client:
         __DATA_KEY: None
     }
 
-    __client_operation = None
+    __client_operations = {'current': None}
 
     def __init__(self):
         self.__dict_of_auth_data_set = {}
@@ -35,7 +35,7 @@ class Client:
 
     def set_operation(self):
         from gateway.operations.operations import Operations
-        return Operations(self.__dict_of_operation_data_set, self.__client_operation)
+        return Operations(self.__dict_of_operation_data_set, self.__client_operations)
 
     def build_request(self):
         self.__gate_client_request[self.__AUTH_KEY] = self.__dict_of_auth_data_set
@@ -54,5 +54,5 @@ class Client:
         Returns:
             :return: :class:`Response <Response>` object
         """
-        r = requests.post(gateway.API_BASE_URL + self.__client_operation, json=request_json)
+        r = requests.post(gateway.API_BASE_URL + self.__client_operations['current'], json=request_json)
         return r

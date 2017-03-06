@@ -1,6 +1,8 @@
 # pprint for nice printing of dict or json etc.
 # It's not necessary to use it in your implementation
 import pprint
+import random
+import string
 # # Must have, response all in json format
 # import json
 # Add library, to make your work easier
@@ -49,6 +51,20 @@ transaction_dms_hold.customer_data_set().add_shipping_street(street='Gustava Zem
 transaction_dms_hold.customer_data_set().add_shipping_house(house_number='76')
 transaction_dms_hold.customer_data_set().add_shipping_flat(flat_number='12')
 transaction_dms_hold.customer_data_set().add_shipping_zip(zip_code='LV-1039')
+# Don't forget to fill your merchant data in your transaction, like this one
+transaction_dms_hold.merchant_order_data_set().add_merchant_transaction_id(
+    transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(50))
+)
+transaction_dms_hold.merchant_order_data_set().add_merchant_user_id(user_id=21)
+transaction_dms_hold.merchant_order_data_set().add_merchant_order_id(
+    order_id=''.join(random.choice(string.ascii_lowercase) for o_id in range(100))
+)
+transaction_dms_hold.merchant_order_data_set().add_merchant_order_description(
+    description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+)
+transaction_dms_hold.merchant_order_data_set().add_merchant_order_meta(
+    json_object={'f_name': 'Jane', 'l_name': 'Doe', 'sequence': '0', 'title': 'president', 'url': 'nice.example.com'}
+)
 # So, all almost done. Set our cardholder IP. That's is optionally.
 transaction_dms_hold.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
 transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')

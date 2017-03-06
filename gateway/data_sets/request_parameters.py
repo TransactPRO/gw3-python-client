@@ -30,11 +30,11 @@ class RequestParameters:
     GENERAL_DATA_CUSTOMER_DATA_SHIPPING_ADDRESS_ZIP = 'zip'
 
     # Order data sets
-    GENERAL_DATA_ORDER_DATA_MERCHANT_TRANSACTION_ID = 'order-data.merchant-transaction-id'
-    GENERAL_DATA_ORDER_DATA_MERCHANT_USER_ID = 'order-data.merchant-user-id'
-    GENERAL_DATA_ORDER_DATA_ORDER_ID = 'order-data.order-id'
-    GENERAL_DATA_ORDER_DATA_ORDER_DESCRIPTION = 'order-data.order-description'
-    GENERAL_DATA_ORDER_DATA_ORDER_META = 'order-data.order-meta'
+    GENERAL_DATA_ORDER_DATA_MERCHANT_TRANSACTION_ID = 'merchant-transaction-id'
+    GENERAL_DATA_ORDER_DATA_MERCHANT_USER_ID = 'merchant-user-id'
+    GENERAL_DATA_ORDER_DATA_ORDER_ID = 'order-id'
+    GENERAL_DATA_ORDER_DATA_ORDER_DESCRIPTION = 'order-description'
+    GENERAL_DATA_ORDER_DATA_ORDER_META = 'order-meta'
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = 'pan'
