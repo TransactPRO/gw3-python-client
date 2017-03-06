@@ -6,16 +6,16 @@ class Operations(object):
     __operation_data = {}
     __asked_operation = None
 
-    # Transactions types
-    SMS = '/sms'
-    DMS_HOLD = '/hold-dms'
-    DMS_CHARGE = '/charge-dms'
-    CANCEL = '/cancel'
-    MOTO_SMS = '/moto/sms'
-    MOTO_DMS = '/moto/dms'
+    # Transactions types routes
+    __SMS = '/sms'
+    __DMS_HOLD = '/hold-dms'
+    __DMS_CHARGE = '/charge-dms'
+    __CANCEL = '/cancel'
+    __MOTO_SMS = '/moto/sms'
+    __MOTO_DMS = '/moto/dms'
 
     def __init__(self, __gate_operation_data_set, __client_operations):
-        self.__asked_operations_dict = __client_operations
+        self.__asked_operation = __client_operations
         self.__operation_data = __gate_operation_data_set
         pass
 
@@ -29,7 +29,7 @@ class Operations(object):
         money_data_set()
         system_data_set()
         """
-        self.__asked_operations_dict['current'] = self.SMS
+        self.__asked_operation = self.__SMS
         from gateway.builders.transaction_builder import SmsBuilder
         return SmsBuilder(self.__operation_data)
 
@@ -43,7 +43,7 @@ class Operations(object):
         money_data_set()
         system_data_set()
         """
-        self.__asked_operations_dict['current'] = self.DMS_HOLD
+        self.__asked_operation = self.__DMS_HOLD
         from gateway.builders.transaction_builder import DmsHoldBuilder
         return DmsHoldBuilder(self.__operation_data)
 
@@ -56,6 +56,6 @@ class Operations(object):
         command_data_set()
         money_data_set()
         """
-        self.__asked_operations_dict['current'] = self.DMS_CHARGE
+        self.__asked_operation = self.__DMS_CHARGE
         from gateway.builders.transaction_builder import DmsChargeBuilder
         return DmsChargeBuilder(self.__operation_data)

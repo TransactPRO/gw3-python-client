@@ -23,6 +23,11 @@ class TransactionTypesResources:
         from gateway.builders.command_data_builder import CommandDataBuilder
         return CommandDataBuilder(__transaction_data_set_dict)
 
+    @classmethod
+    def customer_data_set(cls, __transaction_data_set_dict):
+        from gateway.builders.customer_data_builder import CustomerDataBuilder
+        return CustomerDataBuilder(__transaction_data_set_dict)
+
 
 class SmsBuilder(TransactionTypesResources):
     __sms_data_set = None
@@ -39,6 +44,9 @@ class SmsBuilder(TransactionTypesResources):
     def system_data_set(self, **kwargs):
         return super().system_data_set(self.__sms_data_set)
 
+    def customer_data_set(self, **kwargs):
+        return super().customer_data_set(self.__sms_data_set)
+
 
 class DmsHoldBuilder(TransactionTypesResources):
     __dms_hold_set = None
@@ -54,6 +62,9 @@ class DmsHoldBuilder(TransactionTypesResources):
 
     def system_data_set(self, **kwargs):
         return super().system_data_set(self.__dms_hold_set)
+
+    def customer_data_set(self, **kwargs):
+        return super().customer_data_set(self.__dms_hold_set)
 
 
 class DmsChargeBuilder(TransactionTypesResources):

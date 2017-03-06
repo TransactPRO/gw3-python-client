@@ -30,12 +30,31 @@ transaction_dms_hold.payment_method_set().add_pan_number(pan_number='42222222222
 transaction_dms_hold.money_data_set().add_payment_amount(minor_value=5000)
 transaction_dms_hold.money_data_set().add_payment_currency(iso_4217_ccy='USD')
 
-# So, all done, almost. Set our cardholder IP. That's is optionally, you can not report that information
+# If need you can setup customer data information of that transaction, but it's optional
+transaction_dms_hold.customer_data_set().add_email('jane_doe@nice.example.com')
+# In our case billing data and shipping data will be same
+# First set billing
+transaction_dms_hold.customer_data_set().add_billing_country(country='Latvia')
+transaction_dms_hold.customer_data_set().add_billing_state(state='Riga')
+transaction_dms_hold.customer_data_set().add_billing_city(city='Riga')
+transaction_dms_hold.customer_data_set().add_billing_street(street='Gustava Zemgala gatve')
+transaction_dms_hold.customer_data_set().add_billing_house(house_number='76')
+transaction_dms_hold.customer_data_set().add_billing_flat(flat_number='12')
+transaction_dms_hold.customer_data_set().add_billing_zip(zip_code='LV-1039')
+# Now set shipping data for our transaction
+transaction_dms_hold.customer_data_set().add_shipping_country(country='Latvia')
+transaction_dms_hold.customer_data_set().add_shipping_state(state='Riga')
+transaction_dms_hold.customer_data_set().add_shipping_city(city='Riga')
+transaction_dms_hold.customer_data_set().add_shipping_street(street='Gustava Zemgala gatve')
+transaction_dms_hold.customer_data_set().add_shipping_house(house_number='76')
+transaction_dms_hold.customer_data_set().add_shipping_flat(flat_number='12')
+transaction_dms_hold.customer_data_set().add_shipping_zip(zip_code='LV-1039')
+# So, all almost done. Set our cardholder IP. That's is optionally.
 transaction_dms_hold.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
 transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
 
 # Step 3
-# Build prepared transaction data
+# Construct our transaction request data
 # TODO Add try catch validator exception
 dms_hold_request = TPRO_CLI.build_request()
 print('Constructed request:')
@@ -44,6 +63,7 @@ print('--------------------')
 
 # Step 4
 # Now make our request via Transact pro HTTP transporter
+# Or you can use your own HTTP transporter
 result = TPRO_CLI.make_request(request_json=dms_hold_request)
 print('Response:')
 gw_response = result
@@ -52,7 +72,6 @@ if gw_response.text is '' or gw_response.text is None:
 gw_response = gw_response.json()
 pprint.pprint(gw_response)
 print('--------------------')
-
 
 # Nice let's try get our new gateway transaction id from response.
 # It's needed to charge transaction to next stage, it's called DMS CHARGE
@@ -74,8 +93,8 @@ transaction_dms_charge = TPRO_CLI.set_operation().dms_charge()
 transaction_dms_charge.command_data_set().add_gateway_transaction_id(gate_transaction_id=gateway_transaction_id)
 # And we can charge holded data part of it or full.
 # As in example:
-# First payment was for the fuel in the gas station and holded 50$ from your cardholder
-# But cardholder filled for 20$ so DMS charge must be 20$
+# First payment was for the shipment in the e-commerce shop and holded 50$ from your cardholder
+# But cardholder received half of goods, so we charge 20$ form hold
 transaction_dms_charge.money_data_set().add_payment_amount(minor_value=2000)
 
 # As usual build our request for needed operation
