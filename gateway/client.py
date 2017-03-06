@@ -40,6 +40,8 @@ class Client:
     def build_request(self):
         self.__gate_client_request[self.__AUTH_KEY] = self.__dict_of_auth_data_set
         self.__gate_client_request[self.__DATA_KEY] = self.__dict_of_operation_data_set
+
+        # TODO Add validation scheme
         return self.__gate_client_request
 
     def make_request(self, request_json=None):

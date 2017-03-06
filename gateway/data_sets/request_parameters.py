@@ -8,9 +8,9 @@ class RequestParameters:
     AUTH_DATA_SESSION_ID = 'session-id'
 
     # Command data sets
-    COMMAND_DATA_GATEWAY_TRANSACTION_ID = 'data.command-data.gateway-transaction-id'
-    COMMAND_DATA_FORM_ID = 'data.command-data.form-id'
-    COMMAND_DATA_TERMINAL_MID = 'data.command-data.terminal-mid'
+    COMMAND_DATA_GATEWAY_TRANSACTION_ID = 'gateway-transaction-id'
+    COMMAND_DATA_FORM_ID = 'form-id'
+    COMMAND_DATA_TERMINAL_MID = 'terminal-mid'
 
     # Customer data sets
     GENERAL_DATA_CUSTOMER_DATA_EMAIL = 'data.general-data.customer-data.email'
