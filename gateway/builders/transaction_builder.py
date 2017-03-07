@@ -40,22 +40,22 @@ class SmsBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__sms_data_set = __operation_data_set
 
-    def command_data_set(self, **kwargs):
+    def command_data_set(self):
         return super().command_data_set(self.__sms_data_set)
 
-    def customer_data_set(self, **kwargs):
+    def customer_data_set(self):
         return super().customer_data_set(self.__sms_data_set)
 
-    def merchant_order_data_set(self, **kwargs):
-        return super().merchant_order_data_set(self.__sms_data_set)
+    def merchant_order_data_set(self):
+        return super().merchant_order_data_set
 
-    def payment_method_set(self, **kwargs):
+    def payment_method_set(self):
         return super().payment_method_set(self.__sms_data_set)
 
-    def money_data_set(self, **kwargs):
+    def money_data_set(self):
         return super().money_data_set(self.__sms_data_set)
 
-    def system_data_set(self, **kwargs):
+    def system_data_set(self):
         return super().system_data_set(self.__sms_data_set)
 
 
@@ -65,22 +65,22 @@ class DmsHoldBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__dms_hold_set = __operation_data_set
 
-    def command_data_set(self, **kwargs):
+    def command_data_set(self):
         return super().command_data_set(self.__dms_hold_set)
 
-    def customer_data_set(self, **kwargs):
+    def customer_data_set(self):
         return super().customer_data_set(self.__dms_hold_set)
 
-    def merchant_order_data_set(self, **kwargs):
-        return super().merchant_order_data_set(self.__dms_hold_set)
+    def merchant_order_data_set(self):
+        return super().merchant_order_data_set
 
-    def payment_method_set(self, **kwargs):
+    def payment_method_set(self):
         return super().payment_method_set(self.__dms_hold_set)
 
-    def money_data_set(self, **kwargs):
+    def money_data_set(self):
         return super().money_data_set(self.__dms_hold_set)
 
-    def system_data_set(self, **kwargs):
+    def system_data_set(self):
         return super().system_data_set(self.__dms_hold_set)
 
 
@@ -90,13 +90,13 @@ class DmsChargeBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__dms_charge_set = __operation_data_set
 
-    def money_data_set(self, **kwargs):
+    def money_data_set(self):
         return super().money_data_set(self.__dms_charge_set)
 
-    def command_data_set(self, **kwargs):
+    def command_data_set(self):
         return super().command_data_set(self.__dms_charge_set)
 
-    def system_data_set(self, **kwargs):
+    def system_data_set(self):
         return super().system_data_set(self.__dms_charge_set)
 
 
@@ -106,13 +106,13 @@ class DmsCancelBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__dms_cancel_set = __operation_data_set
 
-    def money_data_set(self, **kwargs):
+    def money_data_set(self):
         return super().money_data_set(self.__dms_cancel_set)
 
-    def command_data_set(self, **kwargs):
+    def command_data_set(self):
         return super().command_data_set(self.__dms_cancel_set)
 
-    def system_data_set(self, **kwargs):
+    def system_data_set(self):
         return super().system_data_set(self.__dms_cancel_set)
 
 
@@ -122,22 +122,22 @@ class MotoSmsBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__moto_sms_set = __operation_data_set
 
-    def command_data_set(self, **kwargs):
+    def command_data_set(self):
         return super().command_data_set(self.__moto_sms_set)
 
-    def customer_data_set(self, **kwargs):
+    def customer_data_set(self):
         return super().customer_data_set(self.__moto_sms_set)
 
-    def merchant_order_data_set(self, **kwargs):
-        return super().merchant_order_data_set(self.__moto_sms_set)
+    def merchant_order_data_set(self):
+        return super().merchant_order_data_set
 
-    def payment_method_set(self, **kwargs):
+    def payment_method_set(self):
         return super().payment_method_set(self.__moto_sms_set)
 
-    def money_data_set(self, **kwargs):
+    def money_data_set(self):
         return super().money_data_set(self.__moto_sms_set)
 
-    def system_data_set(self, **kwargs):
+    def system_data_set(self):
         return super().system_data_set(self.__moto_sms_set)
 
 
@@ -147,20 +147,72 @@ class MotoDmsBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__moto_dms_set = __operation_data_set
 
-    def command_data_set(self, **kwargs):
+    def command_data_set(self):
         return super().command_data_set(self.__moto_dms_set)
 
-    def customer_data_set(self, **kwargs):
+    def customer_data_set(self):
         return super().customer_data_set(self.__moto_dms_set)
 
-    def merchant_order_data_set(self, **kwargs):
-        return super().merchant_order_data_set(self.__moto_dms_set)
+    def merchant_order_data_set(self):
+        return super().merchant_order_data_set
 
-    def payment_method_set(self, **kwargs):
+    def payment_method_set(self):
         return super().payment_method_set(self.__moto_dms_set)
 
-    def money_data_set(self, **kwargs):
+    def money_data_set(self):
         return super().money_data_set(self.__moto_dms_set)
 
-    def system_data_set(self, **kwargs):
+    def system_data_set(self):
         return super().system_data_set(self.__moto_dms_set)
+
+
+class RecurrentSmsBuilder(TransactionTypesResources):
+    __recurrent_sms_set = None
+
+    def __init__(self, __operation_data_set):
+        self.__recurrent_sms_set = __operation_data_set
+
+    def command_data_set(self):
+        return super().command_data_set(self.__recurrent_sms_set)
+
+    def money_data_set(self):
+        return super().money_data_set(self.__recurrent_sms_set)
+
+
+class RecurrentDmsBuilder(TransactionTypesResources):
+    __recurrent_dms_set = None
+
+    def __init__(self, __operation_data_set):
+        self.__recurrent_dms_set = __operation_data_set
+
+    def command_data_set(self):
+        return super().command_data_set(self.__recurrent_dms_set)
+
+    def money_data_set(self):
+        return super().money_data_set(self.__recurrent_dms_set)
+
+
+class RefundBuilder(TransactionTypesResources):
+    __refund_set = None
+
+    def __init__(self, __operation_data_set):
+        self.__refund_set = __operation_data_set
+
+    def command_data_set(self):
+        return super().command_data_set(self.__refund_set)
+
+    def money_data_set(self):
+        return super().money_data_set(self.__refund_set)
+
+
+class ReversalBuilder(TransactionTypesResources):
+    __reversal_set = None
+
+    def __init__(self, __operation_data_set):
+        self.__reversal_set = __operation_data_set
+
+    def command_data_set(self):
+        return super().command_data_set(self.__reversal_set)
+
+    def money_data_set(self):
+        return super().money_data_set(self.__reversal_set)

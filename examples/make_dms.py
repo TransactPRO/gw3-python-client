@@ -52,16 +52,16 @@ transaction_dms_hold.customer_data_set().add_shipping_flat(flat_number='12')
 transaction_dms_hold.customer_data_set().add_shipping_zip(zip_code='LV-1039')
 
 # Don't forget to fill your merchant data in your transaction, like this one
-transaction_dms_hold.merchant_order_data_set().add_merchant_transaction_id(
+transaction_dms_hold.merchant_order_data_set.add_merchant_transaction_id(
     transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(random.randrange(0, 50, 2)))
 )
-transaction_dms_hold.merchant_order_data_set().add_merchant_order_id(
+transaction_dms_hold.merchant_order_data_set.add_merchant_order_id(
     order_id=''.join(random.choice(string.ascii_lowercase) for o_id in range(random.randrange(0, 255, 2)))
 )
-transaction_dms_hold.merchant_order_data_set().add_merchant_order_description(
+transaction_dms_hold.merchant_order_data_set.add_merchant_order_description(
     description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
 )
-transaction_dms_hold.merchant_order_data_set().add_merchant_order_meta(
+transaction_dms_hold.merchant_order_data_set.add_merchant_order_meta(
     json_object={'f_name': 'Jane', 'l_name': 'Doe', 'sequence': '0', 'title': 'president', 'url': 'nice.example.com'}
 )
 # So, all almost done. Set our cardholder IP. That's optionally.

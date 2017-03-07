@@ -25,16 +25,16 @@ transaction_sms.payment_method_set().add_pan_number(pan_number='4222222222222')
 transaction_sms.money_data_set().add_payment_amount(minor_value=100)
 transaction_sms.money_data_set().add_payment_currency(iso_4217_ccy='EUR')
 # Probably you will needed description of yours transaction
-transaction_sms.merchant_order_data_set().add_merchant_order_description(
+transaction_sms.merchant_order_data_set.add_merchant_order_description(
     description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
 )
 # And setup your own order ID
-transaction_sms.merchant_order_data_set().add_merchant_order_id(
+transaction_sms.merchant_order_data_set.add_merchant_order_id(
     order_id=''.join(random.choice(string.ascii_lowercase) for o_id in range(random.randrange(0, 255, 2)))
 )
 # Also you can add your transaction id
 
-transaction_sms.merchant_order_data_set().add_merchant_transaction_id(
+transaction_sms.merchant_order_data_set.add_merchant_transaction_id(
     transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(random.randrange(0, 50, 2)))
 )
 # Set our cardholder IP. That's optionally.

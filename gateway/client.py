@@ -34,6 +34,10 @@ class Client:
         return AuthorizationBuilder(self.__dict_of_auth_data_set)
 
     def set_operation(self):
+        """
+        Transact Pro Gateway 3 API s operations
+        Returns:Operations
+        """
         from gateway.operations.operations import Operations
         return Operations(self.__dict_of_operation_data_set, self.__client_operations)
 

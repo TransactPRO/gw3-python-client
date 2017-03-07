@@ -13,7 +13,10 @@ class Operations(object):
     __CANCEL = '/cancel'
     __MOTO_SMS = '/moto/sms'
     __MOTO_DMS = '/moto/dms'
-    __RECURRENTS = '/recurrent/dms'
+    __RECURRENTS_SMS = '/recurrent/sms'
+    __RECURRENTS_DMS = '/recurrent/dms'
+    __REFUND = '/refund'
+    __REVERSAL = '/reversal'
 
     def __init__(self, __gate_operation_data_set, __client_operation):
         self.__asked_operation = __client_operation
@@ -69,3 +72,37 @@ class Operations(object):
         self.__asked_operation['current'] = self.__MOTO_DMS
         from gateway.builders.transaction_builder import MotoDmsBuilder
         return MotoDmsBuilder(self.__operation_data)
+
+    def recurrent_sms(self):
+        """
+        Creates a double of previously created and successfully processed transaction
+        (either from SMS or DMS-CHARGE) as DMS transaction.
+        """
+        self.__asked_operation['current'] = self.__RECURRENTS_DMS
+        from gateway.builders.transaction_builder import RecurrentSmsBuilder
+        return RecurrentSmsBuilder(self.__operation_data)
+
+    def recurrent_dms(self):
+        """
+        Creates a double of previously created and successfully processed transaction
+        (either from SMS or DMS-CHARGE) as DMS transaction.
+        """
+        self.__asked_operation['current'] = self.__RECURRENTS_SMS
+        from gateway.builders.transaction_builder import RecurrentDmsBuilder
+        return RecurrentDmsBuilder(self.__operation_data)
+
+    def refund(self):
+        """
+        Refund previously successfully executed SMS or DMS-CHARGE transaction.
+        """
+        self.__asked_operation['current'] = self.__REFUND
+        from gateway.builders.transaction_builder import RefundBuilder
+        return RefundBuilder(self.__operation_data)
+
+    def reversal(self):
+        """
+        Reverse previously successfully executed SMS or DMS-CHARGE transaction.
+        """
+        self.__asked_operation['current'] = self.__REVERSAL
+        from gateway.builders.transaction_builder import ReversalBuilder
+        return ReversalBuilder(self.__operation_data)
