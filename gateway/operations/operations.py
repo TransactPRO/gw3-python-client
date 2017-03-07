@@ -42,3 +42,29 @@ class Operations(object):
         self.__asked_operation['current'] = self.__DMS_CHARGE
         from gateway.builders.transaction_builder import DmsChargeBuilder
         return DmsChargeBuilder(self.__operation_data)
+
+    def dms_cancel(self):
+        """
+        Unfreeze previously reserved funds in DMS hold stage
+        """
+        self.__asked_operation['current'] = self.__CANCEL
+        from gateway.builders.transaction_builder import DmsCancelBuilder
+        return DmsCancelBuilder(self.__operation_data)
+
+    def moto_sms(self):
+        """
+        MOTO transaction (Mail Order \ Telephone Order) is a type of transaction.
+        This is identical as SMS transaction, but requires no CVV code for processing.
+        """
+        self.__asked_operation['current'] = self.__MOTO_SMS
+        from gateway.builders.transaction_builder import MotoSmsBuilder
+        return MotoSmsBuilder(self.__operation_data)
+
+    def moto_dms(self):
+        """
+        MOTO transaction (Mail Order \ Telephone Order) is a type of transaction.
+        This is identical as DMS-HOLD transaction, but requires no CVV code for processing.
+        """
+        self.__asked_operation['current'] = self.__MOTO_DMS
+        from gateway.builders.transaction_builder import MotoDmsBuilder
+        return MotoDmsBuilder(self.__operation_data)
