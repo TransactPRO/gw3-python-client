@@ -5,7 +5,7 @@ class MerchantOrderBuilder(object):
     # First layer of that data set
     __GENERAL_DATA_KEY = 'general-data'
     # Nested layer of general data set
-    __ORDER_DATA_KEY = 'customer-data'
+    __ORDER_DATA_KEY = 'order-data'
 
     # Base structure of customer data
     __order_data_structure = {

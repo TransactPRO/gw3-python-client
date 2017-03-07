@@ -43,6 +43,7 @@ transaction_dms_hold.customer_data_set().add_billing_street(street='Gustava Zemg
 transaction_dms_hold.customer_data_set().add_billing_house(house_number='76')
 transaction_dms_hold.customer_data_set().add_billing_flat(flat_number='12')
 transaction_dms_hold.customer_data_set().add_billing_zip(zip_code='LV-1039')
+
 # Now set shipping data for our transaction
 transaction_dms_hold.customer_data_set().add_shipping_country(country='Latvia')
 transaction_dms_hold.customer_data_set().add_shipping_state(state='Riga')
@@ -51,6 +52,7 @@ transaction_dms_hold.customer_data_set().add_shipping_street(street='Gustava Zem
 transaction_dms_hold.customer_data_set().add_shipping_house(house_number='76')
 transaction_dms_hold.customer_data_set().add_shipping_flat(flat_number='12')
 transaction_dms_hold.customer_data_set().add_shipping_zip(zip_code='LV-1039')
+
 # Don't forget to fill your merchant data in your transaction, like this one
 transaction_dms_hold.merchant_order_data_set().add_merchant_transaction_id(
     transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(50))
@@ -73,7 +75,7 @@ transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='1
 # Construct our transaction request data
 # TODO Add try catch validator exception
 dms_hold_request = TPRO_CLI.build_request()
-print('Constructed request:')
+print('Constructed DMS HOLD request:')
 pprint.pprint(dms_hold_request)
 print('--------------------')
 
@@ -102,7 +104,14 @@ gateway_transaction_id = tmp_dict_space['gateway-transaction-id']
 # Or even just save that stuff in your database for future using
 
 # DMS charge time
-# Step 1 (Auth we done constructed) so set operation DMS CHARGE
+# Step 0
+# Init client class for our work flow
+TPRO_CLI = Client()
+# Step 1
+# Add your merchant authorization data
+TPRO_CLI.create_auth_data().add_account_id(id_number=22)
+TPRO_CLI.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
+# Step 2
 transaction_dms_charge = TPRO_CLI.set_operation().dms_charge()
 # As we do in DMS HOLD, set needed data sets.
 # For DMS CHARGE need provide gate_transaction_id form last operation DMS HOLD
@@ -113,15 +122,16 @@ transaction_dms_charge.command_data_set().add_gateway_transaction_id(gate_transa
 # But cardholder received half of goods, so we charge 20$ form hold
 transaction_dms_charge.money_data_set().add_payment_amount(minor_value=2000)
 
+# Step 3
 # As usual build our request for needed operation
 # TODO Try catch exception of validator
 dms_charge_request = TPRO_CLI.build_request()
-print('Constructed request:')
+print('Constructed DMS CHARGE request:')
 pprint.pprint(dms_charge_request)
 print('--------------------')
 
 # Ok, let's send request via Transact Pro HTTP transporter
-result = TPRO_CLI.make_request(request_json=dms_hold_request)
+result = TPRO_CLI.make_request(request_json=dms_charge_request)
 print('Response:')
 gw_response = result
 if gw_response.text is '' or gw_response.text is None:

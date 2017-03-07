@@ -17,14 +17,14 @@ class Client:
     # Request structure
     __AUTH_KEY = 'auth-data'
     __DATA_KEY = 'data'
-    __gate_client_request = {
-        __AUTH_KEY: None,
-        __DATA_KEY: None
-    }
 
     __client_operations = {'current': None}
 
     def __init__(self):
+        self.__gate_client_base_structure = {
+            self.__AUTH_KEY: None,
+            self.__DATA_KEY: None
+        }
         self.__dict_of_auth_data_set = {}
         self.__dict_of_operation_data_set = {}
         pass
@@ -38,11 +38,11 @@ class Client:
         return Operations(self.__dict_of_operation_data_set, self.__client_operations)
 
     def build_request(self):
-        self.__gate_client_request[self.__AUTH_KEY] = self.__dict_of_auth_data_set
-        self.__gate_client_request[self.__DATA_KEY] = self.__dict_of_operation_data_set
+        self.__gate_client_base_structure[self.__AUTH_KEY] = self.__dict_of_auth_data_set
+        self.__gate_client_base_structure[self.__DATA_KEY] = self.__dict_of_operation_data_set
 
         # TODO Add validation scheme
-        return self.__gate_client_request
+        return self.__gate_client_base_structure
 
     def make_request(self, request_json=None):
         # TODO Add http client
