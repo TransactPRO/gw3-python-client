@@ -13,6 +13,7 @@ class Operations(object):
     __CANCEL = '/cancel'
     __MOTO_SMS = '/moto/sms'
     __MOTO_DMS = '/moto/dms'
+    __RECURRENTS = '/recurrent/dms'
 
     def __init__(self, __gate_operation_data_set, __client_operation):
         self.__asked_operation = __client_operation

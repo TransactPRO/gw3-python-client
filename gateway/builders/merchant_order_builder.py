@@ -18,6 +18,8 @@ class MerchantOrderBuilder(object):
         self.__data_structure_util = DataStructuresUtils
         self.__req_params = RequestParameters
         self.__general_data_set = __transaction_data_set
+        if self.__GENERAL_DATA_KEY not in self.__general_data_set:
+            self.__general_data_set[self.__GENERAL_DATA_KEY] = {}
 
     def add_merchant_transaction_id(self, transaction_id=None):
         """

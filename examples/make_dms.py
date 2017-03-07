@@ -3,8 +3,6 @@
 import pprint
 import random
 import string
-# # Must have, response all in json format
-# import json
 # Add library, to make your work easier
 from gateway import Client
 
@@ -55,11 +53,10 @@ transaction_dms_hold.customer_data_set().add_shipping_zip(zip_code='LV-1039')
 
 # Don't forget to fill your merchant data in your transaction, like this one
 transaction_dms_hold.merchant_order_data_set().add_merchant_transaction_id(
-    transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(50))
+    transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(random.randrange(0, 50, 2)))
 )
-transaction_dms_hold.merchant_order_data_set().add_merchant_user_id(user_id=21)
 transaction_dms_hold.merchant_order_data_set().add_merchant_order_id(
-    order_id=''.join(random.choice(string.ascii_lowercase) for o_id in range(100))
+    order_id=''.join(random.choice(string.ascii_lowercase) for o_id in range(random.randrange(0, 255, 2)))
 )
 transaction_dms_hold.merchant_order_data_set().add_merchant_order_description(
     description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
@@ -67,22 +64,22 @@ transaction_dms_hold.merchant_order_data_set().add_merchant_order_description(
 transaction_dms_hold.merchant_order_data_set().add_merchant_order_meta(
     json_object={'f_name': 'Jane', 'l_name': 'Doe', 'sequence': '0', 'title': 'president', 'url': 'nice.example.com'}
 )
-# So, all almost done. Set our cardholder IP. That's is optionally.
+# So, all almost done. Set our cardholder IP. That's optionally.
 transaction_dms_hold.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
 transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
 
 # Step 3
 # Construct our transaction request data
 # TODO Add try catch validator exception
-dms_hold_request = TPRO_CLI.build_request()
+dms_hold_transaction = TPRO_CLI.build_request()
 print('Constructed DMS HOLD request:')
-pprint.pprint(dms_hold_request)
+pprint.pprint(dms_hold_transaction)
 print('--------------------')
 
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-result = TPRO_CLI.make_request(request_json=dms_hold_request)
+result = TPRO_CLI.make_request(request_json=dms_hold_transaction)
 print('Response:')
 gw_response = result
 if gw_response.text is '' or gw_response.text is None:
@@ -125,13 +122,13 @@ transaction_dms_charge.money_data_set().add_payment_amount(minor_value=2000)
 # Step 3
 # As usual build our request for needed operation
 # TODO Try catch exception of validator
-dms_charge_request = TPRO_CLI.build_request()
+dms_charge_transaction = TPRO_CLI.build_request()
 print('Constructed DMS CHARGE request:')
-pprint.pprint(dms_charge_request)
+pprint.pprint(dms_charge_transaction)
 print('--------------------')
 
 # Ok, let's send request via Transact Pro HTTP transporter
-result = TPRO_CLI.make_request(request_json=dms_charge_request)
+result = TPRO_CLI.make_request(request_json=dms_charge_transaction)
 print('Response:')
 gw_response = result
 if gw_response.text is '' or gw_response.text is None:
