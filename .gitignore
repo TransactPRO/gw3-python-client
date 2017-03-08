@@ -1,4 +1,5 @@
 .idea
-transact_pro_gw3.egg-info
+examples/__pycache__
+transact_pro_gw3_client.egg-info
 dist
 build

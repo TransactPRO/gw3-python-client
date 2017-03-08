@@ -1,4 +1,3 @@
-import requests
 import gateway
 
 
@@ -69,7 +68,6 @@ class Client:
         """
         Methods constructs and validate operation data structure for Transact Pro Gateway 3.
         Returns: Dict
-
         """
         self.__gate_client_base_structure[self.__AUTH_KEY] = self.__dict_of_auth_data_set
         self.__gate_client_base_structure[self.__DATA_KEY] = self.__dict_of_operation_data_set
@@ -78,14 +76,23 @@ class Client:
         return self.__gate_client_base_structure
 
     def make_request(self, request_json=None):
-        # TODO Add http client
         """
-        Transact Pro HTTP Client
+        Make HTTP request via Transact Pro Client
 
         Args:
             request_json (string): Transact Pro request structure
         Returns:
             :return: :class:`Response <Response>` object
         """
-        r = requests.post(gateway.API_BASE_URL + self.__client_operations['current'], json=request_json)
-        return r
+        req_url = gateway.API_BASE_URL + gateway.API_VERSION + self.__client_operations['current']
+        if req_url is None:
+            raise RuntimeError('Transact PRO API URL empty!')
+
+        from gateway.http_clients.transport import new_http_client
+
+        response = new_http_client().request(
+            url=req_url,
+            request_data=request_json
+        )
+
+        return response
