@@ -1,13 +1,11 @@
-from gateway.data_sets.request_parameters import RequestParameters
-
-
 class AuthorizationBuilder(object):
     __data_sets = None
     __auth_data_set = {}
 
-    def __init__(self, __gate_auth_data_set):
+    def __init__(self, __client_auth_data_set):
+        from gateway.data_sets.request_parameters import RequestParameters
         self.__data_sets = RequestParameters
-        self.__auth_data_set = __gate_auth_data_set
+        self.__auth_data_set = __client_auth_data_set
 
     def add_account_id(self, id_number=None):
         """

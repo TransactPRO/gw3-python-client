@@ -9,6 +9,8 @@ class RequestParameters:
 
     # Command data sets
     COMMAND_DATA_GATEWAY_TRANSACTION_ID = 'gateway-transaction-id'
+    COMMAND_DATA_GATEWAY_TRANSACTION_IDS = 'gateway-transaction-ids'
+    COMMAND_DATA_MERCHANT_TRANSACTION_IDS = 'merchant-transaction-ids'
     COMMAND_DATA_FORM_ID = 'form-id'
     COMMAND_DATA_TERMINAL_MID = 'terminal-mid'
 

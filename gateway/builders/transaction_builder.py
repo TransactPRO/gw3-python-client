@@ -34,6 +34,22 @@ class TransactionTypesResources:
         return SystemDataBuilder(__transaction_data_set_dict)
 
 
+class ExploringTypesResources:
+    """
+    Contains all necessary data sets builders for construction exploring past payments operations
+    """
+
+    @classmethod
+    def info_command_data_set(cls, __info_data_set_dict):
+        from gateway.builders.info_data_builder import InfoDataBuilder
+        return InfoDataBuilder(__info_data_set_dict)
+
+
+"""
+Transaction Types builders
+"""
+
+
 class SmsBuilder(TransactionTypesResources):
     __sms_data_set = None
 
@@ -47,7 +63,7 @@ class SmsBuilder(TransactionTypesResources):
         return super().customer_data_set(self.__sms_data_set)
 
     def merchant_order_data_set(self):
-        return super().merchant_order_data_set
+        return super().merchant_order_data_set(self.__sms_data_set)
 
     def payment_method_set(self):
         return super().payment_method_set(self.__sms_data_set)
@@ -72,7 +88,7 @@ class DmsHoldBuilder(TransactionTypesResources):
         return super().customer_data_set(self.__dms_hold_set)
 
     def merchant_order_data_set(self):
-        return super().merchant_order_data_set
+        return super().merchant_order_data_set(self.__dms_hold_set)
 
     def payment_method_set(self):
         return super().payment_method_set(self.__dms_hold_set)
@@ -129,7 +145,7 @@ class MotoSmsBuilder(TransactionTypesResources):
         return super().customer_data_set(self.__moto_sms_set)
 
     def merchant_order_data_set(self):
-        return super().merchant_order_data_set
+        return super().merchant_order_data_set(self.__moto_sms_set)
 
     def payment_method_set(self):
         return super().payment_method_set(self.__moto_sms_set)
@@ -154,7 +170,7 @@ class MotoDmsBuilder(TransactionTypesResources):
         return super().customer_data_set(self.__moto_dms_set)
 
     def merchant_order_data_set(self):
-        return super().merchant_order_data_set
+        return super().merchant_order_data_set(self.__moto_dms_set)
 
     def payment_method_set(self):
         return super().payment_method_set(self.__moto_dms_set)
@@ -216,3 +232,21 @@ class ReversalBuilder(TransactionTypesResources):
 
     def money_data_set(self):
         return super().money_data_set(self.__reversal_set)
+
+
+"""
+Exploring Past Payments builders
+"""
+
+
+class TransactionStatusBuilder(TransactionTypesResources, ExploringTypesResources):
+    __transaction_status_set = None
+
+    def __init__(self, __operation_data_set):
+        self.__transaction_status_set = __operation_data_set
+
+    def info_command_data_set(self):
+        return super(TransactionStatusBuilder, self).info_command_data_set(self.__transaction_status_set)
+
+    def system_data_set(self):
+        return super(TransactionStatusBuilder, self).system_data_set(self.__transaction_status_set)

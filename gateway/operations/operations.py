@@ -17,6 +17,7 @@ class Operations(object):
     __RECURRENTS_DMS = '/recurrent/dms'
     __REFUND = '/refund'
     __REVERSAL = '/reversal'
+    __TRAN_STATUS = '/status'
 
     def __init__(self, __gate_operation_data_set, __client_operation):
         self.__asked_operation = __client_operation
@@ -106,3 +107,11 @@ class Operations(object):
         self.__asked_operation['current'] = self.__REVERSAL
         from gateway.builders.transaction_builder import ReversalBuilder
         return ReversalBuilder(self.__operation_data)
+
+    def transaction_status(self):
+        """
+        Returns transaction current status.
+        """
+        self.__asked_operation['current'] = self.__TRAN_STATUS
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data)

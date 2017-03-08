@@ -2,6 +2,7 @@ class CustomerDataBuilder(object):
     """
     Customer data - information about customer (cardholder)
     """
+
     # First layer of that data set
     __GENERAL_DATA_KEY = 'general-data'
     # Nested layer of general data set
