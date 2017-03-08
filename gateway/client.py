@@ -39,7 +39,8 @@ class Client:
     def set_operation(self):
         """
         Transact Pro Gateway 3 APIs operations
-        Returns:Operations
+
+        Transactions
           - sms()
           - dms_hold()
           - dms_charge()
@@ -50,6 +51,16 @@ class Client:
           - recurrent_sms()
           - refund()
           - reversal()
+
+        Exploring operations
+            - transaction_status()
+            - transaction_result()
+            - transaction_history()
+            - transaction_recurrent_history()
+            - transaction_refunds_history()
+            - transaction_refunds_history
+
+        Returns:Operations
         """
         from gateway.operations.operations import Operations
         return Operations(self.__dict_of_operation_data_set, self.__client_operations)
