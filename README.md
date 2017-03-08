@@ -45,6 +45,10 @@ Available operations:
 
 Bugs and feature request are tracked on [GitHub](https://github.com/TransactPRO/gw3-python-client/issues)
 
+#### If you wont to make some contributions
+Please review code style guideline and try to keep in accordance with it.
+[CodeStyle](https://github.com/TransactPRO/gw3-python-client/blob/master/CODESTYLE.md)
+
 ### License
 
 This library is licensed under the MIT License - see the `LICENSE` file for details.
