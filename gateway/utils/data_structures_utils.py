@@ -6,7 +6,7 @@ class DataStructuresUtils:
     def add_to_dict(source_dict=None, working_dict=None, new_key=None, new_dict=None):
         """
         Staticmethod will helps correctly update dict with nested data structure
-        Examples:
+        Example
             source_dict : {
                 'working_dict' : {
                     'new_key' : {

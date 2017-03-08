@@ -4,21 +4,21 @@ import pprint
 import random
 import string
 # Add library, to make your work easier
-from gateway import Client
+import gateway
 
 # Step 0
 # Init client class for our work flow
-TPRO_CLI = Client()
+GATEWAY_CLIENT = gateway.Client()
 
 # Step 1
 # Add your merchant authorization data
-TPRO_CLI.create_auth_data().add_account_id(id_number=22)
-TPRO_CLI.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
+GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=22)
+GATEWAY_CLIENT.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
 
 # Step 2
 # Ok, now build our transaction request
 # Set operation DMS hold
-transaction_dms_hold = TPRO_CLI.set_operation().dms_hold()
+transaction_dms_hold = GATEWAY_CLIENT.set_operation().dms_hold()
 
 # Add our credit card (PAN) values, cvv, names, pan number
 transaction_dms_hold.payment_method_set().add_pan_cardholder_name(first_last_name='Jane Doe')
@@ -71,7 +71,7 @@ transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='1
 # Step 3
 # Construct our transaction request data
 # TODO Add try catch validator exception
-dms_hold_transaction = TPRO_CLI.build_request()
+dms_hold_transaction = GATEWAY_CLIENT.build_request()
 print('Constructed DMS HOLD request:')
 pprint.pprint(dms_hold_transaction)
 print('--------------------')
@@ -79,7 +79,7 @@ print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-result = TPRO_CLI.make_request(request_json=dms_hold_transaction)
+result = GATEWAY_CLIENT.make_request(request_json=dms_hold_transaction)
 print('Response:')
 gw_response = result
 if gw_response.text is '' or gw_response.text is None:
@@ -103,13 +103,13 @@ gateway_transaction_id = tmp_dict_space['gateway-transaction-id']
 # DMS charge time
 # Step 0
 # Init client class for our work flow
-TPRO_CLI = Client()
+GATEWAY_CLIENT = gateway.Client()
 # Step 1
 # Add your merchant authorization data
-TPRO_CLI.create_auth_data().add_account_id(id_number=22)
-TPRO_CLI.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
+GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=22)
+GATEWAY_CLIENT.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
 # Step 2
-transaction_dms_charge = TPRO_CLI.set_operation().dms_charge()
+transaction_dms_charge = GATEWAY_CLIENT.set_operation().dms_charge()
 # As we do in DMS HOLD, set needed data sets.
 # For DMS CHARGE need provide gate_transaction_id form last operation DMS HOLD
 transaction_dms_charge.command_data_set().add_gateway_transaction_id(gate_transaction_id=gateway_transaction_id)
@@ -122,13 +122,13 @@ transaction_dms_charge.money_data_set().add_payment_amount(minor_value=2000)
 # Step 3
 # As usual build our request for needed operation
 # TODO Try catch exception of validator
-dms_charge_transaction = TPRO_CLI.build_request()
+dms_charge_transaction = GATEWAY_CLIENT.build_request()
 print('Constructed DMS CHARGE request:')
 pprint.pprint(dms_charge_transaction)
 print('--------------------')
 
 # Ok, let's send request via Transact Pro HTTP transporter
-result = TPRO_CLI.make_request(request_json=dms_charge_transaction)
+result = GATEWAY_CLIENT.make_request(request_json=dms_charge_transaction)
 print('Response:')
 gw_response = result
 if gw_response.text is '' or gw_response.text is None:

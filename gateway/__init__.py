@@ -1,4 +1,7 @@
-API_BASE_URL = 'http://uriel.sk.fpngw3.env/v3.0'
+"""
+Transact Pro Payment Gateway integration library.
+"""
 
 from gateway.client import Client
-from gateway.operations.operations import Operations
+
+API_BASE_URL = 'http://uriel.sk.fpngw3.env/v3.0'

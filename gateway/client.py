@@ -1,7 +1,3 @@
-"""
-Transact Pro Payment Gateway integration library.
-"""
-
 import requests
 import gateway
 
@@ -30,18 +26,40 @@ class Client:
         pass
 
     def create_auth_data(self):
+        """
+        Transact Pro Authorization
+        Returns:AuthorizationBuilder
+          - add_account_id()
+          - add_secret_key()
+          - add_session_id()
+        """
         from gateway.builders.authorization_builder import AuthorizationBuilder
         return AuthorizationBuilder(self.__dict_of_auth_data_set)
 
     def set_operation(self):
         """
-        Transact Pro Gateway 3 API s operations
+        Transact Pro Gateway 3 APIs operations
         Returns:Operations
+          - sms()
+          - dms_hold()
+          - dms_charge()
+          - cancel()
+          - moto_sms()
+          - moto_dms()
+          - recurrent_dms()
+          - recurrent_sms()
+          - refund()
+          - reversal()
         """
         from gateway.operations.operations import Operations
         return Operations(self.__dict_of_operation_data_set, self.__client_operations)
 
     def build_request(self):
+        """
+        Methods constructs and validate operation data structure for Transact Pro Gateway 3.
+        Returns: Dict
+
+        """
         self.__gate_client_base_structure[self.__AUTH_KEY] = self.__dict_of_auth_data_set
         self.__gate_client_base_structure[self.__DATA_KEY] = self.__dict_of_operation_data_set
 
@@ -51,10 +69,10 @@ class Client:
     def make_request(self, request_json=None):
         # TODO Add http client
         """
-        Request data  in json format, for Transact Pro API
+        Transact Pro HTTP Client
 
         Args:
-            request_json (string): Transact Pro Merchant Account ID.
+            request_json (string): Transact Pro request structure
         Returns:
             :return: :class:`Response <Response>` object
         """
