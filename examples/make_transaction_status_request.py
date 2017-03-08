@@ -1,7 +1,5 @@
 # It's not necessary to use it in your implementation
 import pprint
-import random
-import string
 # Add library, to make your work easier
 import gateway
 
@@ -22,7 +20,6 @@ transaction_status.info_command_data_set().add_gateway_transaction_ids(
         'efd3718b-95d2-4f33-95d3-452e3c99e6ae'
     ]
 )
-
 # Set our cardholder IP. That's optionally.
 transaction_status.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
 transaction_status.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')

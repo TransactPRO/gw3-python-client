@@ -34,7 +34,7 @@ required = [
 packages = ['gateway', 'gateway/builders', 'gateway/operations', 'gateway/data_sets', 'gateway/utils']
 
 setup(
-    name='transact-pro/gw3',
+    name='transact-pro/gw3-client',
     version='1.0.0',
     description='Transact PRO Gateway3 implementation in Python.',
     long_description=LONG_DESCRIPTION,

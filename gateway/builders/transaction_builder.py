@@ -106,11 +106,20 @@ class DmsChargeBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__dms_charge_set = __operation_data_set
 
-    def money_data_set(self):
-        return super().money_data_set(self.__dms_charge_set)
-
     def command_data_set(self):
         return super().command_data_set(self.__dms_charge_set)
+
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in DMS CHARGE operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in DMS CHARGE operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in DMS CHARGE operation!')
+
+    def money_data_set(self):
+        return super().money_data_set(self.__dms_charge_set)
 
     def system_data_set(self):
         return super().system_data_set(self.__dms_charge_set)
@@ -122,11 +131,20 @@ class DmsCancelBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set):
         self.__dms_cancel_set = __operation_data_set
 
-    def money_data_set(self):
-        return super().money_data_set(self.__dms_cancel_set)
-
     def command_data_set(self):
         return super().command_data_set(self.__dms_cancel_set)
+
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in DMS CANCEL operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in DMS CANCEL operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in DMS CANCEL operation!')
+
+    def money_data_set(self):
+        return super().money_data_set(self.__dms_cancel_set)
 
     def system_data_set(self):
         return super().system_data_set(self.__dms_cancel_set)
@@ -191,8 +209,20 @@ class RecurrentSmsBuilder(TransactionTypesResources):
     def command_data_set(self):
         return super().command_data_set(self.__recurrent_sms_set)
 
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in Recurrent SMS operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in Recurrent SMS operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in Recurrent SMS operation!')
+
     def money_data_set(self):
         return super().money_data_set(self.__recurrent_sms_set)
+
+    def system_data_set(self):
+        return super().system_data_set(self.__recurrent_sms_set)
 
 
 class RecurrentDmsBuilder(TransactionTypesResources):
@@ -204,8 +234,20 @@ class RecurrentDmsBuilder(TransactionTypesResources):
     def command_data_set(self):
         return super().command_data_set(self.__recurrent_dms_set)
 
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in Recurrent DMS operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in Recurrent DMS operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in Recurrent DMS operation!')
+
     def money_data_set(self):
         return super().money_data_set(self.__recurrent_dms_set)
+
+    def system_data_set(self):
+        return super().system_data_set(self.__recurrent_dms_set)
 
 
 class RefundBuilder(TransactionTypesResources):
@@ -217,8 +259,20 @@ class RefundBuilder(TransactionTypesResources):
     def command_data_set(self):
         return super().command_data_set(self.__refund_set)
 
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in Refund operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in Refund operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in Refund operation!')
+
     def money_data_set(self):
         return super().money_data_set(self.__refund_set)
+
+    def system_data_set(self):
+        return super().system_data_set(self.__refund_set)
 
 
 class ReversalBuilder(TransactionTypesResources):
@@ -230,8 +284,20 @@ class ReversalBuilder(TransactionTypesResources):
     def command_data_set(self):
         return super().command_data_set(self.__reversal_set)
 
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in Reversal operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in Reversal operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in Reversal operation!')
+
     def money_data_set(self):
         return super().money_data_set(self.__reversal_set)
+
+    def system_data_set(self):
+        return super().system_data_set(self.__reversal_set)
 
 
 """
@@ -246,7 +312,22 @@ class TransactionStatusBuilder(TransactionTypesResources, ExploringTypesResource
         self.__transaction_status_set = __operation_data_set
 
     def info_command_data_set(self):
-        return super(TransactionStatusBuilder, self).info_command_data_set(self.__transaction_status_set)
+        return super().info_command_data_set(self.__transaction_status_set)
+
+    def command_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in Transaction Status operation!')
+
+    def customer_data_set(self):
+        raise NotImplementedError('Customer data set unavailable in Transaction Status operation!')
+
+    def merchant_order_data_set(self):
+        raise NotImplementedError('Merchant order data set unavailable in Transaction Status operation!')
+
+    def payment_method_set(self):
+        raise NotImplementedError('Payment method data set unavailable in Transaction Status operation!')
+
+    def money_data_set(self):
+        raise NotImplementedError('Money data set unavailable in Transaction Status operation!')
 
     def system_data_set(self):
-        return super(TransactionStatusBuilder, self).system_data_set(self.__transaction_status_set)
+        return super().system_data_set(self.__transaction_status_set)
