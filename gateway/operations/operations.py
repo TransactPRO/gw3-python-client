@@ -18,6 +18,10 @@ class Operations(object):
     __REFUND = '/refund'
     __REVERSAL = '/reversal'
     __TRAN_STATUS = '/status'
+    __TRAN_RESULT = '/result'
+    __TRAN_HISTORY = '/history'
+    __TRAN_RECURRENT_HISTORY = '/recurrents'
+    __TRAN_REFUNDS_HISTORY = '/history'
 
     def __init__(self, __gate_operation_data_set, __client_operation):
         self.__asked_operation = __client_operation
@@ -113,5 +117,37 @@ class Operations(object):
         Returns transaction current status.
         """
         self.__asked_operation['current'] = self.__TRAN_STATUS
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data)
+
+    def transaction_result(self):
+        """
+        Returns final result for provided transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_RESULT
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data)
+
+    def transaction_history(self):
+        """
+        Returns status history for provided transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_HISTORY
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data)
+
+    def transaction_recurrent_history(self):
+        """
+        Returns list of child RECURRENT transactions for provided list of parent transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_RECURRENT_HISTORY
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data)
+
+    def transaction_refunds_history(self):
+        """
+        Returns list of child REFUND transactions for provided list of parent transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_REFUNDS_HISTORY
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         return TransactionStatusBuilder(self.__operation_data)
