@@ -8,7 +8,7 @@ class MoneyDataBuilder(object):
     }
 
     def __init__(self, __transaction_data_set):
-        from gateway.utils.data_structures_utils import DataStructuresUtils
+        from gateway.utils.data_structures import DataStructuresUtils
         from gateway.data_sets.request_parameters import RequestParameters
         self.__data_structure_util = DataStructuresUtils
         self.__req_params = RequestParameters
@@ -19,7 +19,7 @@ class MoneyDataBuilder(object):
         Add payment money amount in minor units
 
         Args:
-            minor_value (int): Money amount in minor units
+            minor_value (str): Money amount in minor units
         """
         self.__data_structure_util.add_to_dict(
             source_dict=self.__money_data_set,

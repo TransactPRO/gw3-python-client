@@ -1,4 +1,4 @@
-from gateway.utils import data_structures_utils
+from gateway.utils import data_structures
 from unittest import TestCase
 
 
@@ -15,7 +15,7 @@ class TestUtils(TestCase):
             'NESTED_KEY': None
         }
 
-        data_structures_utils.DataStructuresUtils.add_to_dict(
+        data_structures.DataStructuresUtils.add_to_dict(
             source_dict=self.SAMPLE_SOURCE_DICT,
             working_dict=new_dict,
             new_key='NESTED_KEY',

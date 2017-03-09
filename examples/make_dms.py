@@ -23,7 +23,7 @@ transaction_dms_hold = GATEWAY_CLIENT.set_operation().dms_hold()
 
 # Add our credit card (PAN) values, cvv, names, pan number
 transaction_dms_hold.payment_method_set().add_pan_cardholder_name(first_last_name='Jane Doe')
-transaction_dms_hold.payment_method_set().add_pan_cvv_code(cvv_number=442)
+transaction_dms_hold.payment_method_set().add_pan_cvv_code(cvv_number='442')
 transaction_dms_hold.payment_method_set().add_pan_expiry_date(mm_yy='12/30')
 transaction_dms_hold.payment_method_set().add_pan_number(pan_number='4222222222222')
 
@@ -71,7 +71,6 @@ transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='1
 
 # Step 3
 # Construct our transaction request data
-# TODO Add try catch validator exception
 dms_hold_transaction = GATEWAY_CLIENT.build_request()
 print('Constructed DMS HOLD request:')
 pprint.pprint(dms_hold_transaction)
@@ -120,7 +119,6 @@ transaction_dms_charge.money_data_set().add_payment_amount(minor_value=2000)
 
 # Step 3
 # As usual build our request for needed operation
-# TODO Try catch exception of validator
 dms_charge_transaction = GATEWAY_CLIENT.build_request()
 print('Constructed DMS CHARGE request:')
 pprint.pprint(dms_charge_transaction)

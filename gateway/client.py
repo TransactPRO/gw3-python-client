@@ -14,6 +14,7 @@ class Client:
     __DATA_KEY = 'data'
 
     __client_operations = {'current': None}
+    __required_parameters_for_operation = {}
 
     def __init__(self):
         self.__gate_client_base_structure = {
@@ -33,7 +34,7 @@ class Client:
           - add_session_id()
         """
         from gateway.builders.authorization_builder import AuthorizationBuilder
-        return AuthorizationBuilder(self.__dict_of_auth_data_set)
+        return AuthorizationBuilder(self.__dict_of_auth_data_set, self.__required_parameters_for_operation)
 
     def set_operation(self):
         """
@@ -72,7 +73,15 @@ class Client:
         self.__gate_client_base_structure[self.__AUTH_KEY] = self.__dict_of_auth_data_set
         self.__gate_client_base_structure[self.__DATA_KEY] = self.__dict_of_operation_data_set
 
-        # TODO Add validation scheme
+        from gateway.utils.data_validator import DataValidator
+        validator_response = DataValidator().validate_request_data(
+            required_data=self.__required_parameters_for_operation,
+            request_data=self.__gate_client_base_structure
+        )
+
+        if len(validator_response[-1]) > 0:
+            raise RuntimeError('Validation failed in request data:', validator_response[-1])
+
         return self.__gate_client_base_structure
 
     def make_request(self, request_json=None):
@@ -88,7 +97,7 @@ class Client:
             tuple
         """
         if request_json is None or len(request_json) < 1:
-            raise RuntimeError('Request json invalid is empty!')
+            raise RuntimeError("Request json invalid it's empty!")
 
         if type(request_json) is not dict:
             raise RuntimeError('Request json data invalid, must be dict!')

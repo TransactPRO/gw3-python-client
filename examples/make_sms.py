@@ -18,7 +18,7 @@ transaction_sms = GATEWAY_CLIENT.set_operation().sms()
 # And fill transaction details as down below
 # Add data about cardholder
 transaction_sms.payment_method_set().add_pan_cardholder_name(first_last_name='John Doe')
-transaction_sms.payment_method_set().add_pan_cvv_code(cvv_number=442)
+transaction_sms.payment_method_set().add_pan_cvv_code(cvv_number='442')
 transaction_sms.payment_method_set().add_pan_expiry_date(mm_yy='12/20')
 transaction_sms.payment_method_set().add_pan_number(pan_number='4222222222222')
 # And about payment
@@ -43,7 +43,6 @@ transaction_sms.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.16
 
 # Step 3
 # Construct our transaction request data
-# TODO Add try catch validator exception
 sms_transaction = GATEWAY_CLIENT.build_request()
 print('Constructed SMS request:')
 pprint.pprint(sms_transaction)
