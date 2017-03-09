@@ -1,5 +1,9 @@
 .idea
 examples/__pycache__
+gateway/builders/__pycache__
+gateway/http/__pycache__
+gateway/operations/__pycache__
+gateway/utils/__pycache__
 transact_pro_gw3_client.egg-info
 dist
 build

@@ -65,8 +65,11 @@ class RequestsTransport(HttpTransport):
             kwargs['verify'] = False
 
         try:
-            response = self.__session.request(url, json=request_data, timeout=self.__timeout, **kwargs)
+            print('REEEEEQQQQ TRANS')
+            req_response = self.__session.request(url, json=request_data, timeout=self.__timeout, **kwargs)
+            print(self.__session)
+            print(req_response.json())
         except:
             raise
 
-        return response
+        return req_response.content, req_response.status_code, req_response.headers
