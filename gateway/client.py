@@ -77,10 +77,15 @@ class Client:
 
     def make_request(self, request_json=None):
         """
-        Make HTTP request via Transact Pro Client
+        Make HTTP request via Transact Pro HttpTransport
 
         Args:
             request_json (dict): Transact Pro request structure
+
+        Response tuple (HTTP Content, HTTP Status code, HTTP HEADERS)
+
+        Returns:
+            tuple
         """
         if request_json is None or len(request_json) < 1:
             raise RuntimeError('Request json invalid is empty!')
