@@ -2,7 +2,10 @@ import gateway
 from gateway.builders.authorization_builder import AuthorizationBuilder
 from gateway.operations.operations import Operations
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import (
+    patch,
+    Mock
+)
 
 
 class TestClient(TestCase):
@@ -59,3 +62,11 @@ class TestClient(TestCase):
         self.GATE_CLIENT.create_auth_data().add_account_id(1)
         self.GATE_CLIENT.create_auth_data().add_secret_key('MySecretKey')
         self.assertEquals(self.GATE_CLIENT.build_request(), self.CORRECT_AUTH_DATA)
+
+    def test_make_request(self):
+        """Will succeed"""
+        cli = self.GATE_CLIENT
+        with patch.object(cli, 'make_request') as req_mock:
+            cli.make_request(self.CORRECT_AUTH_DATA)
+
+        req_mock.assert_called_once_with(self.CORRECT_AUTH_DATA)
