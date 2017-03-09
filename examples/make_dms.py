@@ -3,6 +3,7 @@
 import pprint
 import random
 import string
+import json
 # Add library, to make your work easier
 import gateway
 
@@ -79,20 +80,18 @@ print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-result = GATEWAY_CLIENT.make_request(request_json=dms_hold_transaction)
-print('Response:')
-gw_response = result
-if gw_response.text is '' or gw_response.text is None:
-    raise RuntimeError("Critical can't continue: Gateway response empty!")
-gw_response = gw_response.json()
+gw_response = GATEWAY_CLIENT.make_request(request_json=dms_hold_transaction)
+print('DMS Hold Response:')
 pprint.pprint(gw_response)
 print('--------------------')
 
 # Nice let's try get our new gateway transaction id from response.
 # It's needed to charge transaction to next stage, it's called DMS CHARGE
-if 'gw' not in gw_response:
+# First convert byte to str and then str to json object
+gw_response_content_dict = json.loads(gw_response[0].decode('ascii'))
+if 'gw' not in gw_response_content_dict:
     raise RuntimeError("Critical can't continue: Gateway isn't provided (gw) data!")
-tmp_dict_space = gw_response['gw']
+tmp_dict_space = gw_response_content_dict['gw']
 if 'gateway-transaction-id' not in tmp_dict_space:
     raise RuntimeError("Critical can't continue: Gateway isn't provided (gateway-transaction-id) data field!")
 gateway_transaction_id = tmp_dict_space['gateway-transaction-id']
@@ -128,12 +127,8 @@ pprint.pprint(dms_charge_transaction)
 print('--------------------')
 
 # Ok, let's send request via Transact Pro HTTP transporter
-result = GATEWAY_CLIENT.make_request(request_json=dms_charge_transaction)
-print('Response:')
-gw_response = result
-if gw_response.text is '' or gw_response.text is None:
-    raise RuntimeError("Critical can't continue: Gateway response empty!")
-gw_response = gw_response.json()
+gw_response = GATEWAY_CLIENT.make_request(request_json=dms_charge_transaction)
+print('DMS Charge Response:')
 pprint.pprint(gw_response)
 print('--------------------')
 # That's it, happy coding

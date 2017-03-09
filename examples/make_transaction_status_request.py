@@ -28,17 +28,13 @@ transaction_status.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192
 # Construct our transaction request data
 # TODO Add try catch validator exception
 sms_transaction = GATEWAY_CLIENT.build_request()
-print('Constructed SMS request:')
+print('Constructed Transaction status request:')
 pprint.pprint(sms_transaction)
 print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-result = GATEWAY_CLIENT.make_request(request_json=sms_transaction)
-print('Response:')
-gw_response = result
-if gw_response.text is '' or gw_response.text is None:
-    raise RuntimeError("Critical can't continue: Gateway response empty!")
-gw_response = gw_response.json()
+gw_response = GATEWAY_CLIENT.make_request(request_json=sms_transaction)
+print('Transaction status Response:')
 pprint.pprint(gw_response)
 print('--------------------')
