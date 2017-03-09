@@ -37,7 +37,7 @@ packages = [
     'gateway/operations',
     'gateway/data_sets',
     'gateway/utils',
-    'gateway/http_clients'
+    'gateway/http'
 ]
 
 setup(

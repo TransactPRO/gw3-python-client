@@ -80,19 +80,17 @@ class Client:
         Make HTTP request via Transact Pro Client
 
         Args:
-            request_json (string): Transact Pro request structure
-        Returns:
-            :return: :class:`Response <Response>` object
+            request_json (dict): Transact Pro request structure
         """
+        if request_json is None or len(request_json) < 1:
+            raise RuntimeError('Request json invalid is empty!')
+
+        if type(request_json) is not dict:
+            raise RuntimeError('Request json data invalid, must be dict!')
+
         req_url = gateway.API_BASE_URL + gateway.API_VERSION + self.__client_operations['current']
         if req_url is None:
-            raise RuntimeError('Transact PRO API URL empty!')
+            raise RuntimeError('Transact PRO API URL Empty!')
 
-        from gateway.http_clients.transport import new_http_client
-
-        response = new_http_client().request(
-            url=req_url,
-            request_data=request_json
-        )
-
-        return response
+        from gateway.http.transport import new_http_client
+        return new_http_client().request(http_url=req_url, request_data=request_json)
