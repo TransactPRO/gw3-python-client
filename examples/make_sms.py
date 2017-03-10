@@ -10,8 +10,8 @@ import gateway
 GATEWAY_CLIENT = gateway.Client()
 # Step 1
 # Add your merchant authorization data
-GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=22)
-GATEWAY_CLIENT.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
+GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=507)
+GATEWAY_CLIENT.create_auth_data().add_secret_key(value='IvjBhoeDKUkCMOif58gyxlRNb7QpdmtF')
 # Step 2
 # Now let's set operation SMS hold
 transaction_sms = GATEWAY_CLIENT.set_operation().sms()
