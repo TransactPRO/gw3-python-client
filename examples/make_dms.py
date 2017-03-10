@@ -13,8 +13,8 @@ GATEWAY_CLIENT = gateway.Client()
 
 # Step 1
 # Add your merchant authorization data
-GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=22)
-GATEWAY_CLIENT.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
+GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=507)
+GATEWAY_CLIENT.create_auth_data().add_secret_key(value='IvjBhoeDKUkCMOif58gyxlRNb7QpdmtF')
 
 # Step 2
 # Ok, now build our transaction request
@@ -104,8 +104,8 @@ gateway_transaction_id = tmp_dict_space['gateway-transaction-id']
 GATEWAY_CLIENT = gateway.Client()
 # Step 1
 # Add your merchant authorization data
-GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=22)
-GATEWAY_CLIENT.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvwRXWIGUxs')
+GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=507)
+GATEWAY_CLIENT.create_auth_data().add_secret_key(value='IvjBhoeDKUkCMOif58gyxlRNb7QpdmtF')
 # Step 2
 transaction_dms_charge = GATEWAY_CLIENT.set_operation().dms_charge()
 # As we do in DMS HOLD, set needed data sets.
