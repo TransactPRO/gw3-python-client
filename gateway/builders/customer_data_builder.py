@@ -2,6 +2,7 @@ class CustomerDataBuilder(object):
     """
     Customer data - information about customer (cardholder)
     """
+
     # First layer of that data set
     __GENERAL_DATA_KEY = 'general-data'
     # Nested layer of general data set
@@ -27,7 +28,7 @@ class CustomerDataBuilder(object):
     }
 
     def __init__(self, __transaction_data_set):
-        from gateway.utils.data_structures_utils import DataStructuresUtils
+        from gateway.utils.data_structures import DataStructuresUtils
         from gateway.data_sets.request_parameters import RequestParameters
         self.__data_structure_util = DataStructuresUtils
         self.__req_params = RequestParameters

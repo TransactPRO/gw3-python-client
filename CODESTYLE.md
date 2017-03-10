@@ -76,7 +76,7 @@ and module.some_object).
 * Variables, attributes, functions, methods and properties can be named with a
 leading underscore to indicate that they're "private"
     ```
-        _private_validate_response(response):
+        __private_validate_response(response):
     ```
 
 ## Exceptions

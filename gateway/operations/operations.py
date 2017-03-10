@@ -17,10 +17,16 @@ class Operations(object):
     __RECURRENTS_DMS = '/recurrent/dms'
     __REFUND = '/refund'
     __REVERSAL = '/reversal'
+    __TRAN_STATUS = '/status'
+    __TRAN_RESULT = '/result'
+    __TRAN_HISTORY = '/history'
+    __TRAN_RECURRENT_HISTORY = '/recurrents'
+    __TRAN_REFUNDS_HISTORY = '/history'
 
-    def __init__(self, __gate_operation_data_set, __client_operation):
+    def __init__(self, __gate_operation_data_set, __client_operation, __client_mandatory_fields):
         self.__asked_operation = __client_operation
         self.__operation_data = __gate_operation_data_set
+        self.__operation_mandatory_fields = __client_mandatory_fields
         pass
 
     def sms(self):
@@ -29,7 +35,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__SMS
         from gateway.builders.transaction_builder import SmsBuilder
-        return SmsBuilder(self.__operation_data)
+        return SmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def dms_hold(self):
         """
@@ -37,7 +43,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__DMS_HOLD
         from gateway.builders.transaction_builder import DmsHoldBuilder
-        return DmsHoldBuilder(self.__operation_data)
+        return DmsHoldBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def dms_charge(self):
         """
@@ -45,7 +51,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__DMS_CHARGE
         from gateway.builders.transaction_builder import DmsChargeBuilder
-        return DmsChargeBuilder(self.__operation_data)
+        return DmsChargeBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def dms_cancel(self):
         """
@@ -53,7 +59,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__CANCEL
         from gateway.builders.transaction_builder import DmsCancelBuilder
-        return DmsCancelBuilder(self.__operation_data)
+        return DmsCancelBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def moto_sms(self):
         """
@@ -62,7 +68,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__MOTO_SMS
         from gateway.builders.transaction_builder import MotoSmsBuilder
-        return MotoSmsBuilder(self.__operation_data)
+        return MotoSmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def moto_dms(self):
         """
@@ -71,7 +77,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__MOTO_DMS
         from gateway.builders.transaction_builder import MotoDmsBuilder
-        return MotoDmsBuilder(self.__operation_data)
+        return MotoDmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def recurrent_sms(self):
         """
@@ -80,7 +86,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__RECURRENTS_DMS
         from gateway.builders.transaction_builder import RecurrentSmsBuilder
-        return RecurrentSmsBuilder(self.__operation_data)
+        return RecurrentSmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def recurrent_dms(self):
         """
@@ -89,7 +95,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__RECURRENTS_SMS
         from gateway.builders.transaction_builder import RecurrentDmsBuilder
-        return RecurrentDmsBuilder(self.__operation_data)
+        return RecurrentDmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def refund(self):
         """
@@ -97,7 +103,7 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__REFUND
         from gateway.builders.transaction_builder import RefundBuilder
-        return RefundBuilder(self.__operation_data)
+        return RefundBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def reversal(self):
         """
@@ -105,4 +111,44 @@ class Operations(object):
         """
         self.__asked_operation['current'] = self.__REVERSAL
         from gateway.builders.transaction_builder import ReversalBuilder
-        return ReversalBuilder(self.__operation_data)
+        return ReversalBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def transaction_status(self):
+        """
+        Returns transaction current status.
+        """
+        self.__asked_operation['current'] = self.__TRAN_STATUS
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def transaction_result(self):
+        """
+        Returns final result for provided transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_RESULT
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def transaction_history(self):
+        """
+        Returns status history for provided transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_HISTORY
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def transaction_recurrent_history(self):
+        """
+        Returns list of child RECURRENT transactions for provided list of parent transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_RECURRENT_HISTORY
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def transaction_refunds_history(self):
+        """
+        Returns list of child REFUND transactions for provided list of parent transactions.
+        """
+        self.__asked_operation['current'] = self.__TRAN_REFUNDS_HISTORY
+        from gateway.builders.transaction_builder import TransactionStatusBuilder
+        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
