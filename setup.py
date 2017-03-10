@@ -1,10 +1,24 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from distutils.core import setup
+import sys
+import warnings
+
+if sys.version < '3':
+    warnings.warn(
+        'Python 2 is not officially supported by Transact PRO  with Gateway3. '
+        'If you have any questions, please file an issue on Github',
+        DeprecationWarning)
+    raise RuntimeError('Please install higher version of Python.')
+
+try:
+    from distutils.command.build_py import build_py_2to3 as build_py
+except ImportError:
+    from distutils.command.build_py import build_py
 
 MAINTAINER_NAME = 'Artjoms Nemiro'
 MAINTAINER_EMAIL = 'artjom.nemiro@gateway.lv'
-URL_GIT = 'https://github.com/TransactPRO/GW3-python-integration'
+URL_GIT = 'https://github.com/TransactPRO/gw3-python-client'
 
 try:
     import pypandoc
@@ -14,7 +28,7 @@ except (IOError, ImportError, OSError, RuntimeError):
     LONG_DESCRIPTION = ''
 
 CLASSIFIERS = [
-    'Development Status :: 1 - Planning',
+    'Development Status :: 2 - Pre-Alpha',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
     'Natural Language :: English',
@@ -40,8 +54,14 @@ packages = [
     'gateway/http'
 ]
 
+tests_packages = [
+    'unittest',
+    'mock'
+]
+
 setup(
     name='transact-pro/gw3-client',
+    cmdclass={'build_py': build_py},
     version='1.0.0',
     description='Transact PRO Gateway3 implementation in Python.',
     long_description=LONG_DESCRIPTION,
@@ -50,9 +70,10 @@ setup(
     maintainer=MAINTAINER_NAME,
     maintainer_email=MAINTAINER_EMAIL,
     install_requires=required,
-    # url=URL_GIT,
-    # download_url='',
+    url=URL_GIT,
+    download_url='',
     packages=packages,
+    tests_require=tests_packages,
     platforms=['Platform Independent'],
     license='MIT',
     classifiers=CLASSIFIERS,

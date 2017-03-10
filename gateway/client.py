@@ -120,9 +120,9 @@ class Client:
         # Setup config for HTTP transport
         # And make request via HTTP implemented Client
         response = new_http_client(
-            verify_ssl=gateway.VERIFY_SSL_CERTS,
-            proxy=gateway.PROXY,
-            timeout=gateway.TIME_OUT
+            verify_ssl=gateway.HTTP_VERIFY_SSL_CERTS,
+            proxy=gateway.HTTP_PROXY,
+            timeout=gateway.HTTP_TIME_OUT
         ).request(
             http_method=HTTP_POST,
             http_url=req_url,
