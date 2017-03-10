@@ -42,7 +42,8 @@ CLASSIFIERS = [
 ]
 
 required = [
-    'requests'
+    'requests',
+    'ssl'
 ]
 
 packages = [

@@ -21,6 +21,7 @@ HTTP_OPTIONS = 'OPTIONS'
 HTTP_TRACE = 'TRACE'
 HTTP_PATCH = 'PATCH'
 
+
 def new_http_client(*args, **kwargs):
     """
     Get available HTTP Package from local system
@@ -88,7 +89,7 @@ class RequestsTransport(HttpTransport):
 
         kwargs = {}
         if self.verify_ssl:
-            kwargs['verify'] = os.path.join(os.path.dirname(__file__), 'data/ca-certificates.crt')
+            kwargs['verify'] = os.path.join(os.path.dirname(__file__), 'ca-certificates.crt')
         else:
             kwargs['verify'] = False
 
