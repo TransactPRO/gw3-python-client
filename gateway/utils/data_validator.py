@@ -5,6 +5,7 @@ class DataValidator:
 
     def validate_request_data(self, required_data, request_data):
         """
+        Validate all dict (json) structure with given dict of keys and class types
 
         Args:
             required_data (dict): Money amount in minor units
@@ -14,7 +15,19 @@ class DataValidator:
             Example {'Key1': int, 'Other_dor': {'tiny_key': str}}
         Returns (dict):  Invalid data
         """
-        return list(self.__search_and_validate(req_struct=required_data, source_struct=request_data))
+        result = {}
+        yielded_list = list(self.__search_and_validate(req_struct=required_data, source_struct=request_data))
+
+        try:
+            if len(yielded_list[-1]) > 0:
+                result = yielded_list[-1]
+        except IndexError:
+            if len(yielded_list) > 0:
+                result = yielded_list[0]
+        except:
+            raise
+
+        return result
 
     def __search_and_validate(self, req_struct, source_struct):
         """

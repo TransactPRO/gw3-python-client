@@ -84,8 +84,8 @@ class Client:
             request_data=self.__gate_client_base_structure
         )
 
-        if len(validator_response[-1]) > 0:
-            raise RuntimeError('Validation failed in request data:', validator_response[-1])
+        if validator_response:
+            raise RuntimeError('Validation failed in request data:', validator_response)
 
         return self.__gate_client_base_structure
 
@@ -96,7 +96,7 @@ class Client:
         Args:
             request_json (dict): Transact Pro request structure
 
-        Response tuple (HTTP Content, HTTP Status code, HTTP HEADERS)
+        Response tuple (HTTP Content, HTTP Status code, HTTP Headers)
 
         Returns:
             tuple
@@ -111,5 +111,22 @@ class Client:
         if req_url is None:
             raise RuntimeError('Transact PRO API URL Empty!')
 
-        from gateway.http.transport import new_http_client
-        return new_http_client().request(http_url=req_url, request_data=request_json)
+        # Import transport package supplies
+        from gateway.http.transport import (
+            HTTP_POST,
+            new_http_client
+        )
+
+        # Setup config for HTTP transport
+        # And make request via HTTP implemented Client
+        response = new_http_client(
+            verify_ssl=gateway.VERIFY_SSL_CERTS,
+            proxy=gateway.PROXY,
+            timeout=gateway.TIME_OUT
+        ).request(
+            http_method=HTTP_POST,
+            http_url=req_url,
+            request_data=request_json
+        )
+
+        return response

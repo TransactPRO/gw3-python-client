@@ -6,8 +6,20 @@ except ImportError:
     requests = None
 
 # HTTP Methods const
+# HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.
+# Although they can also be nouns, these requests methods are sometimes referred as HTTP verbs.
+# Each of them implements a different semantic,
+# but some common features are shared by a group of them:
+# e.g. a request method can be safe, idempotent, or cacheable.
 HTTP_POST = 'POST'
-
+HTTP_HEAD = 'HEAD'
+HTTP_GET = 'GET'
+HTTP_PUT = 'PUT'
+HTTP_DELETE = 'DELETE'
+HTTP_CONNECT = 'CONNECT'
+HTTP_OPTIONS = 'OPTIONS'
+HTTP_TRACE = 'TRACE'
+HTTP_PATCH = 'PATCH'
 
 def new_http_client(*args, **kwargs):
     """
@@ -79,6 +91,9 @@ class RequestsTransport(HttpTransport):
             kwargs['verify'] = os.path.join(os.path.dirname(__file__), 'data/ca-certificates.crt')
         else:
             kwargs['verify'] = False
+
+        if self.proxy:
+            kwargs['proxies'] = self.proxy
 
         try:
             request_result = self.__session.request(

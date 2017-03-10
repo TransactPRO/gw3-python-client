@@ -26,7 +26,6 @@ transaction_status.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192
 
 # Step 3
 # Construct our transaction request data
-# TODO Add try catch validator exception
 sms_transaction = GATEWAY_CLIENT.build_request()
 print('Constructed Transaction status request:')
 pprint.pprint(sms_transaction)
