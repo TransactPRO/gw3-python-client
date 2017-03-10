@@ -17,6 +17,7 @@ GATEWAY_CLIENT.create_auth_data().add_secret_key(value='Ht93CeOzg5ofmkLJYyiuhpvw
 transaction_sms = GATEWAY_CLIENT.set_operation().sms()
 # And fill transaction details as down below
 # Add data about cardholder
+transaction_sms.command_data_set().add_form_id(inside_form_id='22')
 transaction_sms.payment_method_set().add_pan_cardholder_name(first_last_name='John Doe')
 transaction_sms.payment_method_set().add_pan_cvv_code(cvv_number='442')
 transaction_sms.payment_method_set().add_pan_expiry_date(mm_yy='12/20')

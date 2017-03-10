@@ -13,22 +13,27 @@ class Client:
     __AUTH_KEY = 'auth-data'
     __DATA_KEY = 'data'
 
+    # Stores's asked operation
     __client_operations = {'current': None}
+    # Stores's collected required parameters for valid request
     __required_parameters_for_operation = {}
 
     def __init__(self):
+        # Base request structure
         self.__gate_client_base_structure = {
             self.__AUTH_KEY: None,
             self.__DATA_KEY: None
         }
+        # Stores's collected auth data
         self.__dict_of_auth_data_set = {}
+        # Stores's collected operation data sets
         self.__dict_of_operation_data_set = {}
         pass
 
     def create_auth_data(self):
         """
         Transact Pro Authorization
-        Returns:AuthorizationBuilder
+        Returns: AuthorizationBuilder
           - add_account_id()
           - add_secret_key()
           - add_session_id()
@@ -58,12 +63,12 @@ class Client:
             - transaction_history()
             - transaction_recurrent_history()
             - transaction_refunds_history()
-            - transaction_refunds_history
 
-        Returns:Operations
+        Returns: Operations
         """
         from gateway.operations.operations import Operations
-        return Operations(self.__dict_of_operation_data_set, self.__client_operations)
+        return Operations(self.__dict_of_operation_data_set, self.__client_operations,
+                          self.__required_parameters_for_operation)
 
     def build_request(self):
         """
