@@ -9,6 +9,7 @@ gateway/utils/__pycache__/
 test/__pycache__/
 test/utils/__pycache__/
 test/operations/__pycache__/
+test/builders/__pycache__/
 transact_pro_gw3_client.egg-info
 dist
 build

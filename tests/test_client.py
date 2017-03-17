@@ -25,10 +25,7 @@ import gateway
 from gateway.builders.authorization_builder import AuthorizationBuilder
 from gateway.operations.operations import Operations
 from unittest import TestCase
-from unittest.mock import (
-    patch,
-    Mock
-)
+from unittest.mock import patch
 
 
 class TestClient(TestCase):
@@ -47,9 +44,11 @@ class TestClient(TestCase):
         self.GATE_CLIENT = gateway.Client()
 
     def test_create_auth_data_instance(self):
+        """Will succeed"""
         self.assertIsInstance(self.GATE_CLIENT.create_auth_data(), AuthorizationBuilder)
 
     def test_set_operation_instance(self):
+        """Will succeed"""
         self.assertIsInstance(self.GATE_CLIENT.set_operation(), Operations)
 
     def test_call_add_account_id(self):

@@ -23,10 +23,7 @@
 
 from gateway.operations.operations import Operations
 from unittest import TestCase
-from unittest.mock import (
-    patch,
-    Mock
-)
+from unittest.mock import patch
 
 
 class TestOperations(TestCase):
@@ -36,6 +33,7 @@ class TestOperations(TestCase):
         self.OP = Operations({}, {}, {})
 
     def test_call_sms(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import SmsBuilder
         self.assertIsInstance(new_op.sms(), SmsBuilder)
@@ -46,6 +44,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_dms_hold(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import DmsHoldBuilder
         self.assertIsInstance(new_op.dms_hold(), DmsHoldBuilder)
@@ -56,6 +55,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_dms_charge(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import DmsChargeBuilder
         self.assertIsInstance(new_op.dms_charge(), DmsChargeBuilder)
@@ -66,6 +66,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_dms_cancel(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import DmsCancelBuilder
         self.assertIsInstance(new_op.dms_cancel(), DmsCancelBuilder)
@@ -76,6 +77,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_moto_sms(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import MotoSmsBuilder
         self.assertIsInstance(new_op.moto_sms(), MotoSmsBuilder)
@@ -86,6 +88,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_moto_dms(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import MotoDmsBuilder
         self.assertIsInstance(new_op.moto_dms(), MotoDmsBuilder)
@@ -96,6 +99,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_recurrent_sms(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import RecurrentSmsBuilder
         self.assertIsInstance(new_op.recurrent_sms(), RecurrentSmsBuilder)
@@ -106,6 +110,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_recurrent_dms(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import RecurrentDmsBuilder
         self.assertIsInstance(new_op.recurrent_dms(), RecurrentDmsBuilder)
@@ -116,6 +121,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_refund(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import RefundBuilder
         self.assertIsInstance(new_op.refund(), RefundBuilder)
@@ -126,6 +132,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_reversal(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import ReversalBuilder
         self.assertIsInstance(new_op.reversal(), ReversalBuilder)
@@ -136,6 +143,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_transaction_status(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         self.assertIsInstance(new_op.transaction_status(), TransactionStatusBuilder)
@@ -146,6 +154,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_transaction_result(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         self.assertIsInstance(new_op.transaction_result(), TransactionStatusBuilder)
@@ -156,6 +165,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_transaction_history(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         self.assertIsInstance(new_op.transaction_history(), TransactionStatusBuilder)
@@ -166,6 +176,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_transaction_recurrent_history(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         self.assertIsInstance(new_op.transaction_recurrent_history(), TransactionStatusBuilder)
@@ -176,6 +187,7 @@ class TestOperations(TestCase):
         mock.assert_called_once_with()
 
     def test_call_transaction_refunds_history(self):
+        """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         self.assertIsInstance(new_op.transaction_refunds_history(), TransactionStatusBuilder)
