@@ -39,7 +39,7 @@ class TestAuthorizationBuilder(TestCase):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_authorization_builder_instance(self):
+    def test_create_builder_instance(self):
         """Will succeed"""
         self.assertIsInstance(self.BUILDER, AuthorizationBuilder)
 

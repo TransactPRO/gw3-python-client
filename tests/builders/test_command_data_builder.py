@@ -39,7 +39,7 @@ class TestCommandDataBuilder(TestCase):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_command_data_builder_instance(self):
+    def test_create_builder_instance(self):
         """Will succeed"""
         self.assertIsInstance(self.BUILDER, CommandDataBuilder)
 

@@ -36,7 +36,7 @@ class TestCustomerDataBuilder(TestCase):
     def tearDown(self):
         del self.DATA
 
-    def test_create_command_data_builder_instance(self):
+    def test_create_builder_instance(self):
         """Will succeed"""
         self.assertIsInstance(self.BUILDER, CustomerDataBuilder)
 
