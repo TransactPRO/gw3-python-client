@@ -49,6 +49,7 @@ class Operations(object):
     def __init__(self, __gate_operation_data_set, __client_operation, __client_mandatory_fields):
         self.__asked_operation = __client_operation
         self.__operation_data = __gate_operation_data_set
+        # @TODO __client_mandatory_fields Must be prepare before builders, to avoid missing fields if they not called
         self.__operation_mandatory_fields = __client_mandatory_fields
         pass
 
