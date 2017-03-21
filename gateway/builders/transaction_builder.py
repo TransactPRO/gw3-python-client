@@ -52,9 +52,9 @@ class TransactionTypesResources(object):
         return MoneyDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
 
     @classmethod
-    def system_data_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
+    def system_data_set(cls, __transaction_data_set_dict):
         from gateway.builders.system_data_builder import SystemDataBuilder
-        return SystemDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
+        return SystemDataBuilder(__transaction_data_set_dict)
 
 
 class ExploringTypesResources:
@@ -79,7 +79,8 @@ class SmsBuilder(TransactionTypesResources):
         self.__operation_mandatory_fields_set = __operation_mandatory_fields
 
     def command_data_set(self):
-        return super(SmsBuilder, self).command_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(SmsBuilder, self).command_data_set(self.__operation_data_set,
+                                                        self.__operation_mandatory_fields_set)
 
     def customer_data_set(self):
         return super(SmsBuilder, self).customer_data_set(self.__operation_data_set)
@@ -88,13 +89,14 @@ class SmsBuilder(TransactionTypesResources):
         return super(SmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
-        return super(SmsBuilder, self).payment_method_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(SmsBuilder, self).payment_method_set(self.__operation_data_set,
+                                                          self.__operation_mandatory_fields_set)
 
     def money_data_set(self):
         return super(SmsBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(SmsBuilder, self).system_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(SmsBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class DmsHoldBuilder(TransactionTypesResources):
@@ -117,10 +119,11 @@ class DmsHoldBuilder(TransactionTypesResources):
                                                               self.__operation_mandatory_fields_set)
 
     def money_data_set(self):
-        return super(DmsHoldBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(DmsHoldBuilder, self).money_data_set(self.__operation_data_set,
+                                                          self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(DmsHoldBuilder, self).system_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(DmsHoldBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class DmsChargeBuilder(TransactionTypesResources):
@@ -146,8 +149,7 @@ class DmsChargeBuilder(TransactionTypesResources):
                                                             self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(DmsChargeBuilder, self).system_data_set(self.__operation_data_set,
-                                                             self.__operation_mandatory_fields_set)
+        return super(DmsChargeBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class DmsCancelBuilder(TransactionTypesResources):
@@ -173,8 +175,7 @@ class DmsCancelBuilder(TransactionTypesResources):
                                                             self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(DmsCancelBuilder, self).system_data_set(self.__operation_data_set,
-                                                             self.__operation_mandatory_fields_set)
+        return super(DmsCancelBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class MotoSmsBuilder(TransactionTypesResources):
@@ -197,10 +198,11 @@ class MotoSmsBuilder(TransactionTypesResources):
                                                               self.__operation_mandatory_fields_set)
 
     def money_data_set(self):
-        return super(MotoSmsBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(MotoSmsBuilder, self).money_data_set(self.__operation_data_set,
+                                                          self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(MotoSmsBuilder, self).system_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(MotoSmsBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class MotoDmsBuilder(TransactionTypesResources):
@@ -223,10 +225,11 @@ class MotoDmsBuilder(TransactionTypesResources):
                                                               self.__operation_mandatory_fields_set)
 
     def money_data_set(self):
-        return super(MotoDmsBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(MotoDmsBuilder, self).money_data_set(self.__operation_data_set,
+                                                          self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(MotoDmsBuilder, self).system_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(MotoDmsBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class RecurrentSmsBuilder(TransactionTypesResources):
@@ -252,8 +255,7 @@ class RecurrentSmsBuilder(TransactionTypesResources):
                                                                self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(RecurrentSmsBuilder, self).system_data_set(self.__operation_data_set,
-                                                                self.__operation_mandatory_fields_set)
+        return super(RecurrentSmsBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class RecurrentDmsBuilder(TransactionTypesResources):
@@ -279,8 +281,7 @@ class RecurrentDmsBuilder(TransactionTypesResources):
                                                                self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(RecurrentDmsBuilder, self).system_data_set(self.__operation_data_set,
-                                                                self.__operation_mandatory_fields_set)
+        return super(RecurrentDmsBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class RefundBuilder(TransactionTypesResources):
@@ -289,7 +290,8 @@ class RefundBuilder(TransactionTypesResources):
         self.__operation_mandatory_fields_set = __operation_mandatory_fields
 
     def command_data_set(self):
-        return super(RefundBuilder, self).command_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(RefundBuilder, self).command_data_set(self.__operation_data_set,
+                                                           self.__operation_mandatory_fields_set)
 
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in Refund operation!')
@@ -301,10 +303,11 @@ class RefundBuilder(TransactionTypesResources):
         raise NotImplementedError('Payment method data set unavailable in Refund operation!')
 
     def money_data_set(self):
-        return super(RefundBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(RefundBuilder, self).money_data_set(self.__operation_data_set,
+                                                         self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(RefundBuilder, self).system_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(RefundBuilder, self).system_data_set(self.__operation_data_set)
 
 
 class ReversalBuilder(TransactionTypesResources):
@@ -326,11 +329,11 @@ class ReversalBuilder(TransactionTypesResources):
         raise NotImplementedError('Payment method data set unavailable in Reversal operation!')
 
     def money_data_set(self):
-        return super(ReversalBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        return super(ReversalBuilder, self).money_data_set(self.__operation_data_set,
+                                                           self.__operation_mandatory_fields_set)
 
     def system_data_set(self):
-        return super(ReversalBuilder, self).system_data_set(self.__operation_data_set,
-                                                            self.__operation_mandatory_fields_set)
+        return super(ReversalBuilder, self).system_data_set(self.__operation_data_set)
 
 
 """
@@ -363,5 +366,4 @@ class TransactionStatusBuilder(TransactionTypesResources, ExploringTypesResource
         raise NotImplementedError('Money data set unavailable in Transaction Status operation!')
 
     def system_data_set(self):
-        return super(TransactionStatusBuilder, self).system_data_set(self.__operation_data_set,
-                                                                     self.__operation_mandatory_fields_set)
+        return super(TransactionStatusBuilder, self).system_data_set(self.__operation_data_set)
