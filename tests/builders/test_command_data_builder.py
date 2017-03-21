@@ -64,16 +64,23 @@ class TestCommandDataBuilder(TestCase):
             new.add_terminal_mid('77299421')
         mock.assert_called_once_with('77299421')
 
-    def test_mandatory_fields(self):
+    def test_mandatory_and_data_fields(self):
         """Will succeed"""
         new = self.BUILDER
         new.add_terminal_mid('3321552')
         new.add_gateway_transaction_id('16f463xf-9s32-dsv2-b983-fSD2234598f1')
         new.add_form_id('#Bravo345')
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
-        valid_fields = {
+        valid_fields_types = {
             RequestParameters.COMMAND_DATA_GATEWAY_TRANSACTION_ID:
                 RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_ID,
         }
-        self.assertDictEqual(valid_fields, self.MANDATORY_FIELDS)
-
+        self.assertDictEqual(valid_fields_types, self.MANDATORY_FIELDS)
+        valid_data_structure = {
+            'command-data': {
+                'terminal-mid': '3321552',
+                'gateway-transaction-id': '16f463xf-9s32-dsv2-b983-fSD2234598f1',
+                'form-id': '#Bravo345'
+            }
+        }
+        self.assertDictEqual(valid_data_structure, self.DATA)

@@ -64,14 +64,16 @@ class TestAuthorizationBuilder(TestCase):
             new.add_session_id('TheXSession')
         mock.assert_called_once_with('TheXSession')
 
-    def test_mandatory_fields(self):
+    def test_mandatory_and_data_fields(self):
         """Will succeed"""
         new = self.BUILDER
         new.add_account_id(42)
         new.add_secret_key('UniverseSecretsKey')
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
-        valid_fields = {
+        valid_fields_types = {
             RequestParameters.AUTH_DATA_ACCOUNT_ID: RequestParametersTypes.AUTH_DATA_ACCOUNT_ID,
             RequestParameters.AUTH_DATA_SECRET_KEY: RequestParametersTypes.AUTH_DATA_SECRET_KEY,
         }
-        self.assertDictEqual(valid_fields, self.MANDATORY_FIELDS)
+        self.assertDictEqual(valid_fields_types, self.MANDATORY_FIELDS)
+        valid_data_structure = {'secret-key': 'UniverseSecretsKey', 'account-id': 42}
+        self.assertDictEqual(valid_data_structure, self.DATA)

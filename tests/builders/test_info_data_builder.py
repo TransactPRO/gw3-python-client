@@ -54,7 +54,7 @@ class TestCommandDataBuilder(TestCase):
             '16f462cb-9s32-dsv2-b983-fa14da6421f1'
         ])
 
-    def test_mandatory_fields(self):
+    def test_mandatory_and_data_fields(self):
         """Will succeed"""
         new = self.BUILDER
         new.add_gateway_transaction_ids([
@@ -66,3 +66,6 @@ class TestCommandDataBuilder(TestCase):
                 RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_IDS,
         }
         self.assertDictEqual(valid_fields, self.MANDATORY_FIELDS)
+        print(self.DATA)
+        valid_data_structure = {'command-data': {'gateway-transaction-ids': ['16f462cb-9s32-dsv2-b983-fa14da6421f1']}}
+        self.assertDictEqual(valid_data_structure, self.DATA)
