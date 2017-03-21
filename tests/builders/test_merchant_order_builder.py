@@ -45,14 +45,14 @@ class TestMerchantOrderBuilder(TestCase):
         new = self.BUILDER
         with patch.object(new, 'add_merchant_transaction_id') as mock:
             new.add_merchant_transaction_id('MyMerchantExampleID#1234567890')
-        mock.add_merchant_transaction_id('MyMerchantExampleID#1234567890')
+        mock.assert_called_once_with('MyMerchantExampleID#1234567890')
 
     def test_build_with_add_merchant_order_id(self):
         """Will succeed"""
         new = self.BUILDER
         with patch.object(new, 'add_merchant_order_id') as mock:
             new.add_merchant_order_id('MyORDER#1234567890')
-        mock.add_merchant_order_id('MyORDER#1234567890')
+        mock.assert_called_once_with('MyORDER#1234567890')
 
     def test_build_with_add_merchant_order_description(self):
         """Will succeed"""
@@ -60,7 +60,7 @@ class TestMerchantOrderBuilder(TestCase):
         with patch.object(new, 'add_merchant_order_description') as mock:
             new.add_merchant_order_description(
                 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
-        mock.add_merchant_order_description(
+        mock.assert_called_once_with(
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
 
     def test_build_with_add_merchant_order_meta(self):
@@ -74,7 +74,7 @@ class TestMerchantOrderBuilder(TestCase):
                 'title': 'president',
                 'url': 'nice.example.com'
             })
-        mock.add_merchant_order_meta({
+        mock.assert_called_once_with({
             'f_name': 'Jane',
             'l_name': 'Doe',
             'sequence': '0',

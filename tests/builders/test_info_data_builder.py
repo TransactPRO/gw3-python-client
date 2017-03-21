@@ -66,6 +66,5 @@ class TestCommandDataBuilder(TestCase):
                 RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_IDS,
         }
         self.assertDictEqual(valid_fields, self.MANDATORY_FIELDS)
-        print(self.DATA)
         valid_data_structure = {'command-data': {'gateway-transaction-ids': ['16f462cb-9s32-dsv2-b983-fa14da6421f1']}}
         self.assertDictEqual(valid_data_structure, self.DATA)
