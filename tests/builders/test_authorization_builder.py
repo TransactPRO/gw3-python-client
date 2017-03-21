@@ -27,8 +27,8 @@ from unittest.mock import patch
 
 class TestAuthorizationBuilder(TestCase):
     AUTH_BUILDER = None
-    AUTH_DATA = None
-    AUTH_MANDATORY_FIELDS = None
+    AUTH_DATA = {}
+    AUTH_MANDATORY_FIELDS = {}
 
     def setUp(self):
         self.AUTH_DATA = {}
@@ -45,22 +45,33 @@ class TestAuthorizationBuilder(TestCase):
 
     def test_build_with_account_id(self):
         """Will succeed"""
-        new_auth = self.AUTH_BUILDER
-        with patch.object(new_auth, 'add_account_id') as mock:
-            new_auth.add_account_id(42)
+        new = self.AUTH_BUILDER
+        with patch.object(new, 'add_account_id') as mock:
+            new.add_account_id(42)
         mock.assert_called_once_with(42)
 
     def test_build_with_secret_key(self):
         """Will succeed"""
-        new_auth = self.AUTH_BUILDER
-        with patch.object(new_auth, 'add_secret_key') as mock:
-            new_auth.add_secret_key('TheKey')
+        new = self.AUTH_BUILDER
+        with patch.object(new, 'add_secret_key') as mock:
+            new.add_secret_key('TheKey')
         mock.assert_called_once_with('TheKey')
 
     def test_build_with_session(self):
         """Will succeed"""
-        new_auth = self.AUTH_BUILDER
-        with patch.object(new_auth, 'add_session_id') as mock:
-            new_auth.add_session_id('TheXSession')
+        new = self.AUTH_BUILDER
+        with patch.object(new, 'add_session_id') as mock:
+            new.add_session_id('TheXSession')
         mock.assert_called_once_with('TheXSession')
 
+    def test_mandatory_fields(self):
+        """Will succeed"""
+        new = self.AUTH_BUILDER
+        new.add_account_id(42)
+        new.add_secret_key('UniverseSecretsKey')
+        from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
+        valid_fields = {
+            RequestParameters.AUTH_DATA_ACCOUNT_ID: RequestParametersTypes.AUTH_DATA_ACCOUNT_ID,
+            RequestParameters.AUTH_DATA_SECRET_KEY: RequestParametersTypes.AUTH_DATA_SECRET_KEY,
+        }
+        self.assertDictEqual(valid_fields, self.AUTH_MANDATORY_FIELDS)
