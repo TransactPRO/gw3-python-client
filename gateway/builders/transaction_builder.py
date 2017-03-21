@@ -43,12 +43,12 @@ class TransactionTypesResources(object):
 
     @classmethod
     def payment_method_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from .payment_data_builder import PaymentDataBuilder
+        from gateway.builders.payment_data_builder import PaymentDataBuilder
         return PaymentDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
 
     @classmethod
     def money_data_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from .money_data_builder import MoneyDataBuilder
+        from gateway.builders.money_data_builder import MoneyDataBuilder
         return MoneyDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
 
     @classmethod
