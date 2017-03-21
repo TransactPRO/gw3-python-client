@@ -113,7 +113,7 @@ class MerchantOrderBuilder(object):
         Add merchant-side Key-Value order data
 
         Args:
-            json_object (str): Merchant-side Key-Value order data
+            json_object (dict): Merchant-side Key-Value order data
         """
         self.__data_structure_util.add_to_dict(
             source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
