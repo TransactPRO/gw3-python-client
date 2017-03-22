@@ -31,6 +31,10 @@ API_BASE_URL = 'http://uriel.preprod.fpngw3.env/'
 API_VERSION = 'v3.0'
 
 # Transact PRO HTTP transport configuration
+# Implemented:
+# requests
+# pycurl
+HTTP_TRANSPORT_IMPLEMENTATION = 'requests'
 HTTP_TIME_OUT = 60
 HTTP_VERIFY_SSL_CERTS = False
 # Example: { 'http': 'http://<user>:<pass>@<proxy>:<port>', 'https': 'http://<user>:<pass>@<proxy>:<port>' }
