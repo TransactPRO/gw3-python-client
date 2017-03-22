@@ -68,9 +68,6 @@ class CommandDataBuilder(object):
         Args:
             inside_form_id (str): Inside form ID when selecting non-default form manually
         """
-        self.__command_mandatory_fields[
-            self.__data_sets.COMMAND_DATA_FORM_ID
-        ] = self.__data_types.COMMAND_DATA_FORM_ID
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__command_data_set,
@@ -86,9 +83,6 @@ class CommandDataBuilder(object):
         Args:
             terminal_id (str): Terminal MID when selecting terminal manually
         """
-        self.__command_mandatory_fields[
-            self.__data_sets.COMMAND_DATA_FORM_ID
-        ] = self.__data_types.COMMAND_DATA_FORM_ID
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__command_data_set,

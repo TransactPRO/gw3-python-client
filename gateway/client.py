@@ -142,6 +142,7 @@ class Client:
         # Setup config for HTTP transport
         # And make request via HTTP implemented Client
         response = new_http_client(
+            cli_name=gateway.HTTP_TRANSPORT_IMPLEMENTATION,
             verify_ssl=gateway.HTTP_VERIFY_SSL_CERTS,
             proxy=gateway.HTTP_PROXY,
             timeout=gateway.HTTP_TIME_OUT

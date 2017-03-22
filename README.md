@@ -72,5 +72,20 @@ Bugs and feature request are tracked on [GitHub](https://github.com/TransactPRO/
 Please review code style guideline and try to keep in accordance with it
 [CodeStyle](https://github.com/TransactPRO/gw3-python-client/blob/master/CODESTYLE.md)
 
+### How to run tests
+Tests based on Unit testing framework (unittest). 
+So, you can install `nose` to run unit tests. 
+```bash
+$: pip install nose
+```
+Then, go to tests directory and run all of the tests by executing command in terminal:
+```bash
+$: nosetests tests/*
+```
+Or only run one of the suites:
+```bash
+$: nosetests tests/test_client.py
+```
+
 ### License
 This library is licensed under the MIT License - see the `LICENSE` file for details.

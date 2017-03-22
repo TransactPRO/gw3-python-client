@@ -67,9 +67,6 @@ class PaymentDataBuilder(object):
         Args:
             mm_yy (str): Credit card expiry date in mm/yy format
         """
-        self.__payment_mandatory_fields[
-            self.__data_sets.PAYMENT_METHOD_DATA_EXPIRE
-        ] = self.__data_types.PAYMENT_METHOD_DATA_EXPIRE
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__payment_data_set,
@@ -85,9 +82,6 @@ class PaymentDataBuilder(object):
         Args:
             cvv_number (str): Credit card protection code
         """
-        self.__payment_mandatory_fields[
-            self.__data_sets.PAYMENT_METHOD_DATA_CVV
-        ] = self.__data_types.PAYMENT_METHOD_DATA_CVV
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__payment_data_set,
@@ -103,9 +97,6 @@ class PaymentDataBuilder(object):
         Args:
             first_last_name (str): Cardholder Name and Surname
         """
-        self.__payment_mandatory_fields[
-            self.__data_sets.PAYMENT_METHOD_DATA_CARDHOLDER_NAME
-        ] = self.__data_types.PAYMENT_METHOD_DATA_CARDHOLDER_NAME
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__payment_data_set,
