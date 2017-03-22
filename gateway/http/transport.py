@@ -36,8 +36,6 @@ except ImportError:
     pycurl = None
 
 
-# HTTP transport package implementation to use
-HTTP_TRANSPORT_NAME = 'requests'
 # HTTP Methods const
 # HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.
 # Although they can also be nouns, these requests methods are sometimes referred as HTTP verbs.
