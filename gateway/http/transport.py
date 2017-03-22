@@ -21,11 +21,20 @@
 # THE SOFTWARE.
 
 import os
+from urllib.parse import (
+    urlparse
+)
 
 try:
     import requests
 except ImportError:
     requests = None
+
+try:
+    import pycurl
+except ImportError:
+    pycurl = None
+
 
 # HTTP Methods const
 # HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.
@@ -44,15 +53,23 @@ HTTP_TRACE = 'TRACE'
 HTTP_PATCH = 'PATCH'
 
 
-def new_http_client(*args, **kwargs):
+def new_http_client(cli_name='requests', *args, **kwargs):
     """
     Get available HTTP Package from local system
     Implemented packages - (requests)
     """
-    if requests is not None:
-        implementation = RequestsTransport
+    if cli_name is 'requests':
+        if requests is not None:
+            implementation = RequestsTransport
+        else:
+            raise RuntimeError("Cant send request via HTTP. In your system, (Requests) package not found.")
+    elif cli_name is 'pycurl':
+        if pycurl is not None:
+            implementation = PyCurlTransport
+        else:
+            raise RuntimeError("Cant send request via HTTP. In your system, (pycurl) package not found.")
     else:
-        raise RuntimeError("Cant send request via HTTP. In your system, (Requests) package not found.")
+        raise RuntimeError("Unknown implementation of http transport package given: " + cli_name)
 
     return implementation(*args, **kwargs)
 
@@ -129,3 +146,71 @@ class RequestsTransport(HttpTransport):
             raise
 
         return request_result.content, request_result.status_code, request_result.headers
+
+
+class PyCurlTransport(HttpTransport):
+    """
+    Make HTTP request
+
+    Returns:
+        tuple: HTTP content, HTTP status code, HTTP headers
+
+    Examples:
+    (
+         b'{"acquirer-details":{"eci-sli":336,"result-code":"000","status-description":'
+         b'"Approved","status-text":"Approved","terminal-mid":"3988920","transaction-id'
+         b'":"ae:d4dec6cb9cc353c2dfad10773455f0ef"},"error":{},"gw":{"gateway-transacti'
+         b'on-id":"ffb366a8-2281-4aae-8296-e7ffbf404d02","status-code":7,"status-text":'
+         b'"SUCCESS"}}',
+
+         200,
+
+         b'HTTP/1.1 200 OK\r\nServer: nginx/1.11.8\r\nDate: Wed, 22 Mar 2017 10:09:19 G'
+         b'MT\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: 3'
+         b'15\r\nConnection: keep-alive\r\nX-Duration: 1.065\r\nX-Sessionid: FdKIUXap'
+         b'Sg5zoq8ZORD7uhAPTYEVn6Lxs3lkMyi1\r\nX-Version: v3.0\r\n\r\n'
+     )
+    """
+
+    def __init__(self, timeout=60, **kwargs):
+        super(PyCurlTransport, self).__init__(**kwargs)
+        self.timeout = timeout
+        if self.proxy:
+            proxy = self.proxy
+            for scheme in proxy:
+                proxy[scheme] = urlparse(proxy[scheme])
+
+    def request(self, http_method=HTTP_POST, http_url=None, request_data=None):
+        import json
+        import io
+        # Setup curl options
+        c = pycurl.Curl()
+        # @TODO Add proxy's configuration
+        # @TODO Add ssl verification
+        c.setopt(c.URL, http_url)
+        c.setopt(pycurl.HTTPHEADER, ['Accept:application/json'])
+        c.setopt(pycurl.FAILONERROR, True)
+        c.setopt(pycurl.FOLLOWLOCATION, True)
+        c.setopt(pycurl.TIMEOUT, self.timeout)
+        c.setopt(pycurl.POSTFIELDS, json.dumps(request_data))
+
+        header_buffer = io.BytesIO()
+        body_buffer = io.BytesIO()
+        c.setopt(c.HEADERFUNCTION, header_buffer.write)
+        c.setopt(pycurl.WRITEFUNCTION, body_buffer.write)
+
+        # Execute request via curl
+        c.perform()
+
+        # Parse response
+        status_code = c.getinfo(pycurl.RESPONSE_CODE)
+        headers = header_buffer.getvalue()
+        content = body_buffer.getvalue()
+        if content == "" or content is None:
+            content = c.errstr()
+
+        header_buffer.close()
+        body_buffer.close()
+        c.close()
+
+        return content, status_code, headers
