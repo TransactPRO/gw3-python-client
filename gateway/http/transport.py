@@ -104,7 +104,7 @@ class RequestsTransport(HttpTransport):
 
     def request(self, http_method=HTTP_POST, http_url=None, request_data=None):
         """
-        Make HTTP request
+        Make HTTP request via requests
 
         Returns:
             tuple: HTTP content, HTTP status code, HTTP headers
@@ -149,29 +149,6 @@ class RequestsTransport(HttpTransport):
 
 
 class PyCurlTransport(HttpTransport):
-    """
-    Make HTTP request
-
-    Returns:
-        tuple: HTTP content, HTTP status code, HTTP headers
-
-    Examples:
-    (
-         b'{"acquirer-details":{"eci-sli":336,"result-code":"000","status-description":'
-         b'"Approved","status-text":"Approved","terminal-mid":"3988920","transaction-id'
-         b'":"ae:d4dec6cb9cc353c2dfad10773455f0ef"},"error":{},"gw":{"gateway-transacti'
-         b'on-id":"ffb366a8-2281-4aae-8296-e7ffbf404d02","status-code":7,"status-text":'
-         b'"SUCCESS"}}',
-
-         200,
-
-         b'HTTP/1.1 200 OK\r\nServer: nginx/1.11.8\r\nDate: Wed, 22 Mar 2017 10:09:19 G'
-         b'MT\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: 3'
-         b'15\r\nConnection: keep-alive\r\nX-Duration: 1.065\r\nX-Sessionid: FdKIUXap'
-         b'Sg5zoq8ZORD7uhAPTYEVn6Lxs3lkMyi1\r\nX-Version: v3.0\r\n\r\n'
-     )
-    """
-
     def __init__(self, timeout=60, **kwargs):
         super(PyCurlTransport, self).__init__(**kwargs)
         self.timeout = timeout
@@ -181,6 +158,28 @@ class PyCurlTransport(HttpTransport):
                 proxy[scheme] = urlparse(proxy[scheme])
 
     def request(self, http_method=HTTP_POST, http_url=None, request_data=None):
+        """
+        Make HTTP request via pycurl
+
+        Returns:
+            tuple: HTTP content, HTTP status code, HTTP headers
+
+        Examples:
+        (
+             b'{"acquirer-details":{"eci-sli":336,"result-code":"000","status-description":'
+             b'"Approved","status-text":"Approved","terminal-mid":"3988920","transaction-id'
+             b'":"ae:d4dec6cb9cc353c2dfad10773455f0ef"},"error":{},"gw":{"gateway-transacti'
+             b'on-id":"ffb366a8-2281-4aae-8296-e7ffbf404d02","status-code":7,"status-text":'
+             b'"SUCCESS"}}',
+
+             200,
+
+             b'HTTP/1.1 200 OK\r\nServer: nginx/1.11.8\r\nDate: Wed, 22 Mar 2017 10:09:19 G'
+             b'MT\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: 3'
+             b'15\r\nConnection: keep-alive\r\nX-Duration: 1.065\r\nX-Sessionid: FdKIUXap'
+             b'Sg5zoq8ZORD7uhAPTYEVn6Lxs3lkMyi1\r\nX-Version: v3.0\r\n\r\n'
+         )
+        """
         import json
         import io
         # Setup curl options

@@ -11,5 +11,9 @@ test/utils/__pycache__/
 test/operations/__pycache__/
 test/builders/__pycache__/
 transact_pro_gw3_client.egg-info
+tests/__pycache__/
+tests/builders/__pycache__/
+tests/operations/__pycache__/
+tests/utils/__pycache__/
 dist
 build
