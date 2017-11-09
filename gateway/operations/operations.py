@@ -107,7 +107,7 @@ class Operations(object):
 
     def credit(self):
         """
-        Credit transaction is a type of transaction ofr money send.
+        Credit transaction is a type of transaction for money send.
         """
         self.__asked_operation['current'] = self.__CREDIT
         from gateway.builders.transaction_builder import CreditBuilder
@@ -115,7 +115,7 @@ class Operations(object):
 
     def p2p(self):
         """
-        P2P transaction is a type of transaction ofr money send.
+        P2P transaction is a type of transaction for money send.
         """
         self.__asked_operation['current'] = self.__P2P
         from gateway.builders.transaction_builder import P2PBuilder
