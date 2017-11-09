@@ -29,6 +29,8 @@ from gateway.builders.transaction_builder import (
     DmsCancelBuilder,
     MotoSmsBuilder,
     MotoDmsBuilder,
+    CreditBuilder,
+    P2PBuilder,
     RecurrentSmsBuilder,
     RecurrentDmsBuilder,
     RefundBuilder,
@@ -104,6 +106,28 @@ class TestTransactionBuilder(TestCase):
     def test_dependency_construction_moto_dms(self):
         new = MotoDmsBuilder({}, {})
         self.assertIsInstance(new, MotoDmsBuilder)
+        self.assertIsInstance(new, TransactionTypesResources)
+        self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
+        self.assertIsInstance(new.customer_data_set(), CustomerDataBuilder)
+        self.assertIsInstance(new.merchant_order_data_set(), MerchantOrderBuilder)
+        self.assertIsInstance(new.payment_method_set(), PaymentDataBuilder)
+        self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
+        self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
+
+    def test_dependency_construction_credit(self):
+        new = CreditBuilder({}, {})
+        self.assertIsInstance(new, CreditBuilder)
+        self.assertIsInstance(new, TransactionTypesResources)
+        self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
+        self.assertIsInstance(new.customer_data_set(), CustomerDataBuilder)
+        self.assertIsInstance(new.merchant_order_data_set(), MerchantOrderBuilder)
+        self.assertIsInstance(new.payment_method_set(), PaymentDataBuilder)
+        self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
+        self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
+
+    def test_dependency_construction_p2p(self):
+        new = P2PBuilder({}, {})
+        self.assertIsInstance(new, P2PBuilder)
         self.assertIsInstance(new, TransactionTypesResources)
         self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
         self.assertIsInstance(new.customer_data_set(), CustomerDataBuilder)

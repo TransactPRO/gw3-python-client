@@ -82,6 +82,20 @@ class TestMerchantOrderBuilder(TestCase):
             'url': 'nice.example.com'
         })
 
+    def test_build_with_add_merchant_side_url(self):
+        """Will succeed"""
+        new = self.BUILDER
+        with patch.object(new, 'add_merchant_side_url') as mock:
+            new.add_merchant_side_url('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
+        mock.assert_called_once_with('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
+
+    def test_build_with_add_recipient_name(self):
+        """Will succeed"""
+        new = self.BUILDER
+        with patch.object(new, 'add_recipient_name') as mock:
+            new.add_recipient_name('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
+        mock.assert_called_once_with('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
+
     def test_merchant_data_structure_build(self):
         valid_data_structure = {
             'general-data': {

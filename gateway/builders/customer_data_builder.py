@@ -57,7 +57,8 @@ class CustomerDataBuilder(object):
         self.__req_params = RequestParameters
         self.__general_data_set = __transaction_data_set
         # Set primary nested layer in transaction data set
-        self.__general_data_set[self.__GENERAL_DATA_KEY] = self.__customer_data_structure
+        if self.__GENERAL_DATA_KEY not in self.__general_data_set:
+            self.__general_data_set[self.__GENERAL_DATA_KEY] = self.__customer_data_structure
 
     def __update_nested_billing_structure(self):
         """
@@ -94,6 +95,38 @@ class CustomerDataBuilder(object):
             new_key=self.__CUSTOMER_DATA_KEY,
             new_dict={
                 self.__req_params.GENERAL_DATA_CUSTOMER_DATA_EMAIL: cardholder_email
+            }
+        )
+
+    def add_phone(self, phone=None):
+        """
+        Add customer (cardholder) phone
+
+        Args:
+            phone (str): Customer (cardholder) phone
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__customer_data_structure,
+            new_key=self.__CUSTOMER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_CUSTOMER_DATA_PHONE: phone
+            }
+        )
+
+    def add_birth_date(self, birth_date=None):
+        """
+        Add customer (cardholder) birth date
+
+        Args:
+            birth_date (str): Customer (cardholder) birth date
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__customer_data_structure,
+            new_key=self.__CUSTOMER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_CUSTOMER_DATA_BIRTH_DATE: birth_date
             }
         )
 
@@ -289,7 +322,7 @@ class CustomerDataBuilder(object):
             working_dict=self.__shipping_data_structure,
             new_key=self.__SHIPPING_DATA_KEY,
             new_dict={
-                self.__req_params.GENERAL_DATA_CUSTOMER_DATA_SHIPPING_ADDRESS_STATE: street
+                self.__req_params.GENERAL_DATA_CUSTOMER_DATA_SHIPPING_ADDRESS_STREET: street
             }
         )
 

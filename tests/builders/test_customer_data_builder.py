@@ -47,6 +47,20 @@ class TestCustomerDataBuilder(TestCase):
             new.add_email('unit@test.exmaple')
         mock.assert_called_once_with('unit@test.exmaple')
 
+    def test_build_add_phone(self):
+        """Will succeed"""
+        new = self.BUILDER
+        with patch.object(new, 'add_phone') as mock:
+            new.add_phone('123456789')
+        mock.assert_called_once_with('123456789')
+
+    def test_build_add_birth_date(self):
+        """Will succeed"""
+        new = self.BUILDER
+        with patch.object(new, 'add_birth_date') as mock:
+            new.add_birth_date('01021900')
+        mock.assert_called_once_with('01021900')
+
     def test_build_add_billing_country(self):
         """Will succeed"""
         new = self.BUILDER
@@ -150,13 +164,13 @@ class TestCustomerDataBuilder(TestCase):
             'general-data': {
                 'customer-data': {
                     'email': 'jane_doe@nice.example.com',
-                    'shipping-address': {
+                    'billing-address': {
+                        'street': 'Gustava Zemgala gatve',
                         'house': '76', 'zip': 'LV-1039',
                         'flat': '12', 'country': 'Latvia',
-                        'city': 'Riga',
-                        'state': 'Gustava Zemgala gatve'
+                        'city': 'Riga', 'state': 'Riga'
                     },
-                    'billing-address': {
+                    'shipping-address': {
                         'street': 'Gustava Zemgala gatve',
                         'house': '76', 'zip': 'LV-1039',
                         'flat': '12', 'country': 'Latvia',
