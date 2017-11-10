@@ -36,6 +36,8 @@ class Operations(object):
     __CANCEL = '/cancel'
     __MOTO_SMS = '/moto/sms'
     __MOTO_DMS = '/moto/dms'
+    __CREDIT = '/credit'
+    __P2P = '/p2p'
     __RECURRENTS_SMS = '/recurrent/sms'
     __RECURRENTS_DMS = '/recurrent/dms'
     __REFUND = '/refund'
@@ -102,6 +104,22 @@ class Operations(object):
         self.__asked_operation['current'] = self.__MOTO_DMS
         from gateway.builders.transaction_builder import MotoDmsBuilder
         return MotoDmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def credit(self):
+        """
+        Credit transaction is a type of transaction for money send.
+        """
+        self.__asked_operation['current'] = self.__CREDIT
+        from gateway.builders.transaction_builder import CreditBuilder
+        return CreditBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def p2p(self):
+        """
+        P2P transaction is a type of transaction for money send.
+        """
+        self.__asked_operation['current'] = self.__P2P
+        from gateway.builders.transaction_builder import P2PBuilder
+        return P2PBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def recurrent_sms(self):
         """

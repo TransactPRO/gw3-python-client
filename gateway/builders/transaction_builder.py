@@ -232,6 +232,60 @@ class MotoDmsBuilder(TransactionTypesResources):
         return super(MotoDmsBuilder, self).system_data_set(self.__operation_data_set)
 
 
+class CreditBuilder(TransactionTypesResources):
+    def __init__(self, __operation_data_set, __operation_mandatory_fields):
+        self.__operation_data_set = __operation_data_set
+        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+
+    def command_data_set(self):
+        return super(CreditBuilder, self).command_data_set(self.__operation_data_set,
+                                                           self.__operation_mandatory_fields_set)
+
+    def customer_data_set(self):
+        return super(CreditBuilder, self).customer_data_set(self.__operation_data_set)
+
+    def merchant_order_data_set(self):
+        return super(CreditBuilder, self).merchant_order_data_set(self.__operation_data_set)
+
+    def payment_method_set(self):
+        return super(CreditBuilder, self).payment_method_set(self.__operation_data_set,
+                                                             self.__operation_mandatory_fields_set)
+
+    def money_data_set(self):
+        return super(CreditBuilder, self).money_data_set(self.__operation_data_set,
+                                                         self.__operation_mandatory_fields_set)
+
+    def system_data_set(self):
+        return super(CreditBuilder, self).system_data_set(self.__operation_data_set)
+
+
+class P2PBuilder(TransactionTypesResources):
+    def __init__(self, __operation_data_set, __operation_mandatory_fields):
+        self.__operation_data_set = __operation_data_set
+        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+
+    def command_data_set(self):
+        return super(P2PBuilder, self).command_data_set(self.__operation_data_set,
+                                                        self.__operation_mandatory_fields_set)
+
+    def customer_data_set(self):
+        return super(P2PBuilder, self).customer_data_set(self.__operation_data_set)
+
+    def merchant_order_data_set(self):
+        return super(P2PBuilder, self).merchant_order_data_set(self.__operation_data_set)
+
+    def payment_method_set(self):
+        return super(P2PBuilder, self).payment_method_set(self.__operation_data_set,
+                                                          self.__operation_mandatory_fields_set)
+
+    def money_data_set(self):
+        return super(P2PBuilder, self).money_data_set(self.__operation_data_set,
+                                                      self.__operation_mandatory_fields_set)
+
+    def system_data_set(self):
+        return super(P2PBuilder, self).system_data_set(self.__operation_data_set)
+
+
 class RecurrentSmsBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set, __operation_mandatory_fields):
         self.__operation_data_set = __operation_data_set

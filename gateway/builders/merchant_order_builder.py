@@ -42,7 +42,7 @@ class MerchantOrderBuilder(object):
         self.__req_params = RequestParameters
         self.__general_data_set = __transaction_data_set
         if self.__GENERAL_DATA_KEY not in self.__general_data_set:
-            self.__general_data_set[self.__GENERAL_DATA_KEY] = {}
+            self.__general_data_set[self.__GENERAL_DATA_KEY] = self.__order_data_structure
 
     def add_merchant_transaction_id(self, transaction_id=None):
         """
@@ -121,5 +121,37 @@ class MerchantOrderBuilder(object):
             new_key=self.__ORDER_DATA_KEY,
             new_dict={
                 self.__req_params.GENERAL_DATA_ORDER_DATA_ORDER_META: json_object
+            }
+        )
+
+    def add_merchant_side_url(self, url=None):
+        """
+        Add merchant-side URL
+
+        Args:
+            url (str): Merchant-side URL
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_MERCHANT_SIDE_URL: url
+            }
+        )
+
+    def add_recipient_name(self, recipient_name=None):
+        """
+        Add recipient name
+
+        Args:
+            recipient_name (str): Recipient name
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_RECIPIENT_NAME: recipient_name
             }
         )

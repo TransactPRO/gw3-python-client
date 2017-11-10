@@ -98,6 +98,28 @@ class TestOperations(TestCase):
 
         mock.assert_called_once_with()
 
+    def test_call_credit(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import CreditBuilder
+        self.assertIsInstance(new_op.credit(), CreditBuilder)
+
+        with patch.object(new_op, 'credit') as mock:
+            new_op.credit()
+
+        mock.assert_called_once_with()
+
+    def test_call_p2p(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import P2PBuilder
+        self.assertIsInstance(new_op.p2p(), P2PBuilder)
+
+        with patch.object(new_op, 'p2p') as mock:
+            new_op.p2p()
+
+        mock.assert_called_once_with()
+
     def test_call_recurrent_sms(self):
         """Will succeed"""
         new_op = self.OP

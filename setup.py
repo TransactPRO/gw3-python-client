@@ -16,8 +16,8 @@ try:
 except ImportError:
     from distutils.command.build_py import build_py
 
-MAINTAINER_NAME = 'Artjoms Nemiro'
-MAINTAINER_EMAIL = 'artjom.nemiro@gateway.lv'
+MAINTAINER_NAME = 'Transact Pro'
+MAINTAINER_EMAIL = 'support@transactpro.lv'
 URL_GIT = 'https://github.com/TransactPRO/gw3-python-client'
 
 try:
@@ -66,7 +66,7 @@ setup(
     version='1.0.0',
     description='Transact PRO Gateway3 implementation in Python.',
     long_description=LONG_DESCRIPTION,
-    author='Transact pro',
+    author='Transact Pro',
     author_email='support@transactpro.lv',
     maintainer=MAINTAINER_NAME,
     maintainer_email=MAINTAINER_EMAIL,

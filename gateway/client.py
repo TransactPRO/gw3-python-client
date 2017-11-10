@@ -74,6 +74,8 @@ class Client:
           - cancel()
           - moto_sms()
           - moto_dms()
+          - credit()
+          - p2p()
           - recurrent_dms()
           - recurrent_sms()
           - refund()
