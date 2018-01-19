@@ -27,7 +27,9 @@ Read more about all gateway possibilities in the [Official documentation](http:/
   - MOTO DMS
   - CREDIT
   - P2P
+  - INIT RECURRENT DMS
   - RECURRENT DMS
+  - INIT RECURRENT SMS
   - RECURRENT SMS
   - REFUND
   - REVERSAL
