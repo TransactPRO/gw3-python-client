@@ -120,6 +120,17 @@ class TestOperations(TestCase):
 
         mock.assert_called_once_with()
 
+    def test_call_init_recurrent_sms(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import SmsBuilder
+        self.assertIsInstance(new_op.init_recurrent_sms(), SmsBuilder)
+
+        with patch.object(new_op, 'init_recurrent_sms') as mock:
+            new_op.init_recurrent_sms()
+
+        mock.assert_called_once_with()
+
     def test_call_recurrent_sms(self):
         """Will succeed"""
         new_op = self.OP
@@ -128,6 +139,17 @@ class TestOperations(TestCase):
 
         with patch.object(new_op, 'recurrent_sms') as mock:
             new_op.recurrent_sms()
+
+        mock.assert_called_once_with()
+
+    def test_call_dms_hold(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import DmsHoldBuilder
+        self.assertIsInstance(new_op.init_recurrent_dms(), DmsHoldBuilder)
+
+        with patch.object(new_op, 'init_recurrent_dms') as mock:
+            new_op.init_recurrent_dms()
 
         mock.assert_called_once_with()
 

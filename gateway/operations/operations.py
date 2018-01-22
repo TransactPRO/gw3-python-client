@@ -38,7 +38,9 @@ class Operations(object):
     __MOTO_DMS = '/moto/dms'
     __CREDIT = '/credit'
     __P2P = '/p2p'
+    __INIT_RECURRENTS_SMS = '/recurrent/sms/init'
     __RECURRENTS_SMS = '/recurrent/sms'
+    __INIT_RECURRENTS_DMS = '/recurrent/dms/init'
     __RECURRENTS_DMS = '/recurrent/dms'
     __REFUND = '/refund'
     __REVERSAL = '/reversal'
@@ -121,21 +123,37 @@ class Operations(object):
         from gateway.builders.transaction_builder import P2PBuilder
         return P2PBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
+    def init_recurrent_sms(self):
+        """
+        Init recurrent SMS.
+        """
+        self.__asked_operation['current'] = self.__INIT_RECURRENTS_SMS
+        from gateway.builders.transaction_builder import SmsBuilder
+        return SmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
     def recurrent_sms(self):
         """
         Creates a double of previously created and successfully processed transaction
         (either from SMS or DMS-CHARGE) as DMS transaction.
         """
-        self.__asked_operation['current'] = self.__RECURRENTS_DMS
+        self.__asked_operation['current'] = self.__RECURRENTS_SMS
         from gateway.builders.transaction_builder import RecurrentSmsBuilder
         return RecurrentSmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def init_recurrent_dms(self):
+        """
+        Init recurrent DMS Hold.
+        """
+        self.__asked_operation['current'] = self.__INIT_RECURRENTS_DMS
+        from gateway.builders.transaction_builder import DmsHoldBuilder
+        return DmsHoldBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def recurrent_dms(self):
         """
         Creates a double of previously created and successfully processed transaction
         (either from SMS or DMS-CHARGE) as DMS transaction.
         """
-        self.__asked_operation['current'] = self.__RECURRENTS_SMS
+        self.__asked_operation['current'] = self.__RECURRENTS_DMS
         from gateway.builders.transaction_builder import RecurrentDmsBuilder
         return RecurrentDmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
