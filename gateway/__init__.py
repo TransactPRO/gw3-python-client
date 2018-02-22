@@ -27,7 +27,7 @@ Transact Pro Payment Gateway integration library.
 from gateway.client import Client
 
 # Transact PRO API configuration
-API_BASE_URL = 'http://api.transactpro.lv/'
+API_BASE_URL = 'https://api.sandbox.transactpro.io/'
 API_VERSION = 'v3.0'
 
 # Transact PRO HTTP transport configuration
