@@ -17,3 +17,4 @@ tests/operations/__pycache__/
 tests/utils/__pycache__/
 dist
 build
+*.pyc

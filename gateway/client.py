@@ -76,6 +76,7 @@ class Client:
           - moto_dms()
           - credit()
           - p2p()
+          - b2p()
           - init_recurrent_dms()
           - recurrent_dms()
           - init_recurrent_sms()
@@ -89,6 +90,9 @@ class Client:
             - transaction_history()
             - transaction_recurrent_history()
             - transaction_refunds_history()
+
+        Verifications:
+            - verify_3d_enrollment()
 
         Returns: Operations
         """

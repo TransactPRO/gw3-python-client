@@ -38,6 +38,7 @@ class Operations(object):
     __MOTO_DMS = '/moto/dms'
     __CREDIT = '/credit'
     __P2P = '/p2p'
+    __B2P = '/b2p'
     __INIT_RECURRENTS_SMS = '/recurrent/sms/init'
     __RECURRENTS_SMS = '/recurrent/sms'
     __INIT_RECURRENTS_DMS = '/recurrent/dms/init'
@@ -48,7 +49,8 @@ class Operations(object):
     __TRAN_RESULT = '/result'
     __TRAN_HISTORY = '/history'
     __TRAN_RECURRENT_HISTORY = '/recurrents'
-    __TRAN_REFUNDS_HISTORY = '/history'
+    __TRAN_REFUNDS_HISTORY = '/refunds'
+    __VERIFY_3D_ENROLLMENT = '/verify/3d-enrollment'
 
     def __init__(self, __gate_operation_data_set, __client_operation, __client_mandatory_fields):
         self.__asked_operation = __client_operation
@@ -122,6 +124,14 @@ class Operations(object):
         self.__asked_operation['current'] = self.__P2P
         from gateway.builders.transaction_builder import P2PBuilder
         return P2PBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def b2p(self):
+        """
+        B2P transaction is a type of transaction for money send (Business To Person).
+        """
+        self.__asked_operation['current'] = self.__B2P
+        from gateway.builders.transaction_builder import B2PBuilder
+        return B2PBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def init_recurrent_sms(self):
         """
@@ -212,3 +222,11 @@ class Operations(object):
         self.__asked_operation['current'] = self.__TRAN_REFUNDS_HISTORY
         from gateway.builders.transaction_builder import TransactionStatusBuilder
         return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def verify_3d_enrollment(self):
+        """
+        Verify card 3-D Secure enrollment.
+        """
+        self.__asked_operation['current'] = self.__VERIFY_3D_ENROLLMENT
+        from gateway.builders.transaction_builder import Verify3dBuilder
+        return Verify3dBuilder(self.__operation_data, self.__operation_mandatory_fields)
