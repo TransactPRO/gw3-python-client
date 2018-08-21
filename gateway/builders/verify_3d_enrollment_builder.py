@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 
 
-class DataBuilder(object):
+class Verify3dEnrollmentBuilder(object):
     """
     Payment data - information about credit card
     """

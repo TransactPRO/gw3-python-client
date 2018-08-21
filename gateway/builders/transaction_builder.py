@@ -56,11 +56,6 @@ class TransactionTypesResources(object):
         from gateway.builders.system_data_builder import SystemDataBuilder
         return SystemDataBuilder(__transaction_data_set_dict)
 
-    @classmethod
-    def input_data_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from gateway.builders.data_builder import DataBuilder
-        return DataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
-
 
 class ExploringTypesResources:
     """
@@ -459,4 +454,6 @@ class Verify3dBuilder(TransactionTypesResources, ExploringTypesResources):
         self.__operation_mandatory_fields_set = __operation_mandatory_fields
 
     def input_data_set(self):
-        return super(Verify3dBuilder, self).input_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+        from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
+        return Verify3dEnrollmentBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
+

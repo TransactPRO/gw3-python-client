@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.data_builder import DataBuilder
+from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
 from unittest import TestCase
 from unittest.mock import patch
 
 
-class TestDataBuilder(TestCase):
+class TestVerify3dEnrollmentBuilder(TestCase):
     BUILDER = None
     DATA = {}
     MANDATORY_FIELDS = {}
@@ -33,7 +33,7 @@ class TestDataBuilder(TestCase):
     def setUp(self):
         self.DATA = {}
         self.MANDATORY_FIELDS = {}
-        self.BUILDER = DataBuilder(self.DATA, self.MANDATORY_FIELDS)
+        self.BUILDER = Verify3dEnrollmentBuilder(self.DATA, self.MANDATORY_FIELDS)
 
     def tearDown(self):
         del self.DATA
@@ -41,7 +41,7 @@ class TestDataBuilder(TestCase):
 
     def test_create_input_data_builder_instance(self):
         """Will succeed"""
-        self.assertIsInstance(self.BUILDER, DataBuilder)
+        self.assertIsInstance(self.BUILDER, Verify3dEnrollmentBuilder)
 
     def test_build_with_add_pan_number(self):
         """Will succeed"""

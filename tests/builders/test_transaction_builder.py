@@ -46,7 +46,7 @@ from gateway.builders.payment_data_builder import PaymentDataBuilder
 from gateway.builders.system_data_builder import SystemDataBuilder
 from gateway.builders.money_data_builder import MoneyDataBuilder
 from gateway.builders.info_data_builder import InfoDataBuilder
-from gateway.builders.data_builder import DataBuilder
+from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
 from unittest import TestCase
 
 
@@ -212,4 +212,4 @@ class TestTransactionBuilder(TestCase):
         self.assertIsInstance(new, Verify3dBuilder)
         self.assertIsInstance(new, TransactionTypesResources)
         self.assertIsInstance(new, ExploringTypesResources)
-        self.assertIsInstance(new.input_data_set(), DataBuilder)
+        self.assertIsInstance(new.input_data_set(), Verify3dEnrollmentBuilder)
