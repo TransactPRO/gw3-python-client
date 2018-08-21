@@ -285,6 +285,31 @@ class P2PBuilder(TransactionTypesResources):
     def system_data_set(self):
         return super(P2PBuilder, self).system_data_set(self.__operation_data_set)
 
+class B2PBuilder(TransactionTypesResources):
+    def __init__(self, __operation_data_set, __operation_mandatory_fields):
+        self.__operation_data_set = __operation_data_set
+        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+
+    def command_data_set(self):
+        return super(B2PBuilder, self).command_data_set(self.__operation_data_set,
+                                                        self.__operation_mandatory_fields_set)
+
+    def customer_data_set(self):
+        return super(B2PBuilder, self).customer_data_set(self.__operation_data_set)
+
+    def merchant_order_data_set(self):
+        return super(B2PBuilder, self).merchant_order_data_set(self.__operation_data_set)
+
+    def payment_method_set(self):
+        return super(B2PBuilder, self).payment_method_set(self.__operation_data_set,
+                                                          self.__operation_mandatory_fields_set)
+
+    def money_data_set(self):
+        return super(B2PBuilder, self).money_data_set(self.__operation_data_set,
+                                                      self.__operation_mandatory_fields_set)
+
+    def system_data_set(self):
+        return super(B2PBuilder, self).system_data_set(self.__operation_data_set)
 
 class RecurrentSmsBuilder(TransactionTypesResources):
     def __init__(self, __operation_data_set, __operation_mandatory_fields):
@@ -299,7 +324,7 @@ class RecurrentSmsBuilder(TransactionTypesResources):
         raise NotImplementedError('Customer data set unavailable in Recurrent SMS operation!')
 
     def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in Recurrent SMS operation!')
+        return super(RecurrentSmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Recurrent SMS operation!')
@@ -325,7 +350,7 @@ class RecurrentDmsBuilder(TransactionTypesResources):
         raise NotImplementedError('Customer data set unavailable in Recurrent DMS operation!')
 
     def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in Recurrent DMS operation!')
+        return super(RecurrentDmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Recurrent DMS operation!')
@@ -421,3 +446,14 @@ class TransactionStatusBuilder(TransactionTypesResources, ExploringTypesResource
 
     def system_data_set(self):
         return super(TransactionStatusBuilder, self).system_data_set(self.__operation_data_set)
+
+
+class Verify3dBuilder(TransactionTypesResources, ExploringTypesResources):
+    def __init__(self, __operation_data_set, __operation_mandatory_fields):
+        self.__operation_data_set = __operation_data_set
+        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+
+    def input_data_set(self):
+        from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
+        return Verify3dEnrollmentBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
+

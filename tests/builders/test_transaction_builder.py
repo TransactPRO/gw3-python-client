@@ -31,11 +31,13 @@ from gateway.builders.transaction_builder import (
     MotoDmsBuilder,
     CreditBuilder,
     P2PBuilder,
+    B2PBuilder,
     RecurrentSmsBuilder,
     RecurrentDmsBuilder,
     RefundBuilder,
     ReversalBuilder,
-    TransactionStatusBuilder
+    TransactionStatusBuilder,
+    Verify3dBuilder
 )
 from gateway.builders.command_data_builder import CommandDataBuilder
 from gateway.builders.customer_data_builder import CustomerDataBuilder
@@ -44,6 +46,7 @@ from gateway.builders.payment_data_builder import PaymentDataBuilder
 from gateway.builders.system_data_builder import SystemDataBuilder
 from gateway.builders.money_data_builder import MoneyDataBuilder
 from gateway.builders.info_data_builder import InfoDataBuilder
+from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
 from unittest import TestCase
 
 
@@ -136,13 +139,24 @@ class TestTransactionBuilder(TestCase):
         self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
         self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
 
+    def test_dependency_construction_b2p(self):
+        new = B2PBuilder({}, {})
+        self.assertIsInstance(new, B2PBuilder)
+        self.assertIsInstance(new, TransactionTypesResources)
+        self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
+        self.assertIsInstance(new.customer_data_set(), CustomerDataBuilder)
+        self.assertIsInstance(new.merchant_order_data_set(), MerchantOrderBuilder)
+        self.assertIsInstance(new.payment_method_set(), PaymentDataBuilder)
+        self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
+        self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
+
     def test_dependency_construction_recurrent_sms(self):
         new = RecurrentSmsBuilder({}, {})
         self.assertIsInstance(new, RecurrentSmsBuilder)
         self.assertIsInstance(new, TransactionTypesResources)
         self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
+        self.assertIsInstance(new.merchant_order_data_set(), MerchantOrderBuilder)
         self.assertRaises(NotImplementedError, new.customer_data_set)
-        self.assertRaises(NotImplementedError, new.merchant_order_data_set)
         self.assertRaises(NotImplementedError, new.payment_method_set)
         self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
         self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
@@ -152,8 +166,8 @@ class TestTransactionBuilder(TestCase):
         self.assertIsInstance(new, RecurrentDmsBuilder)
         self.assertIsInstance(new, TransactionTypesResources)
         self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
+        self.assertIsInstance(new.merchant_order_data_set(), MerchantOrderBuilder)
         self.assertRaises(NotImplementedError, new.customer_data_set)
-        self.assertRaises(NotImplementedError, new.merchant_order_data_set)
         self.assertRaises(NotImplementedError, new.payment_method_set)
         self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
         self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
@@ -192,3 +206,10 @@ class TestTransactionBuilder(TestCase):
         self.assertRaises(NotImplementedError, new.payment_method_set)
         self.assertRaises(NotImplementedError, new.money_data_set)
         self.assertIsInstance(new.system_data_set(), SystemDataBuilder)
+
+    def test_dependency_construction_verify_3d_enrollment(self):
+        new = Verify3dBuilder({}, {})
+        self.assertIsInstance(new, Verify3dBuilder)
+        self.assertIsInstance(new, TransactionTypesResources)
+        self.assertIsInstance(new, ExploringTypesResources)
+        self.assertIsInstance(new.input_data_set(), Verify3dEnrollmentBuilder)

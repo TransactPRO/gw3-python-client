@@ -120,6 +120,17 @@ class TestOperations(TestCase):
 
         mock.assert_called_once_with()
 
+    def test_call_b2p(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import B2PBuilder
+        self.assertIsInstance(new_op.b2p(), B2PBuilder)
+
+        with patch.object(new_op, 'b2p') as mock:
+            new_op.b2p()
+
+        mock.assert_called_once_with()
+
     def test_call_init_recurrent_sms(self):
         """Will succeed"""
         new_op = self.OP
@@ -238,5 +249,16 @@ class TestOperations(TestCase):
 
         with patch.object(new_op, 'transaction_refunds_history') as mock:
             new_op.transaction_refunds_history()
+
+        mock.assert_called_once_with()
+
+    def test_call_verify_3d_enrollment(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import Verify3dBuilder
+        self.assertIsInstance(new_op.verify_3d_enrollment(), Verify3dBuilder)
+
+        with patch.object(new_op, 'verify_3d_enrollment') as mock:
+            new_op.verify_3d_enrollment()
 
         mock.assert_called_once_with()
