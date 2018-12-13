@@ -26,7 +26,7 @@ class RequestParameters:
     Transact Pro APIs Request Parameters data sets
     """
     # Auth data sets
-    AUTH_DATA_ACCOUNT_ID = 'account-id'
+    AUTH_DATA_ACCOUNT_GUID = 'account-guid'
     AUTH_DATA_SECRET_KEY = 'secret-key'
     AUTH_DATA_SESSION_ID = 'session-id'
 
@@ -88,7 +88,7 @@ class RequestParametersTypes(RequestParameters):
     Transact Pro APIs Request Parameters data types
     """
     # Auth data type
-    AUTH_DATA_ACCOUNT_ID = int
+    AUTH_DATA_ACCOUNT_GUID = str
     AUTH_DATA_SECRET_KEY = str
     AUTH_DATA_SESSION_ID = str
 

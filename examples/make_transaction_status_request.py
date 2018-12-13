@@ -33,7 +33,7 @@ import gateway
 GATEWAY_CLIENT = gateway.Client()
 # Step 1
 # Add your merchant authorization data
-GATEWAY_CLIENT.create_auth_data().add_account_id(id_number=507)
+GATEWAY_CLIENT.create_auth_data().add_account_guid(guid='3383e58e-9cde-4ffa-85cf-81cd25b2423e')
 GATEWAY_CLIENT.create_auth_data().add_secret_key(value='IvjBhoeDKUkCMOif58gyxlRNb7QpdmtF')
 # Step 2
 # Now let's set operation SMS hold

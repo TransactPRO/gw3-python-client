@@ -32,15 +32,15 @@ class AuthorizationBuilder(object):
         self.__auth_mandatory_fields = __client_mandatory_fields
         self.__auth_data_set = __client_auth_data_set
 
-    def add_account_id(self, id_number=None):
+    def add_account_guid(self, guid=None):
         """
-        Transact Pro Merchant Account ID.
+        Transact Pro Merchant Account GUID.
 
         Args:
-            id_number (int): Transact Pro Merchant Account ID.
+            guid (str): Transact Pro Merchant Account GUID.
         """
-        self.__auth_mandatory_fields[self.__data_sets.AUTH_DATA_ACCOUNT_ID] = self.__data_types.AUTH_DATA_ACCOUNT_ID
-        self.__auth_data_set[self.__data_sets.AUTH_DATA_ACCOUNT_ID] = id_number
+        self.__auth_mandatory_fields[self.__data_sets.AUTH_DATA_ACCOUNT_GUID] = self.__data_types.AUTH_DATA_ACCOUNT_GUID
+        self.__auth_data_set[self.__data_sets.AUTH_DATA_ACCOUNT_GUID] = guid
 
     def add_secret_key(self, value=None):
         """

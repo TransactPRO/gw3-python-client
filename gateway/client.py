@@ -27,7 +27,7 @@ class Client:
     """
     Main Gate client class for using TransactPro API
 
-    Before starting you need to have a valid Account ID and a Secret Key.
+    Before starting you need to have a valid Account GUID and a Secret Key.
     This information must be provided after successful registration in Transact Pro system.
     """
 
@@ -56,7 +56,7 @@ class Client:
         """
         Transact Pro Authorization
         Returns: AuthorizationBuilder
-          - add_account_id()
+          - add_account_guid()
           - add_secret_key()
           - add_session_id()
         """

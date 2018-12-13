@@ -35,7 +35,7 @@ class TestClient(TestCase):
     }
     CORRECT_AUTH_DATA = {
         'auth-data': {
-            'account-id': 1, 'secret-key': 'MySecretKey'
+            'account-guid': '3383e58e-9cde-4ffa-85cf-81cd25b2423e', 'secret-key': 'MySecretKey'
         },
         'data': {}
     }
@@ -51,13 +51,13 @@ class TestClient(TestCase):
         """Will succeed"""
         self.assertIsInstance(self.GATE_CLIENT.set_operation(), Operations)
 
-    def test_call_add_account_id(self):
+    def test_call_add_account_guid(self):
         """Will succeed"""
         cli = self.GATE_CLIENT.create_auth_data()
-        with patch.object(cli, 'add_account_id') as mock:
-            cli.add_account_id(1)
+        with patch.object(cli, 'add_account_guid') as mock:
+            cli.add_account_guid('3383e58e-9cde-4ffa-85cf-81cd25b2423e')
 
-        mock.assert_called_once_with(1)
+        mock.assert_called_once_with('3383e58e-9cde-4ffa-85cf-81cd25b2423e')
 
     def test_call_add_secret_key(self):
         """Will succeed"""
@@ -81,7 +81,7 @@ class TestClient(TestCase):
 
     def test_create_auth_data(self):
         """Will succeed"""
-        self.GATE_CLIENT.create_auth_data().add_account_id(1)
+        self.GATE_CLIENT.create_auth_data().add_account_guid('3383e58e-9cde-4ffa-85cf-81cd25b2423e')
         self.GATE_CLIENT.create_auth_data().add_secret_key('MySecretKey')
         self.assertEquals(self.GATE_CLIENT.build_request(), self.CORRECT_AUTH_DATA)
 
