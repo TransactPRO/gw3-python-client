@@ -139,7 +139,7 @@ class DmsChargeBuilder(TransactionTypesResources):
         raise NotImplementedError('Customer data set unavailable in DMS CHARGE operation!')
 
     def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in DMS CHARGE operation!')
+        return super(DmsChargeBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in DMS CHARGE operation!')
@@ -165,7 +165,7 @@ class DmsCancelBuilder(TransactionTypesResources):
         raise NotImplementedError('Customer data set unavailable in DMS CANCEL operation!')
 
     def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in DMS CANCEL operation!')
+        return super(DmsCancelBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in DMS CANCEL operation!')
@@ -376,7 +376,7 @@ class RefundBuilder(TransactionTypesResources):
         raise NotImplementedError('Customer data set unavailable in Refund operation!')
 
     def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in Refund operation!')
+        return super(RefundBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Refund operation!')
@@ -402,7 +402,7 @@ class ReversalBuilder(TransactionTypesResources):
         raise NotImplementedError('Customer data set unavailable in Reversal operation!')
 
     def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in Reversal operation!')
+        return super(ReversalBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Reversal operation!')
