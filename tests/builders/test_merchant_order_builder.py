@@ -96,6 +96,13 @@ class TestMerchantOrderBuilder(TestCase):
             new.add_recipient_name('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
         mock.assert_called_once_with('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
 
+    def test_build_with_add_merchant_referring_name(self):
+        """Will succeed"""
+        new = self.BUILDER
+        with patch.object(new, 'add_merchant_referring_name') as mock:
+            new.add_merchant_referring_name('Lorem Ipsum')
+        mock.assert_called_once_with('Lorem Ipsum')
+
     def test_merchant_data_structure_build(self):
         valid_data_structure = {
             'general-data': {
@@ -103,6 +110,9 @@ class TestMerchantOrderBuilder(TestCase):
                     'order-id': 'UnitTestIdOforder_id',
                     'merchant-transaction-id': 'UnitTestIdOftransaction_id',
                     'order-description': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                    'merchant-side-url': 'http://side.url',
+                    'recipient-name': 'Jone Doe',
+                    'merchant-referring-name': 'REF NAME',
                     'order-meta': {
                         'url': 'nice.example.com',
                         'sequence': '0',
@@ -115,15 +125,12 @@ class TestMerchantOrderBuilder(TestCase):
         }
 
         new = self.BUILDER
-        new.add_merchant_transaction_id(
-            transaction_id='UnitTestIdOftransaction_id'
-        )
-        new.add_merchant_order_id(
-            order_id='UnitTestIdOforder_id'
-        )
-        new.add_merchant_order_description(
-            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-        )
+        new.add_merchant_transaction_id('UnitTestIdOftransaction_id')
+        new.add_merchant_order_id('UnitTestIdOforder_id')
+        new.add_merchant_order_description('Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
+        new.add_merchant_side_url('http://side.url')
+        new.add_recipient_name('Jone Doe')
+        new.add_merchant_referring_name('REF NAME')
         new.add_merchant_order_meta(
             json_object={
                 'f_name': 'Jane',
