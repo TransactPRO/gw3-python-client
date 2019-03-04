@@ -155,3 +155,19 @@ class MerchantOrderBuilder(object):
                 self.__req_params.GENERAL_DATA_ORDER_DATA_RECIPIENT_NAME: recipient_name
             }
         )
+
+    def add_merchant_referring_name(self, name=None):
+        """
+        Add merchant referring name for dynamic descriptor
+
+        Args:
+            name (str): merchant referring name
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_MERCHANT_REFERRING_NAME: name
+            }
+        )
