@@ -103,6 +103,13 @@ class TestMerchantOrderBuilder(TestCase):
             new.add_merchant_referring_name('Lorem Ipsum')
         mock.assert_called_once_with('Lorem Ipsum')
 
+    def test_build_with_add_custom_3d_return_url(self):
+        """Will succeed"""
+        new = self.BUILDER
+        with patch.object(new, 'add_custom_3d_return_url') as mock:
+            new.add_custom_3d_return_url('Lorem Ipsum is simply dummy text.')
+        mock.assert_called_once_with('Lorem Ipsum is simply dummy text.')
+
     def test_merchant_data_structure_build(self):
         valid_data_structure = {
             'general-data': {
@@ -113,6 +120,7 @@ class TestMerchantOrderBuilder(TestCase):
                     'merchant-side-url': 'http://side.url',
                     'recipient-name': 'Jone Doe',
                     'merchant-referring-name': 'REF NAME',
+                    'custom-3d-return-url': 'https://example.com',
                     'order-meta': {
                         'url': 'nice.example.com',
                         'sequence': '0',
@@ -131,6 +139,7 @@ class TestMerchantOrderBuilder(TestCase):
         new.add_merchant_side_url('http://side.url')
         new.add_recipient_name('Jone Doe')
         new.add_merchant_referring_name('REF NAME')
+        new.add_custom_3d_return_url('https://example.com')
         new.add_merchant_order_meta(
             json_object={
                 'f_name': 'Jane',
