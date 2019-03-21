@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.command_data_builder import CommandDataBuilder
+from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
 from unittest import TestCase
 from unittest.mock import patch
 
 
-class TestCommandDataBuilder(TestCase):
+class TestVerifyCardDataBuilder(TestCase):
     BUILDER = None
     DATA = {}
     MANDATORY_FIELDS = {}
@@ -33,63 +33,33 @@ class TestCommandDataBuilder(TestCase):
     def setUp(self):
         self.DATA = {}
         self.MANDATORY_FIELDS = {}
-        self.BUILDER = CommandDataBuilder(self.DATA, self.MANDATORY_FIELDS)
+        self.BUILDER = VerifyCardDataBuilder(self.DATA, self.MANDATORY_FIELDS)
 
     def tearDown(self):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_builder_instance(self):
+    def test_create_input_data_builder_instance(self):
         """Will succeed"""
-        self.assertIsInstance(self.BUILDER, CommandDataBuilder)
+        self.assertIsInstance(self.BUILDER, VerifyCardDataBuilder)
 
-    def test_build_with_form_id(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_form_id') as mock:
-            new.add_form_id('#Delta789')
-        mock.assert_called_once_with('#Delta789')
-
-    def test_build_with_gateway_transaction_id(self):
+    def test_build_with_add_gateway_transaction_id(self):
         """Will succeed"""
         new = self.BUILDER
         with patch.object(new, 'add_gateway_transaction_id') as mock:
-            new.add_gateway_transaction_id('16f462cb-9s32-dsv2-b983-fa14da6421f1')
-        mock.assert_called_once_with('16f462cb-9s32-dsv2-b983-fa14da6421f1')
-
-    def test_build_with_terminal_mid(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_terminal_mid') as mock:
-            new.add_terminal_mid('77299421')
-        mock.assert_called_once_with('77299421')
-
-    def test_build_with_card_verification_mode(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_card_verification_mode') as mock:
-            new.add_card_verification_mode(123)
-        mock.assert_called_once_with(123)
+            new.add_gateway_transaction_id('61124aac-7c56-47f9-bb4e-7fd840801751')
+        mock.assert_called_once_with('61124aac-7c56-47f9-bb4e-7fd840801751')
 
     def test_mandatory_and_data_fields(self):
         """Will succeed"""
         new = self.BUILDER
-        new.add_terminal_mid('3321552')
-        new.add_gateway_transaction_id('16f463xf-9s32-dsv2-b983-fSD2234598f1')
-        new.add_form_id('#Bravo345')
-        new.add_card_verification_mode(321)
+        new.add_gateway_transaction_id('61124aac-7c56-47f9-bb4e-7fd840801752')
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
         valid_fields_types = {
-            RequestParameters.COMMAND_DATA_GATEWAY_TRANSACTION_ID:
-                RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_ID,
+            RequestParameters.COMMAND_DATA_GATEWAY_TRANSACTION_ID: RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_ID,
         }
         self.assertDictEqual(valid_fields_types, self.MANDATORY_FIELDS)
         valid_data_structure = {
-            'command-data': {
-                'terminal-mid': '3321552',
-                'gateway-transaction-id': '16f463xf-9s32-dsv2-b983-fSD2234598f1',
-                'form-id': '#Bravo345',
-                'card-verification': 321
-            }
+            'gateway-transaction-id': '61124aac-7c56-47f9-bb4e-7fd840801752'
         }
         self.assertDictEqual(valid_data_structure, self.DATA)

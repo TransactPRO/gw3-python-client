@@ -42,6 +42,7 @@ This `README` provide introduction to the library usage.
 
 - Verifications
   - Verify 3-D Secure enrollment
+  - Complete card verification
 
 #### Basic usage
 You can find several examples realisation in examples folder:
@@ -70,6 +71,25 @@ gateway.HTTP_PROXY = {
 }
 gateway.HTTP_VERIFY_SSL_CERTS = False
 ```
+
+#### Card verification
+
+```python
+import gateway
+
+# set init card verification mode for a payment
+payment.command_data_set().add_card_verification_mode(gateway.CARD_VERIFICATION_MODE_INIT)
+
+# complete card verification
+complete_request = GATEWAY_CLIENT.set_operation().verify_card()
+complete_request.data_set().add_gateway_transaction_id(initialPaymentGatewayId)
+request = GATEWAY_CLIENT.build_request()
+response = GATEWAY_CLIENT.make_request(request)
+
+# set card verification mode to verify for subsequent payments
+new_payment.command_data_set().add_card_verification_mode(gateway.CARD_VERIFICATION_MODE_VERIFY)
+```
+
 
 ### Submit bugs and feature requests
 Bugs and feature request are tracked on [GitHub](https://github.com/TransactPRO/gw3-python-client/issues)

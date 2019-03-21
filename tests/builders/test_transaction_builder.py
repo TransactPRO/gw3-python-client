@@ -37,7 +37,8 @@ from gateway.builders.transaction_builder import (
     RefundBuilder,
     ReversalBuilder,
     TransactionStatusBuilder,
-    Verify3dBuilder
+    Verify3dBuilder,
+    VerifyCardBuilder
 )
 from gateway.builders.command_data_builder import CommandDataBuilder
 from gateway.builders.customer_data_builder import CustomerDataBuilder
@@ -47,6 +48,7 @@ from gateway.builders.system_data_builder import SystemDataBuilder
 from gateway.builders.money_data_builder import MoneyDataBuilder
 from gateway.builders.info_data_builder import InfoDataBuilder
 from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
+from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
 from unittest import TestCase
 
 
@@ -210,6 +212,9 @@ class TestTransactionBuilder(TestCase):
     def test_dependency_construction_verify_3d_enrollment(self):
         new = Verify3dBuilder({}, {})
         self.assertIsInstance(new, Verify3dBuilder)
-        self.assertIsInstance(new, TransactionTypesResources)
-        self.assertIsInstance(new, ExploringTypesResources)
         self.assertIsInstance(new.input_data_set(), Verify3dEnrollmentBuilder)
+
+    def test_dependency_construction_verify_card(self):
+        new = VerifyCardBuilder({}, {})
+        self.assertIsInstance(new, VerifyCardBuilder)
+        self.assertIsInstance(new.data_set(), VerifyCardDataBuilder)

@@ -262,3 +262,14 @@ class TestOperations(TestCase):
             new_op.verify_3d_enrollment()
 
         mock.assert_called_once_with()
+
+    def test_call_verify_card_enrollment(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import VerifyCardBuilder
+        self.assertIsInstance(new_op.verify_card(), VerifyCardBuilder)
+
+        with patch.object(new_op, 'verify_card') as mock:
+            new_op.verify_card()
+
+        mock.assert_called_once_with()

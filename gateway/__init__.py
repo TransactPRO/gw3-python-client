@@ -39,3 +39,7 @@ HTTP_TIME_OUT = 60
 HTTP_VERIFY_SSL_CERTS = False
 # Example: { 'http': 'http://<user>:<pass>@<proxy>:<port>', 'https': 'http://<user>:<pass>@<proxy>:<port>' }
 HTTP_PROXY = None
+
+# Card verification modes
+CARD_VERIFICATION_MODE_INIT = 1
+CARD_VERIFICATION_MODE_VERIFY = 2

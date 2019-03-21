@@ -448,7 +448,7 @@ class TransactionStatusBuilder(TransactionTypesResources, ExploringTypesResource
         return super(TransactionStatusBuilder, self).system_data_set(self.__operation_data_set)
 
 
-class Verify3dBuilder(TransactionTypesResources, ExploringTypesResources):
+class Verify3dBuilder:
     def __init__(self, __operation_data_set, __operation_mandatory_fields):
         self.__operation_data_set = __operation_data_set
         self.__operation_mandatory_fields_set = __operation_mandatory_fields
@@ -456,4 +456,14 @@ class Verify3dBuilder(TransactionTypesResources, ExploringTypesResources):
     def input_data_set(self):
         from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
         return Verify3dEnrollmentBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
+
+
+class VerifyCardBuilder:
+    def __init__(self, __operation_data_set, __operation_mandatory_fields):
+        self.__operation_data_set = __operation_data_set
+        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+
+    def data_set(self):
+        from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
+        return VerifyCardDataBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
 

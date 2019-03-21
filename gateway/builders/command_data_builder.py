@@ -90,3 +90,18 @@ class CommandDataBuilder(object):
             new_key=self.__COMMAND_DATA_KEY,
             new_dict={self.__data_sets.COMMAND_DATA_TERMINAL_MID: terminal_id}
         )
+
+    def add_card_verification_mode(self, mode=None):
+        """
+        Add card verification mode
+
+        Args:
+            mode (int): card verification mode
+        """
+
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__command_data_set,
+            working_dict=self.__command_data_nested_structure,
+            new_key=self.__COMMAND_DATA_KEY,
+            new_dict={self.__data_sets.COMMAND_DATA_CARDS_VERIFICATION: mode}
+        )
