@@ -18,3 +18,4 @@ tests/utils/__pycache__/
 dist
 build
 *.pyc
+venv/
