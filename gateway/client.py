@@ -93,6 +93,10 @@ class Client:
 
         Verifications:
             - verify_3d_enrollment()
+            - verify_card()
+
+        Tokenization:
+            - create_token()
 
         Returns: Operations
         """

@@ -263,7 +263,7 @@ class TestOperations(TestCase):
 
         mock.assert_called_once_with()
 
-    def test_call_verify_card_enrollment(self):
+    def test_call_verify_card(self):
         """Will succeed"""
         new_op = self.OP
         from gateway.builders.transaction_builder import VerifyCardBuilder
@@ -271,5 +271,16 @@ class TestOperations(TestCase):
 
         with patch.object(new_op, 'verify_card') as mock:
             new_op.verify_card()
+
+        mock.assert_called_once_with()
+
+    def test_call_create_token(self):
+        """Will succeed"""
+        new_op = self.OP
+        from gateway.builders.transaction_builder import CreateTokenBuilder
+        self.assertIsInstance(new_op.create_token(), CreateTokenBuilder)
+
+        with patch.object(new_op, 'create_token') as mock:
+            new_op.create_token()
 
         mock.assert_called_once_with()

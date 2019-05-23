@@ -105,3 +105,33 @@ class CommandDataBuilder(object):
             new_key=self.__COMMAND_DATA_KEY,
             new_dict={self.__data_sets.COMMAND_DATA_CARDS_VERIFICATION: mode}
         )
+
+    def add_payment_method_data_source(self, data_source=None):
+        """
+        Add payment method data source
+
+        Args:
+            data_source (int): payment method data source
+        """
+
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__command_data_set,
+            working_dict=self.__command_data_nested_structure,
+            new_key=self.__COMMAND_DATA_KEY,
+            new_dict={self.__data_sets.COMMAND_DATA_PAYMENT_METHOD_DATA_SOURCE: data_source}
+        )
+
+    def add_payment_method_data_token(self, token=None):
+        """
+        Add payment method data token
+
+        Args:
+            token (str): payment method data source
+        """
+
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__command_data_set,
+            working_dict=self.__command_data_nested_structure,
+            new_key=self.__COMMAND_DATA_KEY,
+            new_dict={self.__data_sets.COMMAND_DATA_PAYMENT_METHOD_DATA_TOKEN: token}
+        )

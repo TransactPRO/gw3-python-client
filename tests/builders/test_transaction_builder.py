@@ -38,7 +38,8 @@ from gateway.builders.transaction_builder import (
     ReversalBuilder,
     TransactionStatusBuilder,
     Verify3dBuilder,
-    VerifyCardBuilder
+    VerifyCardBuilder,
+    CreateTokenBuilder
 )
 from gateway.builders.command_data_builder import CommandDataBuilder
 from gateway.builders.customer_data_builder import CustomerDataBuilder
@@ -218,3 +219,13 @@ class TestTransactionBuilder(TestCase):
         new = VerifyCardBuilder({}, {})
         self.assertIsInstance(new, VerifyCardBuilder)
         self.assertIsInstance(new.data_set(), VerifyCardDataBuilder)
+
+    def test_dependency_construction_create_token(self):
+        new = CreateTokenBuilder({}, {})
+        self.assertIsInstance(new, CreateTokenBuilder)
+        self.assertIsInstance(new, TransactionTypesResources)
+        self.assertIsInstance(new.command_data_set(), CommandDataBuilder)
+        self.assertIsInstance(new.merchant_order_data_set(), MerchantOrderBuilder)
+        self.assertIsInstance(new.payment_method_set(), PaymentDataBuilder)
+        self.assertIsInstance(new.money_data_set(), MoneyDataBuilder)
+        self.assertIsInstance(new.system_data_set(), SystemDataBuilder)

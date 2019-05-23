@@ -90,6 +90,30 @@ response = GATEWAY_CLIENT.make_request(request)
 new_payment.command_data_set().add_card_verification_mode(gateway.CARD_VERIFICATION_MODE_VERIFY)
 ```
 
+#### Payment data tokenization
+
+```python
+import gateway
+
+# option 1: create a payment with flag to save payment data
+payment.command_data_set().add_payment_method_data_source(gateway.DATA_SOURCE_SAVE_TO_GATEWAY)
+
+# option 2: send "create token" request with payment data
+operation = GATEWAY_CLIENT.set_operation().create_token()
+
+operation.payment_method_set().add_pan_cardholder_name(first_last_name='John Doe')
+operation.payment_method_set().add_pan_expiry_date(mm_yy='12/20')
+operation.payment_method_set().add_pan_number(pan_number='4222222222222')
+operation.money_data_set().add_payment_currency(iso_4217_ccy='EUR')
+
+request = GATEWAY_CLIENT.build_request()
+response = GATEWAY_CLIENT.make_request(request)
+
+# send a payment with flag to load payment data by token
+new_payment.command_data_set().add_payment_method_data_source(gateway.DATA_SOURCE_USE_GATEWAY_SAVED)
+new_payment.command_data_set().add_payment_method_data_token('initial gateway-transaction-id')
+```
+
 
 ### Submit bugs and feature requests
 Bugs and feature request are tracked on [GitHub](https://github.com/TransactPRO/gw3-python-client/issues)
