@@ -110,7 +110,7 @@ request = GATEWAY_CLIENT.build_request()
 response = GATEWAY_CLIENT.make_request(request)
 
 # send a payment with flag to load payment data by token
-new_payment.command_data_set().add_payment_method_data_source(gateway.DATA_SOURCE_USE_GATEWAY_SAVED)
+new_payment.command_data_set().add_payment_method_data_source(gateway.DATA_SOURCE_USE_GATEWAY_SAVED_CARDHOLDER_INITIATED)
 new_payment.command_data_set().add_payment_method_data_token('initial gateway-transaction-id')
 ```
 
