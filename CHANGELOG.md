@@ -1,3 +1,7 @@
+##### Version 1.5.0 (2019-07-17)
+
+	Add payment data tokenization methods
+
 ##### Version 1.4.0 (2019-05-09)
 
 	Add card verification
