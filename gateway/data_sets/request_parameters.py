@@ -37,6 +37,8 @@ class RequestParameters:
     COMMAND_DATA_FORM_ID = 'form-id'
     COMMAND_DATA_TERMINAL_MID = 'terminal-mid'
     COMMAND_DATA_CARDS_VERIFICATION = 'card-verification'
+    COMMAND_DATA_PAYMENT_METHOD_DATA_SOURCE = 'payment-method-data-source'
+    COMMAND_DATA_PAYMENT_METHOD_DATA_TOKEN = 'payment-method-data-token'
 
     # Customer data sets
     GENERAL_DATA_CUSTOMER_DATA_EMAIL = 'email'
@@ -102,6 +104,8 @@ class RequestParametersTypes(RequestParameters):
     COMMAND_DATA_FORM_ID = str
     COMMAND_DATA_TERMINAL_MID = str
     COMMAND_DATA_CARDS_VERIFICATION = int
+    COMMAND_DATA_PAYMENT_METHOD_DATA_SOURCE = int
+    COMMAND_DATA_PAYMENT_METHOD_DATA_TOKEN = str
 
     # Customer data sets
     GENERAL_DATA_CUSTOMER_DATA_EMAIL = str

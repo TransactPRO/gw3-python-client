@@ -52,6 +52,7 @@ class Operations(object):
     __TRAN_REFUNDS_HISTORY = '/refunds'
     __VERIFY_3D_ENROLLMENT = '/verify/3d-enrollment'
     __VERIFY_CARD = '/verify/card'
+    __TOKEN_CREATE = '/token/create'
 
     def __init__(self, __gate_operation_data_set, __client_operation, __client_mandatory_fields):
         self.__asked_operation = __client_operation
@@ -239,3 +240,11 @@ class Operations(object):
         self.__asked_operation['current'] = self.__VERIFY_CARD
         from gateway.builders.transaction_builder import VerifyCardBuilder
         return VerifyCardBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def create_token(self):
+        """
+        Payment data tokenization request.
+        """
+        self.__asked_operation['current'] = self.__TOKEN_CREATE
+        from gateway.builders.transaction_builder import CreateTokenBuilder
+        return CreateTokenBuilder(self.__operation_data, self.__operation_mandatory_fields)

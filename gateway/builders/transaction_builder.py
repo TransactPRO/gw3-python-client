@@ -467,3 +467,23 @@ class VerifyCardBuilder:
         from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
         return VerifyCardDataBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
 
+
+class CreateTokenBuilder(TransactionTypesResources):
+    def __init__(self, __operation_data_set, __operation_mandatory_fields):
+        self.__operation_data_set = __operation_data_set
+        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+
+    def command_data_set(self):
+        return super(CreateTokenBuilder, self).command_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+
+    def merchant_order_data_set(self):
+        return super(CreateTokenBuilder, self).merchant_order_data_set(self.__operation_data_set)
+
+    def payment_method_set(self):
+        return super(CreateTokenBuilder, self).payment_method_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+
+    def money_data_set(self):
+        return super(CreateTokenBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+
+    def system_data_set(self):
+        return super(CreateTokenBuilder, self).system_data_set(self.__operation_data_set)
