@@ -69,6 +69,7 @@ class RequestParameters:
     GENERAL_DATA_ORDER_DATA_RECIPIENT_NAME = 'recipient-name'
     GENERAL_DATA_ORDER_DATA_MERCHANT_REFERRING_NAME = 'merchant-referring-name'
     GENERAL_DATA_ORDER_DATA_CUSTOM_3D_RETURN_URL = 'custom-3d-return-url'
+    GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL = 'custom-return-url'
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = 'pan'
@@ -136,6 +137,7 @@ class RequestParametersTypes(RequestParameters):
     GENERAL_DATA_ORDER_DATA_RECIPIENT_NAME = str
     GENERAL_DATA_ORDER_DATA_MERCHANT_REFERRING_NAME = str
     GENERAL_DATA_ORDER_DATA_CUSTOM_3D_RETURN_URL = str
+    GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL = str
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = str

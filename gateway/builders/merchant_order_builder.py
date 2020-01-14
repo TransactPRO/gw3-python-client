@@ -187,3 +187,19 @@ class MerchantOrderBuilder(object):
                 self.__req_params.GENERAL_DATA_ORDER_DATA_CUSTOM_3D_RETURN_URL: custom_3d_return_url
             }
         )
+
+    def add_custom_return_url(self, custom_return_url=None):
+        """
+        Add custom return url
+
+        Args:
+            custom_return_url (str): custom return url
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL: custom_return_url
+            }
+        )

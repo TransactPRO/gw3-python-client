@@ -44,6 +44,9 @@ This `README` provide introduction to the library usage.
   - Verify 3-D Secure enrollment
   - Complete card verification
 
+- Tokenization
+  - Create payment data token
+
 #### Basic usage
 You can find several examples realisation in examples folder:
 [ExampleScripts](https://github.com/TransactPRO/gw3-python-client/blob/master/examples/)
