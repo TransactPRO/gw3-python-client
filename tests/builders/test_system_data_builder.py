@@ -59,5 +59,27 @@ class TestCommandDataBuilder(TestCase):
         new = self.BUILDER
         new.add_user_ip(cardholder_ipv4='192.168.1.70')
         new.add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
-        valid_data_structure = {'system': {'user-ip': '192.168.1.70', 'x-forwarded-for': '192.168.1.70'}}
+        new.add_browser_accept_header("application/json, text/javascript, */*; q=0.01")
+        new.add_browser_java_enabled(True)
+        new.add_browser_javascript_enabled(True)
+        new.add_browser_language("en-US")
+        new.add_browser_color_depth("24")
+        new.add_browser_screen_height("1080")
+        new.add_browser_screen_width("1920")
+        new.add_browser_tz("+300")
+        new.add_user_agent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36")
+
+        valid_data_structure = {'system': {
+            'user-ip': '192.168.1.70',
+            'x-forwarded-for': '192.168.1.70',
+            'browser-accept-header': "application/json, text/javascript, */*; q=0.01",
+            'browser-java-enabled': True,
+            'browser-javascript-enabled': True,
+            'browser-language': "en-US",
+            'browser-color-depth': "24",
+            'browser-screen-height': "1080",
+            'browser-screen-width': "1920",
+            'browser-tz': "+300",
+            'browser-user-agent': "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36",
+        }}
         self.assertDictEqual(valid_data_structure, self.DATA)
