@@ -19,9 +19,21 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-from tests.builders import *
-from tests.crypro import *
-from tests.operations import *
-from tests.test_client import *
-from tests.responses import *
-from tests.utils import *
+from unittest import TestCase
+
+from requests.structures import CaseInsensitiveDict
+
+from gateway.responses.response import GatewayResponse
+
+
+class TestGatewayResponse(TestCase):
+    def test_is_successful(self):
+        self.assertTrue(GatewayResponse(200, b'', CaseInsensitiveDict()).is_successful())
+        self.assertTrue(GatewayResponse(201, b'', CaseInsensitiveDict()).is_successful())
+        self.assertTrue(GatewayResponse(302, b'', CaseInsensitiveDict()).is_successful())
+        self.assertTrue(GatewayResponse(402, b'', CaseInsensitiveDict()).is_successful())
+
+        self.assertFalse(GatewayResponse(404, b'', CaseInsensitiveDict()).is_successful())
+        self.assertFalse(GatewayResponse(401, b'', CaseInsensitiveDict()).is_successful())
+        self.assertFalse(GatewayResponse(403, b'', CaseInsensitiveDict()).is_successful())
+        self.assertFalse(GatewayResponse(500, b'', CaseInsensitiveDict()).is_successful())

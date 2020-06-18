@@ -19,9 +19,15 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-from tests.builders import *
-from tests.crypro import *
-from tests.operations import *
-from tests.test_client import *
-from tests.responses import *
-from tests.utils import *
+from tests.builders.test_authorization_builder import *
+from tests.builders.test_command_data_builder import *
+from tests.builders.test_customer_data_builder import *
+from tests.builders.test_info_data_builder import *
+from tests.builders.test_merchant_order_builder import *
+from tests.builders.test_money_data_builder import *
+from tests.builders.test_payment_data_builder import *
+from tests.builders.test_report_filter_data_builder import *
+from tests.builders.test_system_data_builder import *
+from tests.builders.test_transaction_builder import *
+from tests.builders.test_verify_3d_enrollment_builder import *
+from tests.builders.test_verify_card_data_builder import *

@@ -21,11 +21,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-
-# It's not necessary to use it in your implementation
 import pprint
-# Add library, to make your work easier
+
 import gateway
 
 # Step 0
@@ -51,7 +48,7 @@ print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-gw_response = GATEWAY_CLIENT.make_request(request_json=api_request)
-print('Response:')
-pprint.pprint(gw_response)
+gw_response = GATEWAY_CLIENT.make_request(request_data=api_request)
+parsed_gw_response = verify_3d_enrollment.parse(gw_response)
+print('Response: %s' % parsed_gw_response.__dict__)
 print('--------------------')

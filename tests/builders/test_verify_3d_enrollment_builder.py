@@ -20,9 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
 from unittest import TestCase
-from unittest.mock import patch
+
+from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
 
 
 class TestVerify3dEnrollmentBuilder(TestCase):
@@ -39,33 +39,7 @@ class TestVerify3dEnrollmentBuilder(TestCase):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_input_data_builder_instance(self):
-        """Will succeed"""
-        self.assertIsInstance(self.BUILDER, Verify3dEnrollmentBuilder)
-
-    def test_build_with_add_pan_number(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_pan_number') as mock:
-            new.add_pan_number('123123')
-        mock.assert_called_once_with('123123')
-
-    def test_build_with_add_terminal_mid(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_terminal_mid') as mock:
-            new.add_terminal_mid('0123456')
-        mock.assert_called_once_with('0123456')
-
-    def test_build_with_add_currency(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_currency') as mock:
-            new.add_currency('EUR')
-        mock.assert_called_once_with('EUR')
-
     def test_mandatory_and_data_fields(self):
-        """Will succeed"""
         new = self.BUILDER
         new.add_pan_number(pan_number='4222222222222')
         new.add_terminal_mid(terminal_id='0123456')

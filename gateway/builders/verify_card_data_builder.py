@@ -20,19 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gateway.data_sets.request_parameters import (
+    RequestParameters,
+    RequestParametersTypes
+)
+from gateway.utils.data_structures import DataStructuresUtils
+
 
 class VerifyCardDataBuilder(object):
     """
     Data - information about original init transaction
     """
-    __input_data_structure = {}
 
     def __init__(self, __client_transaction_data_set, __client_mandatory_fields):
-        from gateway.utils.data_structures import DataStructuresUtils
-        from gateway.data_sets.request_parameters import (
-            RequestParameters,
-            RequestParametersTypes
-        )
+        self.__input_data_structure = {}
+
         self.__data_structure_util = DataStructuresUtils
         self.__data_sets = RequestParameters
         self.__data_types = RequestParametersTypes
@@ -46,9 +48,7 @@ class VerifyCardDataBuilder(object):
         Args:
             gate_transaction_id (str): Previously created Transaction ID
         """
-        self.__input_mandatory_fields[
-            self.__data_sets.COMMAND_DATA_GATEWAY_TRANSACTION_ID
-        ] = self.__data_types.COMMAND_DATA_GATEWAY_TRANSACTION_ID
+        self.__input_mandatory_fields[self.__data_sets.COMMAND_DATA_GATEWAY_TRANSACTION_ID] = self.__data_types.COMMAND_DATA_GATEWAY_TRANSACTION_ID
 
         self.__input_data_structure.update({self.__data_sets.COMMAND_DATA_GATEWAY_TRANSACTION_ID: gate_transaction_id})
         self.__input_data_set.update(self.__input_data_structure)

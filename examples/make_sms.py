@@ -21,14 +21,13 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-
-# It's not necessary to use it in your implementation
 import pprint
 import random
 import string
-# Add library, to make your work easier
+
 import gateway
+from gateway.crypto.digest import DigestMismatchError, DigestMissingError
+from gateway.responses.constants import Status
 
 # Step 0
 # Init client class for our work flow
@@ -69,17 +68,26 @@ transaction_sms.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.16
 
 # Step 3
 # Construct our transaction request data
-sms_transaction = GATEWAY_CLIENT.build_request()
+request_data = GATEWAY_CLIENT.build_request()
 print('Constructed SMS request:')
-pprint.pprint(sms_transaction)
+pprint.pprint(request_data)
 print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-print('Response:')
 try:
-    response_req = GATEWAY_CLIENT.make_request(request_json=sms_transaction)
+    response = GATEWAY_CLIENT.make_request(request_data=request_data)
+    parsed_response = transaction_sms.parse(response)
+
+    if parsed_response.error.error_code != 0:
+        raise RuntimeError("GW error: %s" % parsed_response.error.message)
+    elif parsed_response.gw.status_code == Status.CARD_FORM_URL_SENT:
+        pass  # redirect cardholder to parsed_response.gw.redirect_url
+except DigestMissingError:
+    raise
+except DigestMismatchError:
+    raise
 except RuntimeError:
     raise
-pprint.pprint(response_req)
+print('Response: %s' % parsed_response.__dict__)
 print('--------------------')

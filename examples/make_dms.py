@@ -21,16 +21,12 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-
-# pprint for nice printing of dict or json etc.
-# It's not necessary to use it in your implementation
 import pprint
 import random
 import string
-import json
-# Add library, to make your work easier
+
 import gateway
+from gateway.responses.constants import Status
 
 # Step 0
 # Init client class for our work flow
@@ -104,21 +100,12 @@ print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-gw_response = GATEWAY_CLIENT.make_request(request_json=dms_hold_transaction)
-print('DMS Hold Response:')
-pprint.pprint(gw_response)
+gw_response = GATEWAY_CLIENT.make_request(request_data=dms_hold_transaction)
+parsed_gw_response = transaction_dms_hold.parse(gw_response)
+print('DMS Hold Response: %s' % parsed_gw_response.__dict__)
 print('--------------------')
-
-# Nice let's try get our new gateway transaction id from response.
-# It's needed to charge transaction to next stage, it's called DMS CHARGE
-# First convert byte to str and then str to json object
-gw_response_content_dict = json.loads(gw_response[0].decode('ascii'))
-if 'gw' not in gw_response_content_dict:
-    raise RuntimeError("Critical can't continue: Gateway isn't provided (gw) data!")
-tmp_dict_space = gw_response_content_dict['gw']
-if 'gateway-transaction-id' not in tmp_dict_space:
-    raise RuntimeError("Critical can't continue: Gateway isn't provided (gateway-transaction-id) data field!")
-gateway_transaction_id = tmp_dict_space['gateway-transaction-id']
+if parsed_gw_response.gw.status_code != Status.DMS_HOLD_OK:
+    raise RuntimeError("Critical can't continue: transaction declined!")
 
 # Awesome we extracted our id for next step, so prepare TO CHARGE our transaction.
 # Or even just save that stuff in your database for future using
@@ -135,7 +122,7 @@ GATEWAY_CLIENT.create_auth_data().add_secret_key(value='IvjBhoeDKUkCMOif58gyxlRN
 transaction_dms_charge = GATEWAY_CLIENT.set_operation().dms_charge()
 # As we do in DMS HOLD, set needed data sets.
 # For DMS CHARGE need provide gate_transaction_id form last operation DMS HOLD
-transaction_dms_charge.command_data_set().add_gateway_transaction_id(gate_transaction_id=gateway_transaction_id)
+transaction_dms_charge.command_data_set().add_gateway_transaction_id(gate_transaction_id=parsed_gw_response.gw.gateway_transaction_id)
 # And we can charge holded data part of it or full.
 # As in example:
 # First payment was for the shipment in the e-commerce shop and holded 50$ from your cardholder
@@ -150,8 +137,8 @@ pprint.pprint(dms_charge_transaction)
 print('--------------------')
 
 # Ok, let's send request via Transact Pro HTTP transporter
-gw_response = GATEWAY_CLIENT.make_request(request_json=dms_charge_transaction)
-print('DMS Charge Response:')
-pprint.pprint(gw_response)
+gw_response = GATEWAY_CLIENT.make_request(request_data=dms_charge_transaction)
+parsed_gw_response = transaction_dms_charge.parse(gw_response)
+print('DMS Charge Response: %s' % parsed_gw_response.__dict__)
 print('--------------------')
 # That's it, happy coding
