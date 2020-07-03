@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.system_data_builder import SystemDataBuilder
 from unittest import TestCase
-from unittest.mock import patch
+
+from gateway.builders.system_data_builder import SystemDataBuilder
 
 
-class TestCommandDataBuilder(TestCase):
+class TestSystemDataBuilder(TestCase):
     BUILDER = None
     DATA = {}
 
@@ -36,26 +36,7 @@ class TestCommandDataBuilder(TestCase):
     def tearDown(self):
         del self.DATA
 
-    def test_create_builder_instance(self):
-        """Will succeed"""
-        self.assertIsInstance(self.BUILDER, SystemDataBuilder)
-
-    def test_build_with_add_user_ip(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_user_ip') as mock:
-            new.add_user_ip('127.0.0.1')
-        mock.assert_called_once_with('127.0.0.1')
-
-    def test_build_with_add_x_forwarded_for_ip(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_x_forwarded_for_ip') as mock:
-            new.add_x_forwarded_for_ip('127.0.0.1')
-        mock.assert_called_once_with('127.0.0.1')
-
     def test_mandatory_and_data_fields(self):
-        """Will succeed"""
         new = self.BUILDER
         new.add_user_ip(cardholder_ipv4='192.168.1.70')
         new.add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')

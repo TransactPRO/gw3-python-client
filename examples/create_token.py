@@ -21,14 +21,12 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-
-# It's not necessary to use it in your implementation
 import pprint
 import random
 import string
-# Add library, to make your work easier
+
 import gateway
+from gateway.crypto.digest import DigestMissingError, DigestMismatchError
 
 # Step 0
 # Init client class for our work flow
@@ -60,17 +58,21 @@ operation.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
 
 # Step 3
 # Construct our transaction request data
-request = GATEWAY_CLIENT.build_request()
+request_data = GATEWAY_CLIENT.build_request()
 print('Constructed request:')
-pprint.pprint(request)
+pprint.pprint(request_data)
 print('--------------------')
 # Step 4
 # Now make our request via Transact pro HTTP transporter
 # Or you can use your own HTTP transporter
-print('Response:')
 try:
-    response_req = GATEWAY_CLIENT.make_request(request_json=request)
+    response = GATEWAY_CLIENT.make_request(request_data=request_data)
+    parsed_response = operation.parse(response)
+except DigestMissingError:
+    raise
+except DigestMismatchError:
+    raise
 except RuntimeError:
     raise
-pprint.pprint(response_req)
+print('Response: %s' % parsed_response.__dict__)
 print('--------------------')

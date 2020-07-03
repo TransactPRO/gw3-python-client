@@ -21,8 +21,9 @@
 # THE SOFTWARE.
 
 
-from gateway.utils import data_structures
 from unittest import TestCase
+
+from gateway.utils import data_structures
 
 
 class TestUtils(TestCase):
@@ -32,7 +33,6 @@ class TestUtils(TestCase):
         }
 
     def test_add_to_dict(self):
-        """Will succeed"""
 
         new_dict = {
             'NESTED_KEY': None

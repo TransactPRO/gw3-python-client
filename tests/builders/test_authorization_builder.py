@@ -20,9 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.authorization_builder import AuthorizationBuilder
 from unittest import TestCase
-from unittest.mock import patch
+
+from gateway.builders.authorization_builder import AuthorizationBuilder
 
 
 class TestAuthorizationBuilder(TestCase):
@@ -39,41 +39,15 @@ class TestAuthorizationBuilder(TestCase):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_builder_instance(self):
-        """Will succeed"""
-        self.assertIsInstance(self.BUILDER, AuthorizationBuilder)
-
-    def test_build_with_account_guid(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_account_guid') as mock:
-            new.add_account_guid('3383e58e-9cde-4ffa-85cf-81cd25b2423e')
-        mock.assert_called_once_with('3383e58e-9cde-4ffa-85cf-81cd25b2423e')
-
-    def test_build_with_secret_key(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_secret_key') as mock:
-            new.add_secret_key('TheKey')
-        mock.assert_called_once_with('TheKey')
-
-    def test_build_with_session(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_session_id') as mock:
-            new.add_session_id('TheXSession')
-        mock.assert_called_once_with('TheXSession')
-
     def test_mandatory_and_data_fields(self):
-        """Will succeed"""
         new = self.BUILDER
         new.add_account_guid('3383e58e-9cde-4ffa-85cf-81cd25b2423e')
         new.add_secret_key('UniverseSecretsKey')
+        new.add_session_id('mega-session')
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
         valid_fields_types = {
-            RequestParameters.AUTH_DATA_ACCOUNT_GUID: RequestParametersTypes.AUTH_DATA_ACCOUNT_GUID,
-            RequestParameters.AUTH_DATA_SECRET_KEY: RequestParametersTypes.AUTH_DATA_SECRET_KEY,
+            RequestParameters.AUTH_DATA_SESSION_ID: RequestParametersTypes.AUTH_DATA_SESSION_ID,
         }
         self.assertDictEqual(valid_fields_types, self.MANDATORY_FIELDS)
-        valid_data_structure = {'secret-key': 'UniverseSecretsKey', 'account-guid': '3383e58e-9cde-4ffa-85cf-81cd25b2423e'}
+        valid_data_structure = {'secret-key': 'UniverseSecretsKey', 'account-guid': '3383e58e-9cde-4ffa-85cf-81cd25b2423e', 'session-id': 'mega-session'}
         self.assertDictEqual(valid_data_structure, self.DATA)

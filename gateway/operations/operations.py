@@ -19,15 +19,16 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+from urllib.parse import urlunparse
+
+from gateway.builders.transaction_builder import *
+from gateway.transport.transport import HTTP_GET
 
 
 class Operations(object):
     """
     TransactPro Gateway 3 API s operations
     """
-
-    __operation_data = {}
-    __asked_operation = None
 
     # Transactions types routes
     __SMS = '/sms'
@@ -50,106 +51,96 @@ class Operations(object):
     __TRAN_HISTORY = '/history'
     __TRAN_RECURRENT_HISTORY = '/recurrents'
     __TRAN_REFUNDS_HISTORY = '/refunds'
+    __LIMITS = '/limits'
     __VERIFY_3D_ENROLLMENT = '/verify/3d-enrollment'
     __VERIFY_CARD = '/verify/card'
     __TOKEN_CREATE = '/token/create'
+    __REPORT = '/report'
 
     def __init__(self, __gate_operation_data_set, __client_operation, __client_mandatory_fields):
-        self.__asked_operation = __client_operation
         self.__operation_data = __gate_operation_data_set
-        # @TODO __client_mandatory_fields Must be prepare before builders, to avoid missing fields if they not called
+        self.__asked_operation = __client_operation
         self.__operation_mandatory_fields = __client_mandatory_fields
         pass
 
-    def sms(self):
+    def sms(self) -> SmsBuilder:
         """
         Single-Message transactions are used for immediate charge.
         """
         self.__asked_operation['current'] = self.__SMS
-        from gateway.builders.transaction_builder import SmsBuilder
         return SmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def dms_hold(self):
+    def dms_hold(self) -> DmsHoldBuilder:
         """
         This transaction freezes (reserves\hold) funds on cardholder account for feature charge.
         """
         self.__asked_operation['current'] = self.__DMS_HOLD
-        from gateway.builders.transaction_builder import DmsHoldBuilder
         return DmsHoldBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def dms_charge(self):
+    def dms_charge(self) -> DmsChargeBuilder:
         """
         Immediate charge of previously frozen (reserved\holded)funds.
         """
         self.__asked_operation['current'] = self.__DMS_CHARGE
-        from gateway.builders.transaction_builder import DmsChargeBuilder
         return DmsChargeBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def dms_cancel(self):
+    def dms_cancel(self) -> DmsCancelBuilder:
         """
         Unfreeze previously reserved funds in DMS hold stage
         """
         self.__asked_operation['current'] = self.__CANCEL
-        from gateway.builders.transaction_builder import DmsCancelBuilder
         return DmsCancelBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def moto_sms(self):
+    def moto_sms(self) -> MotoSmsBuilder:
         """
         MOTO transaction (Mail Order \ Telephone Order) is a type of transaction.
         This is identical as SMS transaction, but requires no CVV code for processing.
         """
         self.__asked_operation['current'] = self.__MOTO_SMS
-        from gateway.builders.transaction_builder import MotoSmsBuilder
         return MotoSmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def moto_dms(self):
+    def moto_dms(self) -> MotoDmsBuilder:
         """
         MOTO transaction (Mail Order \ Telephone Order) is a type of transaction.
         This is identical as DMS-HOLD transaction, but requires no CVV code for processing.
         """
         self.__asked_operation['current'] = self.__MOTO_DMS
-        from gateway.builders.transaction_builder import MotoDmsBuilder
         return MotoDmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def credit(self):
+    def credit(self) -> CreditBuilder:
         """
         Credit transaction is a type of transaction for money send.
         """
         self.__asked_operation['current'] = self.__CREDIT
-        from gateway.builders.transaction_builder import CreditBuilder
         return CreditBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def p2p(self):
+    def p2p(self) -> P2PBuilder:
         """
         P2P transaction is a type of transaction for money send.
         """
         self.__asked_operation['current'] = self.__P2P
-        from gateway.builders.transaction_builder import P2PBuilder
         return P2PBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def b2p(self):
+    def b2p(self) -> B2PBuilder:
         """
         B2P transaction is a type of transaction for money send (Business To Person).
         """
         self.__asked_operation['current'] = self.__B2P
-        from gateway.builders.transaction_builder import B2PBuilder
         return B2PBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def init_recurrent_sms(self):
+    def init_recurrent_sms(self) -> SmsBuilder:
         """
         Init recurrent SMS.
         """
         self.__asked_operation['current'] = self.__INIT_RECURRENTS_SMS
-        from gateway.builders.transaction_builder import SmsBuilder
         return SmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def recurrent_sms(self):
+    def recurrent_sms(self) -> RecurrentSmsBuilder:
         """
         Creates a double of previously created and successfully processed transaction
         (either from SMS or DMS-CHARGE) as DMS transaction.
         """
         self.__asked_operation['current'] = self.__RECURRENTS_SMS
-        from gateway.builders.transaction_builder import RecurrentSmsBuilder
         return RecurrentSmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
     def init_recurrent_dms(self):
@@ -157,94 +148,109 @@ class Operations(object):
         Init recurrent DMS Hold.
         """
         self.__asked_operation['current'] = self.__INIT_RECURRENTS_DMS
-        from gateway.builders.transaction_builder import DmsHoldBuilder
         return DmsHoldBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def recurrent_dms(self):
+    def recurrent_dms(self) -> RecurrentDmsBuilder:
         """
         Creates a double of previously created and successfully processed transaction
         (either from SMS or DMS-CHARGE) as DMS transaction.
         """
         self.__asked_operation['current'] = self.__RECURRENTS_DMS
-        from gateway.builders.transaction_builder import RecurrentDmsBuilder
         return RecurrentDmsBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def refund(self):
+    def refund(self) -> RefundBuilder:
         """
         Refund previously successfully executed SMS or DMS-CHARGE transaction.
         """
         self.__asked_operation['current'] = self.__REFUND
-        from gateway.builders.transaction_builder import RefundBuilder
         return RefundBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def reversal(self):
+    def reversal(self) -> ReversalBuilder:
         """
         Reverse previously successfully executed SMS or DMS-CHARGE transaction.
         """
         self.__asked_operation['current'] = self.__REVERSAL
-        from gateway.builders.transaction_builder import ReversalBuilder
         return ReversalBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def transaction_status(self):
+    def transaction_status(self) -> TransactionStatusBuilder:
         """
         Returns transaction current status.
         """
         self.__asked_operation['current'] = self.__TRAN_STATUS
-        from gateway.builders.transaction_builder import TransactionStatusBuilder
         return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def transaction_result(self):
+    def transaction_result(self) -> TransactionResultBuilder:
         """
         Returns final result for provided transactions.
         """
         self.__asked_operation['current'] = self.__TRAN_RESULT
-        from gateway.builders.transaction_builder import TransactionStatusBuilder
-        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+        return TransactionResultBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def transaction_history(self):
+    def transaction_history(self) -> TransactionHistoryBuilder:
         """
         Returns status history for provided transactions.
         """
         self.__asked_operation['current'] = self.__TRAN_HISTORY
-        from gateway.builders.transaction_builder import TransactionStatusBuilder
-        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+        return TransactionHistoryBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def transaction_recurrent_history(self):
+    def transaction_recurrent_history(self) -> TransactionRecurringHistoryBuilder:
         """
         Returns list of child RECURRENT transactions for provided list of parent transactions.
         """
         self.__asked_operation['current'] = self.__TRAN_RECURRENT_HISTORY
-        from gateway.builders.transaction_builder import TransactionStatusBuilder
-        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+        return TransactionRecurringHistoryBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def transaction_refunds_history(self):
+    def transaction_refunds_history(self) -> TransactionRefundsHistoryBuilder:
         """
         Returns list of child REFUND transactions for provided list of parent transactions.
         """
         self.__asked_operation['current'] = self.__TRAN_REFUNDS_HISTORY
-        from gateway.builders.transaction_builder import TransactionStatusBuilder
-        return TransactionStatusBuilder(self.__operation_data, self.__operation_mandatory_fields)
+        return TransactionRefundsHistoryBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def verify_3d_enrollment(self):
+    def limits(self) -> LimitsBuilder:
+        """
+        Legal person limits retrieval request.
+        """
+        self.__asked_operation['current'] = self.__LIMITS
+        return LimitsBuilder()
+
+    def verify_3d_enrollment(self) -> Verify3dBuilder:
         """
         Verify card 3-D Secure enrollment.
         """
         self.__asked_operation['current'] = self.__VERIFY_3D_ENROLLMENT
-        from gateway.builders.transaction_builder import Verify3dBuilder
         return Verify3dBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def verify_card(self):
+    def verify_card(self) -> VerifyCardBuilder:
         """
         Verify card completion request.
         """
         self.__asked_operation['current'] = self.__VERIFY_CARD
-        from gateway.builders.transaction_builder import VerifyCardBuilder
         return VerifyCardBuilder(self.__operation_data, self.__operation_mandatory_fields)
 
-    def create_token(self):
+    def create_token(self) -> CreateTokenBuilder:
         """
         Payment data tokenization request.
         """
         self.__asked_operation['current'] = self.__TOKEN_CREATE
-        from gateway.builders.transaction_builder import CreateTokenBuilder
         return CreateTokenBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def report(self) -> ReportBuilder:
+        """
+        Transactions report retrieval request.
+        """
+        self.__asked_operation['current'] = self.__REPORT
+        return ReportBuilder(self.__operation_data, self.__operation_mandatory_fields)
+
+    def retrieve_form(self, payment_response: PaymentResponse) -> None:
+        """
+        A request to load HTML form intended for a cardholder.
+        """
+        if not isinstance(payment_response, PaymentResponse):
+            raise RuntimeError('Payment response has invalid type')
+
+        if payment_response is None or payment_response.gw is None or payment_response.gw.redirect_url is None:
+            raise RuntimeError("Response doesn't contain link to an HTML form")
+
+        self.__asked_operation['method'] = HTTP_GET
+        self.__asked_operation['current'] = urlunparse(payment_response.gw.redirect_url)

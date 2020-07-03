@@ -20,9 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
 from unittest import TestCase
-from unittest.mock import patch
+
+from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
 
 
 class TestVerifyCardDataBuilder(TestCase):
@@ -39,19 +39,7 @@ class TestVerifyCardDataBuilder(TestCase):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_input_data_builder_instance(self):
-        """Will succeed"""
-        self.assertIsInstance(self.BUILDER, VerifyCardDataBuilder)
-
-    def test_build_with_add_gateway_transaction_id(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_gateway_transaction_id') as mock:
-            new.add_gateway_transaction_id('61124aac-7c56-47f9-bb4e-7fd840801751')
-        mock.assert_called_once_with('61124aac-7c56-47f9-bb4e-7fd840801751')
-
     def test_mandatory_and_data_fields(self):
-        """Will succeed"""
         new = self.BUILDER
         new.add_gateway_transaction_id('61124aac-7c56-47f9-bb4e-7fd840801752')
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)

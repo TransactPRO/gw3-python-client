@@ -20,6 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gateway.data_sets.request_parameters import RequestParameters
+from gateway.utils.data_structures import DataStructuresUtils
+
 
 class SystemDataBuilder(object):
     """
@@ -27,15 +30,12 @@ class SystemDataBuilder(object):
     """
 
     __SYSTEM_DATA_KEY = 'system'
-    __system_data_structure = {
-        __SYSTEM_DATA_KEY: None
-    }
 
     def __init__(self, __client_transaction_data_set):
-        from gateway.utils.data_structures import DataStructuresUtils
-        from gateway.data_sets.request_parameters import (
-            RequestParameters
-        )
+        self.__system_data_structure = {
+            self.__SYSTEM_DATA_KEY: None
+        }
+
         self.__data_structure_util = DataStructuresUtils
         self.__data_sets = RequestParameters
         self.__system_data_set = __client_transaction_data_set
