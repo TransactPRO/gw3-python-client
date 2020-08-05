@@ -85,6 +85,15 @@ class RequestParameters:
     # System data sets
     SYSTEM_USER_IP = 'user-ip'
     SYSTEM_X_FORWARDED_FOR = 'x-forwarded-for'
+    SYSTEM_BROWSER_ACCEPT_HEADER = 'browser-accept-header'
+    SYSTEM_BROWSER_JAVA_ENABLED = 'browser-java-enabled'
+    SYSTEM_BROWSER_JAVASCRIPT_ENABLED = 'browser-javascript-enabled'
+    SYSTEM_BROWSER_LANGUAGE = 'browser-language'
+    SYSTEM_BROWSER_COLOR_DEPTH = 'browser-color-depth'
+    SYSTEM_BROWSER_SCREEN_HEIGHT = 'browser-screen-height'
+    SYSTEM_BROWSER_SCREEN_WIDTH = 'browser-screen-width'
+    SYSTEM_BROWSER_TZ = 'browser-tz'
+    SYSTEM_BROWSER_USER_AGENT = 'browser-user-agent'
 
     # filter data
     FILTER_DATA_DT_CREATED_FROM = 'dt-created-from'
@@ -160,6 +169,16 @@ class RequestParametersTypes(RequestParameters):
     # System data sets
     SYSTEM_USER_IP = str
     SYSTEM_X_FORWARDED_FOR = str
+
+    SYSTEM_BROWSER_ACCEPT_HEADER = str
+    SYSTEM_BROWSER_JAVA_ENABLED = bool
+    SYSTEM_BROWSER_JAVASCRIPT_ENABLED = bool
+    SYSTEM_BROWSER_LANGUAGE = str
+    SYSTEM_BROWSER_COLOR_DEPTH = str
+    SYSTEM_BROWSER_SCREEN_HEIGHT = str
+    SYSTEM_BROWSER_SCREEN_WIDTH = str
+    SYSTEM_BROWSER_TZ = str
+    SYSTEM_BROWSER_USER_AGENT = str
 
     # filter data
     FILTER_DATA_DT_CREATED_FROM = int
