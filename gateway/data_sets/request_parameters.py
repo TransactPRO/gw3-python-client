@@ -26,6 +26,7 @@ class RequestParameters:
     Transact Pro APIs Request Parameters data sets
     """
     # Auth data sets
+    AUTH_DATA_MERCHANT_GUID = 'merchant-guid'
     AUTH_DATA_ACCOUNT_GUID = 'account-guid'
     AUTH_DATA_SECRET_KEY = 'secret-key'
     AUTH_DATA_SESSION_ID = 'session-id'
@@ -94,6 +95,12 @@ class RequestParameters:
     SYSTEM_BROWSER_TZ = 'browser-tz'
     SYSTEM_BROWSER_USER_AGENT = 'browser-user-agent'
 
+    # filter data
+    FILTER_DATA_DT_CREATED_FROM = 'dt-created-from'
+    FILTER_DATA_DT_CREATED_TO = 'dt-created-to'
+    FILTER_DATA_DT_FINISHED_FROM = 'dt-finished-from'
+    FILTER_DATA_DT_FINISHED_TO = 'dt-finished-to'
+
     def __init__(self):
         pass
 
@@ -103,6 +110,7 @@ class RequestParametersTypes(RequestParameters):
     Transact Pro APIs Request Parameters data types
     """
     # Auth data type
+    AUTH_DATA_MERCHANT_GUID = str
     AUTH_DATA_ACCOUNT_GUID = str
     AUTH_DATA_SECRET_KEY = str
     AUTH_DATA_SESSION_ID = str
@@ -161,6 +169,7 @@ class RequestParametersTypes(RequestParameters):
     # System data sets
     SYSTEM_USER_IP = str
     SYSTEM_X_FORWARDED_FOR = str
+
     SYSTEM_BROWSER_ACCEPT_HEADER = str
     SYSTEM_BROWSER_JAVA_ENABLED = bool
     SYSTEM_BROWSER_JAVASCRIPT_ENABLED = bool
@@ -170,3 +179,9 @@ class RequestParametersTypes(RequestParameters):
     SYSTEM_BROWSER_SCREEN_WIDTH = str
     SYSTEM_BROWSER_TZ = str
     SYSTEM_BROWSER_USER_AGENT = str
+
+    # filter data
+    FILTER_DATA_DT_CREATED_FROM = int
+    FILTER_DATA_DT_CREATED_TO = int
+    FILTER_DATA_DT_FINISHED_FROM = int
+    FILTER_DATA_DT_FINISHED_TO = int

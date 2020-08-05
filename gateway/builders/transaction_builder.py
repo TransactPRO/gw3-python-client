@@ -19,53 +19,70 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+from gateway.builders.command_data_builder import CommandDataBuilder
+from gateway.builders.customer_data_builder import CustomerDataBuilder
+from gateway.builders.info_data_builder import InfoDataBuilder
+from gateway.builders.merchant_order_builder import MerchantOrderBuilder
+from gateway.builders.money_data_builder import MoneyDataBuilder
+from gateway.builders.payment_data_builder import PaymentDataBuilder
+from gateway.builders.report_filter_data_builder import ReportFilterDataBuilder
+from gateway.builders.system_data_builder import SystemDataBuilder
+from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
+from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
+from gateway.responses.csv_response import CsvResponse
+from gateway.responses.enrollment import EnrollmentResponse
+from gateway.responses.limits import LimitsResponse
+from gateway.responses.lists import RefundsResponse, HistoryResponse, RecurringTransactionsResponse, ResultResponse, StatusResponse
+from gateway.responses.payment import PaymentResponse
+from gateway.responses.response import GatewayResponse
 
 
-class TransactionTypesResources(object):
+class TransactionBuilder:
     """
     Contains all necessary data sets builders for different transaction types constructors
     """
 
-    @classmethod
-    def command_data_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from gateway.builders.command_data_builder import CommandDataBuilder
-        return CommandDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
+    def __init__(self, __operation_data_set, __operation_mandatory_fields_set) -> None:
+        self.__command_data_builder = CommandDataBuilder(__operation_data_set, __operation_mandatory_fields_set)
+        self.__customer_data_builder = CustomerDataBuilder(__operation_data_set)
+        self.__merchant_order_builder = MerchantOrderBuilder(__operation_data_set)
+        self.__payment_data_builder = PaymentDataBuilder(__operation_data_set, __operation_mandatory_fields_set)
+        self.__money_data_builder = MoneyDataBuilder(__operation_data_set, __operation_mandatory_fields_set)
+        self.__system_data_builder = SystemDataBuilder(__operation_data_set)
 
-    @classmethod
-    def customer_data_set(cls, __transaction_data_set_dict):
-        from gateway.builders.customer_data_builder import CustomerDataBuilder
-        return CustomerDataBuilder(__transaction_data_set_dict)
+    def command_data_set(self) -> CommandDataBuilder:
+        return self.__command_data_builder
 
-    @classmethod
-    def merchant_order_data_set(cls, __transaction_data_set_dict):
-        from gateway.builders.merchant_order_builder import MerchantOrderBuilder
-        return MerchantOrderBuilder(__transaction_data_set_dict)
+    def customer_data_set(self) -> CustomerDataBuilder:
+        return self.__customer_data_builder
 
-    @classmethod
-    def payment_method_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from gateway.builders.payment_data_builder import PaymentDataBuilder
-        return PaymentDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
+    def merchant_order_data_set(self) -> MerchantOrderBuilder:
+        return self.__merchant_order_builder
 
-    @classmethod
-    def money_data_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from gateway.builders.money_data_builder import MoneyDataBuilder
-        return MoneyDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
+    def payment_method_set(self) -> PaymentDataBuilder:
+        return self.__payment_data_builder
 
-    @classmethod
-    def system_data_set(cls, __transaction_data_set_dict):
-        from gateway.builders.system_data_builder import SystemDataBuilder
-        return SystemDataBuilder(__transaction_data_set_dict)
+    def money_data_set(self) -> MoneyDataBuilder:
+        return self.__money_data_builder
+
+    def system_data_set(self) -> SystemDataBuilder:
+        return self.__system_data_builder
+
+    @staticmethod
+    def parse(response: GatewayResponse) -> PaymentResponse:
+        return response.parse_json(PaymentResponse)
 
 
-class ExploringTypesResources:
+class ExploringBuilder:
     """
     Contains all necessary data sets builders for construction exploring past payments operations
     """
 
-    @classmethod
-    def info_command_data_set(cls, __transaction_data_set_dict, __operation_mandatory_fields_set_dict):
-        from gateway.builders.info_data_builder import InfoDataBuilder
-        return InfoDataBuilder(__transaction_data_set_dict, __operation_mandatory_fields_set_dict)
+    def __init__(self, __operation_data_set, __operation_mandatory_fields_set) -> None:
+        self.__info_data_builder = InfoDataBuilder(__operation_data_set, __operation_mandatory_fields_set)
+
+    def info_command_data_set(self) -> InfoDataBuilder:
+        return self.__info_data_builder
 
 
 """
@@ -73,417 +90,153 @@ Transaction Types builders
 """
 
 
-class SmsBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(SmsBuilder, self).command_data_set(self.__operation_data_set,
-                                                        self.__operation_mandatory_fields_set)
-
-    def customer_data_set(self):
-        return super(SmsBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(SmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
-
-    def payment_method_set(self):
-        return super(SmsBuilder, self).payment_method_set(self.__operation_data_set,
-                                                          self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(SmsBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(SmsBuilder, self).system_data_set(self.__operation_data_set)
+class SmsBuilder(TransactionBuilder):
+    pass
 
 
-class DmsHoldBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(DmsHoldBuilder, self).command_data_set(self.__operation_data_set,
-                                                            self.__operation_mandatory_fields_set)
-
-    def customer_data_set(self):
-        return super(DmsHoldBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(DmsHoldBuilder, self).merchant_order_data_set(self.__operation_data_set, )
-
-    def payment_method_set(self):
-        return super(DmsHoldBuilder, self).payment_method_set(self.__operation_data_set,
-                                                              self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(DmsHoldBuilder, self).money_data_set(self.__operation_data_set,
-                                                          self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(DmsHoldBuilder, self).system_data_set(self.__operation_data_set)
+class DmsHoldBuilder(TransactionBuilder):
+    pass
 
 
-class DmsChargeBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(DmsChargeBuilder, self).command_data_set(self.__operation_data_set,
-                                                              self.__operation_mandatory_fields_set)
-
+class DmsChargeBuilder(TransactionBuilder):
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in DMS CHARGE operation!')
-
-    def merchant_order_data_set(self):
-        return super(DmsChargeBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in DMS CHARGE operation!')
 
-    def money_data_set(self):
-        return super(DmsChargeBuilder, self).money_data_set(self.__operation_data_set,
-                                                            self.__operation_mandatory_fields_set)
 
-    def system_data_set(self):
-        return super(DmsChargeBuilder, self).system_data_set(self.__operation_data_set)
-
-
-class DmsCancelBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(DmsCancelBuilder, self).command_data_set(self.__operation_data_set,
-                                                              self.__operation_mandatory_fields_set)
-
+class DmsCancelBuilder(TransactionBuilder):
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in DMS CANCEL operation!')
-
-    def merchant_order_data_set(self):
-        return super(DmsCancelBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in DMS CANCEL operation!')
 
-    def money_data_set(self):
-        return super(DmsCancelBuilder, self).money_data_set(self.__operation_data_set,
-                                                            self.__operation_mandatory_fields_set)
 
-    def system_data_set(self):
-        return super(DmsCancelBuilder, self).system_data_set(self.__operation_data_set)
+class MotoSmsBuilder(TransactionBuilder):
+    pass
 
 
-class MotoSmsBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(MotoSmsBuilder, self).command_data_set(self.__operation_data_set,
-                                                            self.__operation_mandatory_fields_set)
-
-    def customer_data_set(self):
-        return super(MotoSmsBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(MotoSmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
-
-    def payment_method_set(self):
-        return super(MotoSmsBuilder, self).payment_method_set(self.__operation_data_set,
-                                                              self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(MotoSmsBuilder, self).money_data_set(self.__operation_data_set,
-                                                          self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(MotoSmsBuilder, self).system_data_set(self.__operation_data_set)
+class MotoDmsBuilder(TransactionBuilder):
+    pass
 
 
-class MotoDmsBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(MotoDmsBuilder, self).command_data_set(self.__operation_data_set,
-                                                            self.__operation_mandatory_fields_set)
-
-    def customer_data_set(self):
-        return super(MotoDmsBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(MotoDmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
-
-    def payment_method_set(self):
-        return super(MotoDmsBuilder, self).payment_method_set(self.__operation_data_set,
-                                                              self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(MotoDmsBuilder, self).money_data_set(self.__operation_data_set,
-                                                          self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(MotoDmsBuilder, self).system_data_set(self.__operation_data_set)
+class CreditBuilder(TransactionBuilder):
+    pass
 
 
-class CreditBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(CreditBuilder, self).command_data_set(self.__operation_data_set,
-                                                           self.__operation_mandatory_fields_set)
-
-    def customer_data_set(self):
-        return super(CreditBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(CreditBuilder, self).merchant_order_data_set(self.__operation_data_set)
-
-    def payment_method_set(self):
-        return super(CreditBuilder, self).payment_method_set(self.__operation_data_set,
-                                                             self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(CreditBuilder, self).money_data_set(self.__operation_data_set,
-                                                         self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(CreditBuilder, self).system_data_set(self.__operation_data_set)
+class P2PBuilder(TransactionBuilder):
+    pass
 
 
-class P2PBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+class B2PBuilder(TransactionBuilder):
+    pass
 
-    def command_data_set(self):
-        return super(P2PBuilder, self).command_data_set(self.__operation_data_set,
-                                                        self.__operation_mandatory_fields_set)
 
-    def customer_data_set(self):
-        return super(P2PBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(P2PBuilder, self).merchant_order_data_set(self.__operation_data_set)
-
-    def payment_method_set(self):
-        return super(P2PBuilder, self).payment_method_set(self.__operation_data_set,
-                                                          self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(P2PBuilder, self).money_data_set(self.__operation_data_set,
-                                                      self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(P2PBuilder, self).system_data_set(self.__operation_data_set)
-
-class B2PBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(B2PBuilder, self).command_data_set(self.__operation_data_set,
-                                                        self.__operation_mandatory_fields_set)
-
-    def customer_data_set(self):
-        return super(B2PBuilder, self).customer_data_set(self.__operation_data_set)
-
-    def merchant_order_data_set(self):
-        return super(B2PBuilder, self).merchant_order_data_set(self.__operation_data_set)
-
-    def payment_method_set(self):
-        return super(B2PBuilder, self).payment_method_set(self.__operation_data_set,
-                                                          self.__operation_mandatory_fields_set)
-
-    def money_data_set(self):
-        return super(B2PBuilder, self).money_data_set(self.__operation_data_set,
-                                                      self.__operation_mandatory_fields_set)
-
-    def system_data_set(self):
-        return super(B2PBuilder, self).system_data_set(self.__operation_data_set)
-
-class RecurrentSmsBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(RecurrentSmsBuilder, self).command_data_set(self.__operation_data_set,
-                                                                 self.__operation_mandatory_fields_set)
-
+class RecurrentSmsBuilder(TransactionBuilder):
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in Recurrent SMS operation!')
-
-    def merchant_order_data_set(self):
-        return super(RecurrentSmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Recurrent SMS operation!')
 
-    def money_data_set(self):
-        return super(RecurrentSmsBuilder, self).money_data_set(self.__operation_data_set,
-                                                               self.__operation_mandatory_fields_set)
 
-    def system_data_set(self):
-        return super(RecurrentSmsBuilder, self).system_data_set(self.__operation_data_set)
-
-
-class RecurrentDmsBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(RecurrentDmsBuilder, self).command_data_set(self.__operation_data_set,
-                                                                 self.__operation_mandatory_fields_set)
-
+class RecurrentDmsBuilder(TransactionBuilder):
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in Recurrent DMS operation!')
-
-    def merchant_order_data_set(self):
-        return super(RecurrentDmsBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Recurrent DMS operation!')
 
-    def money_data_set(self):
-        return super(RecurrentDmsBuilder, self).money_data_set(self.__operation_data_set,
-                                                               self.__operation_mandatory_fields_set)
 
-    def system_data_set(self):
-        return super(RecurrentDmsBuilder, self).system_data_set(self.__operation_data_set)
-
-
-class RefundBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(RefundBuilder, self).command_data_set(self.__operation_data_set,
-                                                           self.__operation_mandatory_fields_set)
-
+class RefundBuilder(TransactionBuilder):
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in Refund operation!')
-
-    def merchant_order_data_set(self):
-        return super(RefundBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Refund operation!')
 
-    def money_data_set(self):
-        return super(RefundBuilder, self).money_data_set(self.__operation_data_set,
-                                                         self.__operation_mandatory_fields_set)
 
-    def system_data_set(self):
-        return super(RefundBuilder, self).system_data_set(self.__operation_data_set)
-
-
-class ReversalBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def command_data_set(self):
-        return super(ReversalBuilder, self).command_data_set(self.__operation_data_set,
-                                                             self.__operation_mandatory_fields_set)
-
+class ReversalBuilder(TransactionBuilder):
     def customer_data_set(self):
         raise NotImplementedError('Customer data set unavailable in Reversal operation!')
-
-    def merchant_order_data_set(self):
-        return super(ReversalBuilder, self).merchant_order_data_set(self.__operation_data_set)
 
     def payment_method_set(self):
         raise NotImplementedError('Payment method data set unavailable in Reversal operation!')
 
-    def money_data_set(self):
-        return super(ReversalBuilder, self).money_data_set(self.__operation_data_set,
-                                                           self.__operation_mandatory_fields_set)
 
-    def system_data_set(self):
-        return super(ReversalBuilder, self).system_data_set(self.__operation_data_set)
-
-
-"""
-Exploring Past Payments builders
-"""
-
-
-class TransactionStatusBuilder(TransactionTypesResources, ExploringTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
-
-    def info_command_data_set(self):
-        return super(TransactionStatusBuilder, self).info_command_data_set(self.__operation_data_set,
-                                                                           self.__operation_mandatory_fields_set)
-
-    def command_data_set(self):
-        raise NotImplementedError('Customer data set unavailable in Transaction Status operation!')
-
-    def customer_data_set(self):
-        raise NotImplementedError('Customer data set unavailable in Transaction Status operation!')
-
-    def merchant_order_data_set(self):
-        raise NotImplementedError('Merchant order data set unavailable in Transaction Status operation!')
-
-    def payment_method_set(self):
-        raise NotImplementedError('Payment method data set unavailable in Transaction Status operation!')
-
-    def money_data_set(self):
-        raise NotImplementedError('Money data set unavailable in Transaction Status operation!')
-
-    def system_data_set(self):
-        return super(TransactionStatusBuilder, self).system_data_set(self.__operation_data_set)
+class CreateTokenBuilder(TransactionBuilder):
+    pass
 
 
 class Verify3dBuilder:
     def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+        self.__verify_enrollment_builder = Verify3dEnrollmentBuilder(__operation_data_set, __operation_mandatory_fields)
 
-    def input_data_set(self):
-        from gateway.builders.verify_3d_enrollment_builder import Verify3dEnrollmentBuilder
-        return Verify3dEnrollmentBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
+    def input_data_set(self) -> Verify3dEnrollmentBuilder:
+        return self.__verify_enrollment_builder
+
+    @staticmethod
+    def parse(response: GatewayResponse) -> EnrollmentResponse:
+        return response.parse_json(EnrollmentResponse)
 
 
 class VerifyCardBuilder:
     def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+        self.__verify_card_builder = VerifyCardDataBuilder(__operation_data_set, __operation_mandatory_fields)
 
-    def data_set(self):
-        from gateway.builders.verify_card_data_builder import VerifyCardDataBuilder
-        return VerifyCardDataBuilder(self.__operation_data_set, self.__operation_mandatory_fields_set)
+    def data_set(self) -> VerifyCardDataBuilder:
+        return self.__verify_card_builder
 
 
-class CreateTokenBuilder(TransactionTypesResources):
-    def __init__(self, __operation_data_set, __operation_mandatory_fields):
-        self.__operation_data_set = __operation_data_set
-        self.__operation_mandatory_fields_set = __operation_mandatory_fields
+class TransactionRefundsHistoryBuilder(ExploringBuilder):
+    @staticmethod
+    def parse(response: GatewayResponse) -> RefundsResponse:
+        return response.parse_json(RefundsResponse)
 
-    def command_data_set(self):
-        return super(CreateTokenBuilder, self).command_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
 
-    def merchant_order_data_set(self):
-        return super(CreateTokenBuilder, self).merchant_order_data_set(self.__operation_data_set)
+class TransactionRecurringHistoryBuilder(ExploringBuilder):
+    @staticmethod
+    def parse(response: GatewayResponse) -> RecurringTransactionsResponse:
+        return response.parse_json(RecurringTransactionsResponse)
 
-    def payment_method_set(self):
-        return super(CreateTokenBuilder, self).payment_method_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
 
-    def money_data_set(self):
-        return super(CreateTokenBuilder, self).money_data_set(self.__operation_data_set, self.__operation_mandatory_fields_set)
+class TransactionHistoryBuilder(ExploringBuilder):
+    @staticmethod
+    def parse(response: GatewayResponse) -> HistoryResponse:
+        return response.parse_json(HistoryResponse)
 
-    def system_data_set(self):
-        return super(CreateTokenBuilder, self).system_data_set(self.__operation_data_set)
+
+class TransactionResultBuilder(ExploringBuilder):
+    @staticmethod
+    def parse(response: GatewayResponse) -> ResultResponse:
+        return response.parse_json(ResultResponse)
+
+
+class TransactionStatusBuilder(ExploringBuilder):
+    @staticmethod
+    def parse(response: GatewayResponse) -> StatusResponse:
+        return response.parse_json(StatusResponse)
+
+
+class LimitsBuilder:
+    @staticmethod
+    def parse(response: GatewayResponse) -> LimitsResponse:
+        return response.parse_json(LimitsResponse)
+
+
+class ReportBuilder:
+    """
+    Contains all necessary data sets builders for construction transaction report retrieval operations
+    """
+
+    def __init__(self, __operation_data_set, __operation_mandatory_fields_set) -> None:
+        self.__filter_data_builder = ReportFilterDataBuilder(__operation_data_set, __operation_mandatory_fields_set)
+
+    def filter_data(self) -> ReportFilterDataBuilder:
+        return self.__filter_data_builder
+
+    @staticmethod
+    def parse(response: GatewayResponse) -> CsvResponse:
+        return response.parse_csv()

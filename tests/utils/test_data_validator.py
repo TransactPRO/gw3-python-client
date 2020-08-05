@@ -20,8 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.utils.data_validator import DataValidator
 from unittest import TestCase
+
+from gateway.utils.data_validator import DataValidator
 
 
 class TestDataValidator(TestCase):
@@ -45,7 +46,6 @@ class TestDataValidator(TestCase):
     }
 
     def test_invalid_request_data(self):
-        """Will succeed"""
         response = DataValidator().validate_request_data(
             request_data=self.invalid_test_data_list,
             required_data=self.required_data_list
@@ -54,7 +54,6 @@ class TestDataValidator(TestCase):
         self.assertEqual({'tiny_key': str}, response)
 
     def test_valid_request_data(self):
-        """Will succeed"""
         response = DataValidator().validate_request_data(
             request_data=self.valid_test_data_list,
             required_data=self.required_data_list

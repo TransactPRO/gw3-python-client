@@ -20,22 +20,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gateway.data_sets.request_parameters import (
+    RequestParameters,
+    RequestParametersTypes
+)
+from gateway.utils.data_structures import DataStructuresUtils
+
 
 class MoneyDataBuilder(object):
     """
     Money data - information about payment request
     """
     __MONEY_DATA_KEY = 'money-data'
-    __money_data_structure = {
-        __MONEY_DATA_KEY: None
-    }
 
     def __init__(self, __client_transaction_data_set, __client_mandatory_fields):
-        from gateway.utils.data_structures import DataStructuresUtils
-        from gateway.data_sets.request_parameters import (
-            RequestParameters,
-            RequestParametersTypes
-        )
+        self.__money_data_structure = {
+            self.__MONEY_DATA_KEY: None
+        }
+
         self.__data_structure_util = DataStructuresUtils
         self.__data_types = RequestParametersTypes
         self.__data_sets = RequestParameters
@@ -49,9 +51,7 @@ class MoneyDataBuilder(object):
         Args:
             minor_value (int): Money amount in minor units
         """
-        self.__money_mandatory_fields[
-            self.__data_sets.MONEY_DATA_AMOUNT
-        ] = self.__data_types.MONEY_DATA_AMOUNT
+        self.__money_mandatory_fields[self.__data_sets.MONEY_DATA_AMOUNT] = self.__data_types.MONEY_DATA_AMOUNT
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__money_data_set,
@@ -67,9 +67,7 @@ class MoneyDataBuilder(object):
         Args:
             iso_4217_ccy (str): Currency, ISO-4217 format
         """
-        self.__money_mandatory_fields[
-            self.__data_sets.MONEY_DATA_CURRENCY
-        ] = self.__data_types.MONEY_DATA_CURRENCY
+        self.__money_mandatory_fields[self.__data_sets.MONEY_DATA_CURRENCY] = self.__data_types.MONEY_DATA_CURRENCY
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__money_data_set,

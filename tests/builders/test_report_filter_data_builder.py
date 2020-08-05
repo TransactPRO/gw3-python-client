@@ -19,13 +19,13 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
 from unittest import TestCase
 
-from gateway.builders.money_data_builder import MoneyDataBuilder
+from gateway.builders.report_filter_data_builder import ReportFilterDataBuilder
+from gateway.data_sets.request_parameters import RequestParameters, RequestParametersTypes
 
 
-class TestMoneyDataBuilder(TestCase):
+class TestReportFilterBuilder(TestCase):
     BUILDER = None
     DATA = {}
     MANDATORY_FIELDS = {}
@@ -33,7 +33,7 @@ class TestMoneyDataBuilder(TestCase):
     def setUp(self):
         self.DATA = {}
         self.MANDATORY_FIELDS = {}
-        self.BUILDER = MoneyDataBuilder(self.DATA, self.MANDATORY_FIELDS)
+        self.BUILDER = ReportFilterDataBuilder(self.DATA, self.MANDATORY_FIELDS)
 
     def tearDown(self):
         del self.DATA
@@ -41,20 +41,24 @@ class TestMoneyDataBuilder(TestCase):
 
     def test_mandatory_and_data_fields(self):
         new = self.BUILDER
-        new.add_payment_amount(minor_value=5000)
-        new.add_payment_currency(iso_4217_ccy='USD')
-        from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
-        valid_fields_types = {
-            RequestParameters.MONEY_DATA_AMOUNT:
-                RequestParametersTypes.MONEY_DATA_AMOUNT,
-            RequestParameters.MONEY_DATA_CURRENCY:
-                RequestParametersTypes.MONEY_DATA_CURRENCY,
+        new.add_dt_created_from(1)
+        new.add_dt_created_to(2)
+        new.add_dt_finished_from(3)
+        new.add_dt_finished_to(4)
+
+        valid_fields = {
+            RequestParameters.FILTER_DATA_DT_CREATED_FROM: RequestParametersTypes.FILTER_DATA_DT_CREATED_FROM,
+            RequestParameters.FILTER_DATA_DT_CREATED_TO: RequestParametersTypes.FILTER_DATA_DT_CREATED_TO,
+            RequestParameters.FILTER_DATA_DT_FINISHED_FROM: RequestParametersTypes.FILTER_DATA_DT_FINISHED_FROM,
+            RequestParameters.FILTER_DATA_DT_FINISHED_TO: RequestParametersTypes.FILTER_DATA_DT_FINISHED_TO,
         }
-        self.assertDictEqual(valid_fields_types, self.MANDATORY_FIELDS)
+
+        self.assertDictEqual(valid_fields, self.MANDATORY_FIELDS)
+
         valid_data_structure = {
-            'money-data': {
-                'currency': 'USD',
-                'amount': 5000
-            }
+            'dt-created-from': 1,
+            'dt-created-to': 2,
+            'dt-finished-from': 3,
+            'dt-finished-to': 4,
         }
         self.assertDictEqual(valid_data_structure, self.DATA)

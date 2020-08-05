@@ -20,6 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gateway.data_sets.request_parameters import RequestParameters
+from gateway.utils.data_structures import DataStructuresUtils
+
 
 class MerchantOrderBuilder(object):
     """
@@ -30,14 +33,11 @@ class MerchantOrderBuilder(object):
     # Nested layer of general data set
     __ORDER_DATA_KEY = 'order-data'
 
-    # Base structure of customer data
-    __order_data_structure = {
-        __ORDER_DATA_KEY: None
-    }
-
     def __init__(self, __transaction_data_set):
-        from gateway.utils.data_structures import DataStructuresUtils
-        from gateway.data_sets.request_parameters import RequestParameters
+        self.__order_data_structure = {
+            self.__ORDER_DATA_KEY: None
+        }
+
         self.__data_structure_util = DataStructuresUtils
         self.__req_params = RequestParameters
         self.__general_data_set = __transaction_data_set

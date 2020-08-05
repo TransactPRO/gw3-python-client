@@ -20,7 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import os
 from urllib.parse import (
     urlparse
 )
@@ -58,12 +57,12 @@ def new_http_client(cli_name='requests', *args, **kwargs):
     Get available HTTP Package from local system
     Implemented packages - (requests)
     """
-    if cli_name is 'requests':
+    if cli_name == 'requests':
         if requests is not None:
             implementation = RequestsTransport
         else:
             raise RuntimeError("Cant send request via HTTP. In your system, (Requests) package not found.")
-    elif cli_name is 'pycurl':
+    elif cli_name == 'pycurl':
         if pycurl is not None:
             implementation = PyCurlTransport
         else:
@@ -91,7 +90,7 @@ class HttpTransport(object):
             self.timeout = timeout
         pass
 
-    def request(self, http_method=HTTP_POST, http_url=None, request_data=None):
+    def request(self, http_method=HTTP_POST, http_url=None, authorization_header=None, request_data=None):
         raise NotImplementedError(
             'HTTPClient subclasses must implement `request`')
 
@@ -102,7 +101,7 @@ class RequestsTransport(HttpTransport):
         self.timeout = timeout
         self.__session = requests.Session()
 
-    def request(self, http_method=HTTP_POST, http_url=None, request_data=None):
+    def request(self, http_method=HTTP_POST, http_url=None, authorization_header=None, request_data=None):
         """
         Make HTTP request via requests
 
@@ -127,19 +126,24 @@ class RequestsTransport(HttpTransport):
             request_data = {}
 
         kwargs = {}
-        if self.verify_ssl:
-            kwargs['verify'] = os.path.join(os.path.dirname(__file__), 'ca-certificates.crt')
-        else:
+        if not self.verify_ssl:
             kwargs['verify'] = False
 
         if self.proxy:
             kwargs['proxies'] = self.proxy
 
+        headers = None
+        if authorization_header is not None:
+            headers = {'Authorization': authorization_header}
+        if http_method != HTTP_GET:
+            headers['Content-Type'] = 'application/json'
+
         try:
             request_result = self.__session.request(
                 method=http_method,
                 url=http_url,
-                json=request_data,
+                headers=headers,
+                json=request_data if http_method != HTTP_GET else None,
                 timeout=self.timeout, **kwargs
             )
         except:
@@ -157,7 +161,7 @@ class PyCurlTransport(HttpTransport):
             for scheme in proxy:
                 proxy[scheme] = urlparse(proxy[scheme])
 
-    def request(self, http_method=HTTP_POST, http_url=None, request_data=None):
+    def request(self, http_method=HTTP_POST, http_url=None, authorization_header=None, request_data=None):
         """
         Make HTTP request via pycurl
 
@@ -182,16 +186,23 @@ class PyCurlTransport(HttpTransport):
         """
         import json
         import io
+
+        headers = []
+        if authorization_header is not None:
+            headers.append('Authorization:' + authorization_header)
+        if http_method != HTTP_GET:
+            headers.append('Content-Type: application/json')
+
         # Setup curl options
         c = pycurl.Curl()
-        # @TODO Add proxy's configuration
-        # @TODO Add ssl verification
         c.setopt(c.URL, http_url)
-        c.setopt(pycurl.HTTPHEADER, ['Accept:application/json'])
+        c.setopt(pycurl.CUSTOMREQUEST, http_method)
+        c.setopt(pycurl.HTTPHEADER, headers)
         c.setopt(pycurl.FAILONERROR, True)
         c.setopt(pycurl.FOLLOWLOCATION, True)
         c.setopt(pycurl.TIMEOUT, self.timeout)
-        c.setopt(pycurl.POSTFIELDS, json.dumps(request_data))
+        if http_method != HTTP_GET:
+            c.setopt(pycurl.POSTFIELDS, json.dumps(request_data))
 
         header_buffer = io.BytesIO()
         body_buffer = io.BytesIO()

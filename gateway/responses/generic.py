@@ -19,9 +19,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-from tests.builders import *
-from tests.crypro import *
-from tests.operations import *
-from tests.test_client import *
-from tests.responses import *
-from tests.utils import *
+from gateway.responses.parts import Error
+from gateway.responses.response import get_value
+
+
+class GenericResponse:
+    def __init__(self, data: dict = None) -> None:
+        self.error = get_value(data, "error", Error)  # type: Error

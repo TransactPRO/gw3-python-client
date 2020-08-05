@@ -20,17 +20,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from typing import Dict
+
+from gateway.data_sets.request_parameters import RequestParameters, RequestParametersTypes
+
 
 class AuthorizationBuilder(object):
     def __init__(self, __client_auth_data_set, __client_mandatory_fields):
-        from gateway.data_sets.request_parameters import (
-            RequestParameters,
-            RequestParametersTypes
-        )
         self.__data_sets = RequestParameters
         self.__data_types = RequestParametersTypes
         self.__auth_mandatory_fields = __client_mandatory_fields
         self.__auth_data_set = __client_auth_data_set
+
+    def add_merchant_guid(self, guid=None):
+        """
+        Transact Pro Merchant GUID.
+
+        Args:
+            guid (str): Transact Pro Merchant GUID.
+        """
+        self.__auth_data_set[self.__data_sets.AUTH_DATA_MERCHANT_GUID] = guid
 
     def add_account_guid(self, guid=None):
         """
@@ -39,7 +48,6 @@ class AuthorizationBuilder(object):
         Args:
             guid (str): Transact Pro Merchant Account GUID.
         """
-        self.__auth_mandatory_fields[self.__data_sets.AUTH_DATA_ACCOUNT_GUID] = self.__data_types.AUTH_DATA_ACCOUNT_GUID
         self.__auth_data_set[self.__data_sets.AUTH_DATA_ACCOUNT_GUID] = guid
 
     def add_secret_key(self, value=None):
@@ -49,7 +57,6 @@ class AuthorizationBuilder(object):
         Args:
             value (str): Transact Pro Merchant Password
         """
-        self.__auth_mandatory_fields[self.__data_sets.AUTH_DATA_SECRET_KEY] = self.__data_types.AUTH_DATA_SECRET_KEY
         self.__auth_data_set[self.__data_sets.AUTH_DATA_SECRET_KEY] = value
 
     def add_session_id(self, id_value=None):
@@ -59,4 +66,17 @@ class AuthorizationBuilder(object):
         Args:
             id_value (str): Transact Pro Gateway Session ID
         """
-        self.__auth_data_set[self.__data_sets.AUTH_DATA_SECRET_KEY] = id_value
+        self.__auth_mandatory_fields[self.__data_sets.AUTH_DATA_SESSION_ID] = self.__data_types.AUTH_DATA_SESSION_ID
+        self.__auth_data_set[self.__data_sets.AUTH_DATA_SESSION_ID] = id_value
+
+    @staticmethod
+    def get_object_guid(auth_data: Dict) -> str:
+        """
+        Returns an appropriate object's GUID
+
+        :param auth_data: previously filled authentication data
+        :return: appropriate GUID
+        """
+        return auth_data[RequestParameters.AUTH_DATA_ACCOUNT_GUID] \
+            if RequestParameters.AUTH_DATA_ACCOUNT_GUID in auth_data \
+            else auth_data[RequestParameters.AUTH_DATA_MERCHANT_GUID]

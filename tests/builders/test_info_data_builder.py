@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from gateway.builders.info_data_builder import InfoDataBuilder
 from unittest import TestCase
-from unittest.mock import patch
+
+from gateway.builders.info_data_builder import InfoDataBuilder
 
 
-class TestCommandDataBuilder(TestCase):
+class TestInfoDataBuilder(TestCase):
     BUILDER = None
     DATA = {}
     MANDATORY_FIELDS = {}
@@ -39,23 +39,7 @@ class TestCommandDataBuilder(TestCase):
         del self.DATA
         del self.MANDATORY_FIELDS
 
-    def test_create_builder_instance(self):
-        """Will succeed"""
-        self.assertIsInstance(self.BUILDER, InfoDataBuilder)
-
-    def test_build_with_add_gateway_transaction_ids(self):
-        """Will succeed"""
-        new = self.BUILDER
-        with patch.object(new, 'add_gateway_transaction_ids') as mock:
-            new.add_gateway_transaction_ids([
-                '16f462cb-9s32-dsv2-b983-fa14da6421f1'
-            ])
-        mock.assert_called_once_with([
-            '16f462cb-9s32-dsv2-b983-fa14da6421f1'
-        ])
-
     def test_mandatory_and_data_fields(self):
-        """Will succeed"""
         new = self.BUILDER
         new.add_gateway_transaction_ids([
             '16f462cb-9s32-dsv2-b983-fa14da6421f1'

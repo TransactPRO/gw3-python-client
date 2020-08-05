@@ -20,6 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gateway.data_sets.request_parameters import RequestParameters
+from gateway.utils.data_structures import DataStructuresUtils
+
 
 class CustomerDataBuilder(object):
     """
@@ -35,24 +38,22 @@ class CustomerDataBuilder(object):
     # Nested layer of customer data set
     __SHIPPING_DATA_KEY = 'shipping-address'
 
-    # Base structure of customer data
-    __customer_data_structure = {
-        __CUSTOMER_DATA_KEY: None
-    }
-
-    # Base structure of billing layer
-    __billing_data_structure = {
-        __BILLING_DATA_KEY: None
-    }
-
-    # Base structure of shipping layer
-    __shipping_data_structure = {
-        __SHIPPING_DATA_KEY: None
-    }
-
     def __init__(self, __transaction_data_set):
-        from gateway.utils.data_structures import DataStructuresUtils
-        from gateway.data_sets.request_parameters import RequestParameters
+        # Base structure of customer data
+        self.__customer_data_structure = {
+            self.__CUSTOMER_DATA_KEY: None
+        }
+
+        # Base structure of billing layer
+        self.__billing_data_structure = {
+            self.__BILLING_DATA_KEY: None
+        }
+
+        # Base structure of shipping layer
+        self.__shipping_data_structure = {
+            self.__SHIPPING_DATA_KEY: None
+        }
+
         self.__data_structure_util = DataStructuresUtils
         self.__req_params = RequestParameters
         self.__general_data_set = __transaction_data_set

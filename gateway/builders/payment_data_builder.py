@@ -20,22 +20,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gateway.data_sets.request_parameters import (
+    RequestParameters,
+    RequestParametersTypes
+)
+from gateway.utils.data_structures import DataStructuresUtils
+
 
 class PaymentDataBuilder(object):
     """
     Payment data - information about credit card
     """
     __PAYMENT_METHOD_DATA_KEY = 'payment-method-data'
-    __payment_data_structure = {
-        __PAYMENT_METHOD_DATA_KEY: None
-    }
 
     def __init__(self, __client_transaction_data_set, __client_mandatory_fields):
-        from gateway.utils.data_structures import DataStructuresUtils
-        from gateway.data_sets.request_parameters import (
-            RequestParameters,
-            RequestParametersTypes
-        )
+        self.__payment_data_structure = {
+            self.__PAYMENT_METHOD_DATA_KEY: None
+        }
+
         self.__data_structure_util = DataStructuresUtils
         self.__data_sets = RequestParameters
         self.__data_types = RequestParametersTypes
@@ -49,9 +51,7 @@ class PaymentDataBuilder(object):
         Args:
             pan_number (str): Credit card number
         """
-        self.__payment_mandatory_fields[
-            self.__data_sets.PAYMENT_METHOD_DATA_PAN
-        ] = self.__data_types.PAYMENT_METHOD_DATA_PAN
+        self.__payment_mandatory_fields[self.__data_sets.PAYMENT_METHOD_DATA_PAN] = self.__data_types.PAYMENT_METHOD_DATA_PAN
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__payment_data_set,
