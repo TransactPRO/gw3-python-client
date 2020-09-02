@@ -443,8 +443,8 @@ class TestResponseParsing(TestCase):
     def test_payment_successful_api(self):
         body = b"{\"acquirer-details\":{\"dynamic-descriptor\":\"test\",\"eci-sli\":\"648\",\"result-code\":\"000\",\"status-description\":\"Approved\"," \
                b"\"status-text\":\"Approved\",\"terminal-mid\":\"5800978\",\"transaction-id\":\"1899493845214315\"},\"error\":{}," \
-               b"\"gw\":{\"gateway-transaction-id\":\"8a9bed66-8412-494f-9866-2c26b5ceee62\",\"status-code\":7,\"status-text\":\"SUCCESS\"," \
-               b"\"original-gateway-transaction-id\":\"orig-aaa\",\"parent-gateway-transaction-id\":\"parent-aaa\"}," \
+               b"\"gw\":{\"gateway-transaction-id\":\"8a9bed66-8412-494f-9866-2c26b5ceee62\",\"merchant-transaction-id\":\"87d53472ba27fde33ec03e2f5ca6137a\"," \
+               b"\"status-code\":7,\"status-text\":\"SUCCESS\",\"original-gateway-transaction-id\":\"orig-aaa\",\"parent-gateway-transaction-id\":\"parent-aaa\"}," \
                b"\"warnings\":[\"Soon counters will be exceeded for the merchant\",\"Soon counters will be exceeded for the account\"," \
                b"\"Soon counters will be exceeded for the terminal group\",\"Soon counters will be exceeded for the terminal\"]}\n"
 
@@ -462,6 +462,7 @@ class TestResponseParsing(TestCase):
 
         self.assertIsNotNone(parsed_response.gw)
         self.assertEqual("8a9bed66-8412-494f-9866-2c26b5ceee62", parsed_response.gw.gateway_transaction_id)
+        self.assertEqual("87d53472ba27fde33ec03e2f5ca6137a", parsed_response.gw.merchant_transaction_id)
         self.assertEqual("orig-aaa", parsed_response.gw.original_gateway_transaction_id)
         self.assertEqual("parent-aaa", parsed_response.gw.parent_gateway_transaction_id)
         self.assertEqual(Status.SUCCESS, parsed_response.gw.status_code)
