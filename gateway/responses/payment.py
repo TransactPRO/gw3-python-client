@@ -41,6 +41,7 @@ class AcquirerDetails:
 class GW:
     def __init__(self, data: dict = None) -> None:
         self.gateway_transaction_id = get_value(data, "gateway-transaction-id", str, "")  # type: str
+        self.merchant_transaction_id = get_value(data, "merchant-transaction-id", str, "")  # type: str
         self.original_gateway_transaction_id = get_value(data, "original-gateway-transaction-id", str)  # type: str
         self.parent_gateway_transaction_id = get_value(data, "parent-gateway-transaction-id", str)  # type: str
         self.status_code = get_value(data, "status-code", Status)  # type: Status
