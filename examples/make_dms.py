@@ -74,6 +74,7 @@ transaction_dms_hold.customer_data_set().add_shipping_flat(flat_number='12')
 transaction_dms_hold.customer_data_set().add_shipping_zip(zip_code='LV-1039')
 
 # Don't forget to fill your merchant data in your transaction, like this one
+transaction_dms_hold.merchant_order_data_set().add_merchant_side_url(url='http://example.com')
 transaction_dms_hold.merchant_order_data_set().add_merchant_transaction_id(
     transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(random.randrange(0, 50, 2)))
 )

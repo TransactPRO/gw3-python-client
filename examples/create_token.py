@@ -46,6 +46,7 @@ operation.payment_method_set().add_pan_number(pan_number='4222222222222')
 # And about payment
 operation.money_data_set().add_payment_currency(iso_4217_ccy='EUR')
 # Probably you will needed description of yours transaction
+operation.merchant_order_data_set().add_merchant_side_url(url='http://example.com')
 operation.merchant_order_data_set().add_merchant_order_description(
     description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
 )

@@ -50,6 +50,7 @@ transaction_sms.payment_method_set().add_pan_number(pan_number='4222222222222')
 transaction_sms.money_data_set().add_payment_amount(minor_value=100)
 transaction_sms.money_data_set().add_payment_currency(iso_4217_ccy='EUR')
 # Probably you will needed description of yours transaction
+transaction_sms.merchant_order_data_set().add_merchant_side_url(url='http://example.com')
 transaction_sms.merchant_order_data_set().add_merchant_order_description(
     description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
 )
@@ -79,9 +80,9 @@ try:
     response = GATEWAY_CLIENT.make_request(request_data=request_data)
     parsed_response = transaction_sms.parse(response)
 
-    if parsed_response.error.error_code != 0:
+    if parsed_response.error.error_code:
         raise RuntimeError("GW error: %s" % parsed_response.error.message)
-    elif parsed_response.gw.status_code == Status.CARD_FORM_URL_SENT:
+    elif parsed_response.gw.redirect_url:
         pass  # redirect cardholder to parsed_response.gw.redirect_url
 except DigestMissingError:
     raise
