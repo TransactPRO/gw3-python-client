@@ -71,6 +71,8 @@ class RequestParameters:
     GENERAL_DATA_ORDER_DATA_MERCHANT_REFERRING_NAME = 'merchant-referring-name'
     GENERAL_DATA_ORDER_DATA_CUSTOM_3D_RETURN_URL = 'custom-3d-return-url'
     GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL = 'custom-return-url'
+    GENERAL_DATA_ORDER_DATA_RECURRING_EXPIRY = 'recurring-expiry'
+    GENERAL_DATA_ORDER_DATA_RECURRING_FREQUENCY = 'recurring-frequency'
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = 'pan'
@@ -155,6 +157,8 @@ class RequestParametersTypes(RequestParameters):
     GENERAL_DATA_ORDER_DATA_MERCHANT_REFERRING_NAME = str
     GENERAL_DATA_ORDER_DATA_CUSTOM_3D_RETURN_URL = str
     GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL = str
+    GENERAL_DATA_ORDER_DATA_RECURRING_EXPIRY = str
+    GENERAL_DATA_ORDER_DATA_RECURRING_FREQUENCY = str
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = str

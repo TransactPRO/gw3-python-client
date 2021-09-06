@@ -203,3 +203,35 @@ class MerchantOrderBuilder(object):
                 self.__req_params.GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL: custom_return_url
             }
         )
+
+    def add_recurring_expiry(self, recurring_expiry=None):
+        """
+        Add date after which no further authorizations shall be performed (format: YYYYMMDD)
+
+        Args:
+            recurring_expiry (str): recurring expiry
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_RECURRING_EXPIRY: recurring_expiry
+            }
+        )
+
+    def add_recurring_frequency(self, recurring_frequency=None):
+        """
+        Add the minimum number of days between authorizations (for variable frequency use 1)
+
+        Args:
+            recurring_frequency (str): recurring frequency
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_RECURRING_FREQUENCY: recurring_frequency
+            }
+        )

@@ -48,6 +48,8 @@ class TestMerchantOrderBuilder(TestCase):
                     'merchant-referring-name': 'REF NAME',
                     'custom-3d-return-url': 'https://example.com',
                     'custom-return-url': 'https://another-example.com',
+                    'recurring-expiry': '20310131',
+                    'recurring-frequency': '30',
                     'order-meta': {
                         'url': 'nice.example.com',
                         'sequence': '0',
@@ -68,6 +70,8 @@ class TestMerchantOrderBuilder(TestCase):
         new.add_merchant_referring_name('REF NAME')
         new.add_custom_3d_return_url('https://example.com')
         new.add_custom_return_url('https://another-example.com')
+        new.add_recurring_expiry('20310131')
+        new.add_recurring_frequency('30')
         new.add_merchant_order_meta(
             json_object={
                 'f_name': 'Jane',
