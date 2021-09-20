@@ -41,14 +41,20 @@ class TestInfoDataBuilder(TestCase):
 
     def test_mandatory_and_data_fields(self):
         new = self.BUILDER
-        new.add_gateway_transaction_ids([
-            '16f462cb-9s32-dsv2-b983-fa14da6421f1'
-        ])
+        new.add_gateway_transaction_ids(['16f462cb-9s32-dsv2-b983-fa14da6421f1'])
+        new.add_merchant_transaction_ids(['fa14da6421f1-9s32-dsv2-b983-16f462cb'])
+
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
         valid_fields = {
-            RequestParameters.COMMAND_DATA_GATEWAY_TRANSACTION_IDS:
-                RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_IDS,
+            RequestParameters.COMMAND_DATA_GATEWAY_TRANSACTION_IDS: RequestParametersTypes.COMMAND_DATA_GATEWAY_TRANSACTION_IDS,
+            RequestParameters.COMMAND_DATA_MERCHANT_TRANSACTION_IDS: RequestParametersTypes.COMMAND_DATA_MERCHANT_TRANSACTION_IDS,
         }
         self.assertDictEqual(valid_fields, self.MANDATORY_FIELDS)
-        valid_data_structure = {'command-data': {'gateway-transaction-ids': ['16f462cb-9s32-dsv2-b983-fa14da6421f1']}}
+
+        valid_data_structure = {
+            'command-data': {
+                'gateway-transaction-ids': ['16f462cb-9s32-dsv2-b983-fa14da6421f1'],
+                'merchant-transaction-ids': ['fa14da6421f1-9s32-dsv2-b983-16f462cb'],
+            }
+        }
         self.assertDictEqual(valid_data_structure, self.DATA)

@@ -21,6 +21,7 @@
 # THE SOFTWARE.
 import datetime
 from typing import Sequence
+from enum import Enum
 
 from gateway.responses.constants import Status
 from gateway.responses.generic import GenericResponse
@@ -96,6 +97,13 @@ class ResultResponse(TransactionsList):
         super().__init__(TransactionResult, data)
 
 
+class CardFamily(Enum):
+    VISA = 'VISA'
+    MASTER_CARD = 'MC'
+    MAESTRO = 'MA'
+    AMERICAN_EXPRESS = 'AMEX'
+
+
 class TransactionStatus(TransactionsListElement):
     def __init__(self, data: dict = None) -> None:
         super().__init__(data)
@@ -108,6 +116,8 @@ class TransactionStatus(TransactionsListElement):
         self.status_code_general = get_value(status_data, 'status-code-general', Status)
         self.status_text = get_value(status_data, 'status-text', str, '')
         self.status_text_general = get_value(status_data, 'status-text-general', str, '')
+        self.card_family = get_value(status_data, 'card-family', CardFamily)
+        self.card_mask = get_value(status_data, 'card-mask', str, '')
 
 
 class StatusResponse(TransactionsList):

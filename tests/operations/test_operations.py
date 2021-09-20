@@ -26,7 +26,7 @@ from gateway.builders.transaction_builder import *
 from gateway.operations.operations import Operations
 from gateway.responses.constants import Status, ErrorCode
 from gateway.responses.enrollment import EnrollmentStatus
-from gateway.responses.lists import RefundsListElement, TransactionResult, TransactionStatus
+from gateway.responses.lists import RefundsListElement, TransactionResult, TransactionStatus, CardFamily
 from gateway.responses.parts import TransactionInfo
 from gateway.responses.payment import GW
 from gateway.responses.response import parse_date
@@ -410,9 +410,10 @@ class TestResponseParsing(TestCase):
 
     def test_status(self):
         body = b"{\"transactions\":[{\"gateway-transaction-id\":\"cd7b8bdf-3c78-4540-95d0-68018d2aba97\",\"status\":" \
-               b"[{\"gateway-transaction-id\":\"cd7b8bdf-3c78-4540-95d0-68018d2aba97\",\"status-code\":7,\"status-code-general\":8," \
-               b"\"status-text\":\"SUCCESS\",\"status-text-general\":\"EXPIRED\"}]},{\"gateway-transaction-id\":\"37908991-789b-4d79-8c6a-f90ba0ce12b6\"," \
-               b"\"status\":[{\"gateway-transaction-id\":\"37908991-789b-4d79-8c6a-f90ba0ce12b6\",\"status-code\":8,\"status-code-general\":7," \
+               b"[{\"card-mask\":\"534219*5267\",\"card-family\":\"MC\",\"gateway-transaction-id\":\"cd7b8bdf-3c78-4540-95d0-68018d2aba97\"," \
+               b"\"status-code\":7,\"status-code-general\":8,\"status-text\":\"SUCCESS\",\"status-text-general\":\"EXPIRED\"}]}," \
+               b"{\"gateway-transaction-id\":\"37908991-789b-4d79-8c6a-f90ba0ce12b6\",\"status\":[" \
+               b"{\"gateway-transaction-id\":\"37908991-789b-4d79-8c6a-f90ba0ce12b6\",\"status-code\":8,\"status-code-general\":7," \
                b"\"status-text\":\"EXPIRED\",\"status-text-general\":\"SUCCESS\"}]}," \
                b"{\"error\":{\"code\":400,\"message\":\"Failed to fetch data for transaction with gateway id: 99900000-789b-4d79-8c6a-f90ba0ce12b0\"}," \
                b"\"gateway-transaction-id\":\"99900000-789b-4d79-8c6a-f90ba0ce12b0\"}]}"
@@ -427,6 +428,8 @@ class TestResponseParsing(TestCase):
         self.assertEqual(Status.EXPIRED, tr1.status_code_general)
         self.assertEqual("SUCCESS", tr1.status_text)
         self.assertEqual("EXPIRED", tr1.status_text_general)
+        self.assertEqual(CardFamily.MASTER_CARD, tr1.card_family)
+        self.assertEqual("534219*5267", tr1.card_mask)
 
         tr2: TransactionStatus = parsed_response.transactions[1]
         self.assertEqual("37908991-789b-4d79-8c6a-f90ba0ce12b6", tr2.gateway_transaction_id)

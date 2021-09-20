@@ -65,3 +65,24 @@ class InfoDataBuilder(object):
             new_key=self.__INFO_COMMAND_DATA_KEY,
             new_dict={self.__data_sets.COMMAND_DATA_GATEWAY_TRANSACTION_IDS: list_of_gate_transaction_id}
         )
+
+    def add_merchant_transaction_ids(self, list_of_merchant_transaction_id=None):
+        """
+        Add previously sent merchant transaction IDs
+
+        Example -> ["2d4b377c-648c-432b-a4dc-b386901116d7", "2323377c-548c-4scb-a6dc-b3899kxah520"]
+
+        Args:
+            list_of_merchant_transaction_id (list): Previously sent merchant transaction IDs
+        """
+        if list_of_merchant_transaction_id is None:
+            list_of_merchant_transaction_id = []
+
+        self.__payment_mandatory_fields[self.__data_sets.COMMAND_DATA_MERCHANT_TRANSACTION_IDS] = self.__data_types.COMMAND_DATA_MERCHANT_TRANSACTION_IDS
+
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_set,
+            working_dict=self.__command_data_structure,
+            new_key=self.__INFO_COMMAND_DATA_KEY,
+            new_dict={self.__data_sets.COMMAND_DATA_MERCHANT_TRANSACTION_IDS: list_of_merchant_transaction_id}
+        )
