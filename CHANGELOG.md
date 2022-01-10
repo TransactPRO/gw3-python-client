@@ -1,3 +1,7 @@
+##### Version 1.7.6 (2022-01-10)
+
+	Fix parameters naming for client's IPs
+
 ##### Version 1.7.5 (2021-09-21)
 
 	Added card type and card mask fields to parsed status response; added
