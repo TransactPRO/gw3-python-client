@@ -64,8 +64,8 @@ transaction_sms.merchant_order_data_set().add_merchant_transaction_id(
     transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(random.randrange(0, 50, 2)))
 )
 # Set our cardholder IP. That's optionally.
-transaction_sms.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
-transaction_sms.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
+transaction_sms.system_data_set().add_user_ip(cardholder_ip='192.168.1.70')
+transaction_sms.system_data_set().add_x_forwarded_for_ip(cardholder_ip='192.168.1.70')
 
 # Step 3
 # Construct our transaction request data

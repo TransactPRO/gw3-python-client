@@ -55,7 +55,7 @@ operation.merchant_order_data_set().add_merchant_transaction_id(
     transaction_id=''.join(random.choice(string.ascii_lowercase) for t_id in range(random.randrange(0, 50, 2)))
 )
 # Set our cardholder IP. That's optionally.
-operation.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
+operation.system_data_set().add_user_ip(cardholder_ip='192.168.1.70')
 
 # Step 3
 # Construct our transaction request data

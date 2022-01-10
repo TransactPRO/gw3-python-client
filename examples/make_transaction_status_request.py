@@ -43,8 +43,8 @@ transaction_status.info_command_data_set().add_gateway_transaction_ids(
     ]
 )
 # Set our cardholder IP. That's optionally.
-transaction_status.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
-transaction_status.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
+transaction_status.system_data_set().add_user_ip(cardholder_ip='192.168.1.70')
+transaction_status.system_data_set().add_x_forwarded_for_ip(cardholder_ip='192.168.1.70')
 
 # Step 3
 # Construct our transaction request data

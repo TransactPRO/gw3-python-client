@@ -38,8 +38,8 @@ class TestSystemDataBuilder(TestCase):
 
     def test_mandatory_and_data_fields(self):
         new = self.BUILDER
-        new.add_user_ip(cardholder_ipv4='192.168.1.70')
-        new.add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
+        new.add_user_ip(cardholder_ip='192.168.1.70')
+        new.add_x_forwarded_for_ip(cardholder_ip='192.168.1.70')
         new.add_browser_accept_header("application/json, text/javascript, */*; q=0.01")
         new.add_browser_java_enabled(True)
         new.add_browser_javascript_enabled(True)

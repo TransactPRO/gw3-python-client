@@ -40,34 +40,34 @@ class SystemDataBuilder(object):
         self.__data_sets = RequestParameters
         self.__system_data_set = __client_transaction_data_set
 
-    def add_user_ip(self, cardholder_ipv4=None):
+    def add_user_ip(self, cardholder_ip=None):
         """
-        Add cardholder IPv4 address
+        Add cardholder IP address
 
         Args:
-            cardholder_ipv4 (str): Cardholder IPv4 address
+            cardholder_ip (str): Cardholder IP address
         """
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__system_data_set,
             working_dict=self.__system_data_structure,
             new_key=self.__SYSTEM_DATA_KEY,
-            new_dict={self.__data_sets.SYSTEM_USER_IP: cardholder_ipv4}
+            new_dict={self.__data_sets.SYSTEM_USER_IP: cardholder_ip}
         )
 
-    def add_x_forwarded_for_ip(self, cardholder_ipv4=None):
+    def add_x_forwarded_for_ip(self, cardholder_ip=None):
         """
-        Add cardholder real IPv4 address in case of proxy
+        Add cardholder real IP address in case of proxy
 
         Args:
-            cardholder_ipv4 (str): Cardholder real IPv4 address in case of proxy
+            cardholder_ip (str): Cardholder real IP address in case of proxy
         """
 
         self.__data_structure_util.add_to_dict(
             source_dict=self.__system_data_set,
             working_dict=self.__system_data_structure,
             new_key=self.__SYSTEM_DATA_KEY,
-            new_dict={self.__data_sets.SYSTEM_X_FORWARDED_FOR: cardholder_ipv4}
+            new_dict={self.__data_sets.SYSTEM_X_FORWARDED_FOR: cardholder_ip}
         )
 
     def add_browser_accept_header(self, browser_accept_header=None):

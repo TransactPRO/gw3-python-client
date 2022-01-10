@@ -88,8 +88,8 @@ transaction_dms_hold.merchant_order_data_set().add_merchant_order_meta(
     json_object={'f_name': 'Jane', 'l_name': 'Doe', 'sequence': '0', 'title': 'president', 'url': 'nice.example.com'}
 )
 # So, all almost done. Set our cardholder IP. That's optionally.
-transaction_dms_hold.system_data_set().add_user_ip(cardholder_ipv4='192.168.1.70')
-transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ipv4='192.168.1.70')
+transaction_dms_hold.system_data_set().add_user_ip(cardholder_ip='192.168.1.70')
+transaction_dms_hold.system_data_set().add_x_forwarded_for_ip(cardholder_ip='192.168.1.70')
 
 # Step 3
 # Construct our transaction request data
