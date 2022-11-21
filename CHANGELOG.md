@@ -7,6 +7,15 @@
 	 - add_external_mpi_cavv
 	 - add_external_mpi_trans_status
 
+##### Version 1.7.7 (2022-11-21)
+
+	Added support for external 3-D Secure. Added methods for payment_method_set (when 3-D Secure was completed before the Gateway call):
+	 - add_external_mpi_protocol_version
+	 - add_external_mpi_ds_trans_id
+	 - add_external_mpi_xid
+	 - add_external_mpi_cavv
+	 - add_external_mpi_trans_status
+
 ##### Version 1.7.6 (2022-01-10)
 
 	Fix parameters naming for client's IPs
