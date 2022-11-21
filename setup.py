@@ -24,6 +24,9 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
     'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
@@ -33,7 +36,7 @@ required = [
 
 setuptools.setup(
     name='transactpro-gw3-client',
-    version='1.7.6',
+    version='1.7.7',
     description='Transact PRO Gateway3 implementation in Python.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",

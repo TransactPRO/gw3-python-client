@@ -32,10 +32,16 @@ class PaymentDataBuilder(object):
     Payment data - information about credit card
     """
     __PAYMENT_METHOD_DATA_KEY = 'payment-method-data'
+    # Nested layer of external 3-D Secure data set
+    __EXTERNAL_MPI_DATA_KEY = 'external-mpi-data'
 
     def __init__(self, __client_transaction_data_set, __client_mandatory_fields):
         self.__payment_data_structure = {
             self.__PAYMENT_METHOD_DATA_KEY: None
+        }
+
+        self.__external_mpi_data_structure = {
+            self.__EXTERNAL_MPI_DATA_KEY: None
         }
 
         self.__data_structure_util = DataStructuresUtils
@@ -43,6 +49,10 @@ class PaymentDataBuilder(object):
         self.__data_types = RequestParametersTypes
         self.__payment_data_set = __client_transaction_data_set
         self.__payment_mandatory_fields = __client_mandatory_fields
+
+    def __setup_external_mpi_data(self):
+        if self.__EXTERNAL_MPI_DATA_KEY not in self.__payment_data_structure:
+            self.__payment_data_structure[self.__EXTERNAL_MPI_DATA_KEY] = self.__external_mpi_data_structure
 
     def add_pan_number(self, pan_number=None):
         """
@@ -103,4 +113,84 @@ class PaymentDataBuilder(object):
             working_dict=self.__payment_data_structure,
             new_key=self.__PAYMENT_METHOD_DATA_KEY,
             new_dict={self.__data_sets.PAYMENT_METHOD_DATA_CARDHOLDER_NAME: first_last_name}
+        )
+
+    def add_external_mpi_protocol_version(self, protocol_version=None):
+        """
+        Add 3-D Secure protocolVersion
+
+        Args:
+            protocol_version (str): 3-D Secure protocolVersion
+        """
+
+        self.__setup_external_mpi_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_mpi_data_structure,
+            new_key=self.__EXTERNAL_MPI_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_MPI_PROTOCOL: protocol_version}
+        )
+
+    def add_external_mpi_ds_trans_id(self, ds_trans_id=None):
+        """
+        Add 3-D Secure dsTransId
+
+        Args:
+            ds_trans_id (str): 3-D Secure dsTransId
+        """
+
+        self.__setup_external_mpi_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_mpi_data_structure,
+            new_key=self.__EXTERNAL_MPI_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_MPI_DS_TRANS_ID: ds_trans_id}
+        )
+
+    def add_external_mpi_xid(self, xid=None):
+        """
+        Add 3-D Secure XID
+
+        Args:
+            xid (str): 3-D Secure XID
+        """
+
+        self.__setup_external_mpi_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_mpi_data_structure,
+            new_key=self.__EXTERNAL_MPI_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_MPI_XID: xid}
+        )
+
+    def add_external_mpi_cavv(self, cavv=None):
+        """
+        Add 3-D Secure CAVV
+
+        Args:
+            cavv (str): 3-D Secure CAVV
+        """
+
+        self.__setup_external_mpi_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_mpi_data_structure,
+            new_key=self.__EXTERNAL_MPI_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_MPI_CAVV: cavv}
+        )
+
+    def add_external_mpi_trans_status(self, trans_status=None):
+        """
+        Add 3-D Secure transStatus
+
+        Args:
+            trans_status (str): 3-D Secure transStatus
+        """
+
+        self.__setup_external_mpi_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_mpi_data_structure,
+            new_key=self.__EXTERNAL_MPI_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_MPI_TRANS_STATUS: trans_status}
         )
