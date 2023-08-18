@@ -235,3 +235,37 @@ class MerchantOrderBuilder(object):
                 self.__req_params.GENERAL_DATA_ORDER_DATA_RECURRING_FREQUENCY: recurring_frequency
             }
         )
+
+    def set_mits_expected(self, mits_expected=True):
+        """
+        Set flag that subsequent MIT transactions are supposed to be
+
+        Args:
+            mits_expected (bool): must be set to true for UCOF initialization if any subsequent MIT transactions
+            are supposed to be
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_MITS_EXPECTED: mits_expected
+            }
+        )
+
+    def set_variable_amount_recurring(self, variable_amount_recurring=True):
+        """
+        Set flag that amount will not be fixed for subsequent transactions
+
+        Args:
+            variable_amount_recurring (bool): must be set to true for initial recurring transaction
+            if amount will not be fixed for subsequent transactions
+        """
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__general_data_set[self.__GENERAL_DATA_KEY],
+            working_dict=self.__order_data_structure,
+            new_key=self.__ORDER_DATA_KEY,
+            new_dict={
+                self.__req_params.GENERAL_DATA_ORDER_DATA_VARIABLE_AMOUNT_RECURRING: variable_amount_recurring
+            }
+        )
