@@ -36,7 +36,7 @@ required = [
 
 setuptools.setup(
     name='transactpro-gw3-client',
-    version='1.7.7',
+    version='1.7.8',
     description='Transact PRO Gateway3 implementation in Python.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",

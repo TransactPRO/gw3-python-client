@@ -50,6 +50,8 @@ class TestMerchantOrderBuilder(TestCase):
                     'custom-return-url': 'https://another-example.com',
                     'recurring-expiry': '20310131',
                     'recurring-frequency': '30',
+                    'mits-expected': True,
+                    'variable-amount-recurring': True,
                     'order-meta': {
                         'url': 'nice.example.com',
                         'sequence': '0',
@@ -72,6 +74,8 @@ class TestMerchantOrderBuilder(TestCase):
         new.add_custom_return_url('https://another-example.com')
         new.add_recurring_expiry('20310131')
         new.add_recurring_frequency('30')
+        new.set_mits_expected()
+        new.set_variable_amount_recurring()
         new.add_merchant_order_meta(
             json_object={
                 'f_name': 'Jane',

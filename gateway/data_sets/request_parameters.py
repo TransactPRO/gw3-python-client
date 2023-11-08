@@ -73,6 +73,8 @@ class RequestParameters:
     GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL = 'custom-return-url'
     GENERAL_DATA_ORDER_DATA_RECURRING_EXPIRY = 'recurring-expiry'
     GENERAL_DATA_ORDER_DATA_RECURRING_FREQUENCY = 'recurring-frequency'
+    GENERAL_DATA_ORDER_DATA_MITS_EXPECTED = 'mits-expected'
+    GENERAL_DATA_ORDER_DATA_VARIABLE_AMOUNT_RECURRING = 'variable-amount-recurring'
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = 'pan'
@@ -164,6 +166,8 @@ class RequestParametersTypes(RequestParameters):
     GENERAL_DATA_ORDER_DATA_CUSTOM_RETURN_URL = str
     GENERAL_DATA_ORDER_DATA_RECURRING_EXPIRY = str
     GENERAL_DATA_ORDER_DATA_RECURRING_FREQUENCY = str
+    GENERAL_DATA_ORDER_DATA_MITS_EXPECTED = bool
+    GENERAL_DATA_ORDER_DATA_VARIABLE_AMOUNT_RECURRING = bool
 
     # Payment data sets
     PAYMENT_METHOD_DATA_PAN = str
