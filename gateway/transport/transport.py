@@ -75,7 +75,7 @@ def new_http_client(cli_name='requests', *args, **kwargs):
 
 class HttpTransport(object):
     def __init__(self, verify_ssl=True, proxy=None, timeout=60):
-        if verify_ssl is bool:
+        if isinstance(verify_ssl, bool):
             self.verify_ssl = verify_ssl
         else:
             self.verify_ssl = True

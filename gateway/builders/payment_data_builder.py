@@ -34,6 +34,8 @@ class PaymentDataBuilder(object):
     __PAYMENT_METHOD_DATA_KEY = 'payment-method-data'
     # Nested layer of external 3-D Secure data set
     __EXTERNAL_MPI_DATA_KEY = 'external-mpi-data'
+    # Nested layer of decrypted token's data set
+    __EXTERNAL_TOKEN_DATA_KEY = 'external-token-data'
 
     def __init__(self, __client_transaction_data_set, __client_mandatory_fields):
         self.__payment_data_structure = {
@@ -42,6 +44,10 @@ class PaymentDataBuilder(object):
 
         self.__external_mpi_data_structure = {
             self.__EXTERNAL_MPI_DATA_KEY: None
+        }
+
+        self.__external_token_data_structure = {
+            self.__EXTERNAL_TOKEN_DATA_KEY: None
         }
 
         self.__data_structure_util = DataStructuresUtils
@@ -53,6 +59,10 @@ class PaymentDataBuilder(object):
     def __setup_external_mpi_data(self):
         if self.__EXTERNAL_MPI_DATA_KEY not in self.__payment_data_structure:
             self.__payment_data_structure[self.__EXTERNAL_MPI_DATA_KEY] = self.__external_mpi_data_structure
+
+    def __setup_external_token_data(self):
+        if self.__EXTERNAL_TOKEN_DATA_KEY not in self.__payment_data_structure:
+            self.__payment_data_structure[self.__EXTERNAL_TOKEN_DATA_KEY] = self.__external_token_data_structure
 
     def add_pan_number(self, pan_number=None):
         """
@@ -113,6 +123,21 @@ class PaymentDataBuilder(object):
             working_dict=self.__payment_data_structure,
             new_key=self.__PAYMENT_METHOD_DATA_KEY,
             new_dict={self.__data_sets.PAYMENT_METHOD_DATA_CARDHOLDER_NAME: first_last_name}
+        )
+
+    def add_token(self, token=None):
+        """
+        Add token
+
+        Args:
+            token (str): Token AS-IS
+        """
+
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_set,
+            working_dict=self.__payment_data_structure,
+            new_key=self.__PAYMENT_METHOD_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_TOKEN: token}
         )
 
     def add_external_mpi_protocol_version(self, protocol_version=None):
@@ -193,4 +218,100 @@ class PaymentDataBuilder(object):
             working_dict=self.__external_mpi_data_structure,
             new_key=self.__EXTERNAL_MPI_DATA_KEY,
             new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_MPI_TRANS_STATUS: trans_status}
+        )
+
+    def add_external_token_cryptogram(self, cryptogram=None):
+        """
+        Add cryptogram from decrypted token's data
+
+        Args:
+            cryptogram (str): token cryptogram (TAVV etc.)
+        """
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_CRYPTOGRAM: cryptogram}
+        )
+
+    def add_external_token_eci(self, eci=None):
+        """
+        Add ECI from decrypted token's data
+
+        Args:
+            eci (str): token ECI
+        """
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_ECI: eci}
+        )
+
+    def add_external_token_trans_status(self, trans_status=None):
+        """
+        Add transStatus from decrypted token's data
+
+        Args:
+            trans_status (str): token transStatus
+        """
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_TRANS_STATUS: trans_status}
+        )
+
+    def add_external_token_ds_trans_id(self, ds_trans_id=None):
+        """
+        Add dsTransId from decrypted token's data
+
+        Args:
+            ds_trans_id (str): token dsTransId
+        """
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_DS_TRANS_ID: ds_trans_id}
+        )
+
+    def add_external_token_acs_trans_id(self, acs_trans_id=None):
+        """
+        Add acsTransId from decrypted token's data
+
+        Args:
+            acs_trans_id (str): token acsTransId
+        """
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_ACS_TRANS_ID: acs_trans_id}
+        )
+
+    def add_external_token_cardholder_authenticated(self, cardholder_authenticated=None):
+        """
+        Add cardHolderAuthenticated from decrypted Google Pay token's data
+
+        Args:
+            cardholder_authenticated (bool): value of paymentMethodDetails.assuranceDetails.cardHolderAuthenticated from Google Pay token
+        """
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_AUTHENTICATED: cardholder_authenticated}
         )

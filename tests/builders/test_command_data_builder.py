@@ -47,6 +47,7 @@ class TestCommandDataBuilder(TestCase):
         new.add_card_verification_mode(321)
         new.add_payment_method_data_source(456)
         new.add_payment_method_data_token('mega-token')
+        new.add_payment_method_type('google_pay')
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
         valid_fields_types = {
             RequestParameters.COMMAND_DATA_GATEWAY_TRANSACTION_ID:
@@ -60,7 +61,8 @@ class TestCommandDataBuilder(TestCase):
                 'form-id': '#Bravo345',
                 'card-verification': 321,
                 'payment-method-data-source': 456,
-                'payment-method-data-token': 'mega-token'
+                'payment-method-data-token': 'mega-token',
+                'payment-method-type': 'google_pay'
             }
         }
         self.assertDictEqual(valid_data_structure, self.DATA)

@@ -67,12 +67,20 @@ class TestPaymentDataBuilder(TestCase):
         new.add_pan_cvv_code(cvv_number='442')
         new.add_pan_expiry_date(mm_yy='12/30')
         new.add_pan_number(pan_number='4222222222222')
+        new.add_token(token='qwerty')
 
         new.add_external_mpi_protocol_version('2.2.0')
         new.add_external_mpi_ds_trans_id('26221368-1c3d-4f3c-ba34-2efb76644c320')
         new.add_external_mpi_xid('b+f8duAy8jNTQ0DB4U3mSmPyp8s=')
         new.add_external_mpi_cavv('kBMI/uGZvlKCygBkcQIlLJeBTPLG')
         new.add_external_mpi_trans_status('Y')
+
+        new.add_external_token_cryptogram('AAMI/uGZvlKCygBkcQIlLJeBTPLG')
+        new.add_external_token_eci('07')
+        new.add_external_token_trans_status('N')
+        new.add_external_token_ds_trans_id('33321368-1c3d-4f3c-ba34-2efb76644c320')
+        new.add_external_token_acs_trans_id('99921368-1c3d-4f3c-ba34-2efb76644c320')
+        new.add_external_token_cardholder_authenticated(True)
 
         from gateway.data_sets.request_parameters import (RequestParameters, RequestParametersTypes)
         valid_fields_types = {
@@ -86,12 +94,21 @@ class TestPaymentDataBuilder(TestCase):
                 'pan': '4222222222222',
                 'cardholder-name': 'Jane Doe',
                 'exp-mm-yy': '12/30',
+                'token': 'qwerty',
                 'external-mpi-data': {
                     'protocolVersion': '2.2.0',
                     'dsTransID': '26221368-1c3d-4f3c-ba34-2efb76644c320',
                     'xid': 'b+f8duAy8jNTQ0DB4U3mSmPyp8s=',
                     'cavv': 'kBMI/uGZvlKCygBkcQIlLJeBTPLG',
                     'transStatus': 'Y'
+                },
+                'external-token-data': {
+                    'cryptogram': 'AAMI/uGZvlKCygBkcQIlLJeBTPLG',
+                    'eci': '07',
+                    'cardHolderAuthenticated': True,
+                    'transStatus': 'N',
+                    'dsTransID': '33321368-1c3d-4f3c-ba34-2efb76644c320',
+                    'acsTransID': '99921368-1c3d-4f3c-ba34-2efb76644c320'
                 }
             }
         }

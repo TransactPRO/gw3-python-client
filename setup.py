@@ -9,7 +9,7 @@ URL_GIT = 'https://github.com/TransactPRO/gw3-python-client'
 try:
     import pypandoc
 
-    LONG_DESCRIPTION = pypandoc.convert('README.md', 'rst')
+    LONG_DESCRIPTION = pypandoc.convert_file('README.md', 'rst')
 except (IOError, ImportError, OSError, RuntimeError):
     LONG_DESCRIPTION = ''
 
@@ -21,12 +21,11 @@ CLASSIFIERS = [
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.6',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
     'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
@@ -36,7 +35,7 @@ required = [
 
 setuptools.setup(
     name='transactpro-gw3-client',
-    version='1.7.8',
+    version='1.7.9',
     description='Transact PRO Gateway3 implementation in Python.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
@@ -48,5 +47,5 @@ setuptools.setup(
     license='MIT',
     classifiers=CLASSIFIERS,
     keywords='GW3 gateway3 integration gateway TransactPRO python python3',
-    python_requires='>=3.6',
+    python_requires='>=3.9',
 )

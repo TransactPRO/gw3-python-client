@@ -145,6 +145,29 @@ new_payment.command_data_set().add_payment_method_data_source(gateway.DATA_SOURC
 new_payment.command_data_set().add_payment_method_data_token('initial gateway-transaction-id')
 ```
 
+### Using alternative payment methods
+
+To use an alternative payment method (like Google Pay), send a received token AS-IS or data from a decrypted token.
+
+```python
+# set a corresponding flag that indicates a token provider
+payment.command_data_set().add_payment_method_type(gateway.PAYMENT_METHOD_TYPE_GOOGLE_PAY)
+
+# option 1: send received token AS-IS
+payment.payment_method_set().add_token('<token>')
+
+# option 2: send data from decrypted token
+payment.payment_method_set().add_pan_number('4111111111111111')
+payment.payment_method_set().add_pan_expiry_date('12/30')
+payment.payment_method_set().add_pan_cardholder_name('John Doe') # if available
+payment.payment_method_set().add_external_token_cryptogram('<cryptogram from token>') # if available
+payment.payment_method_set().add_external_token_eci('<ECI from token>') # if available
+payment.payment_method_set().add_external_token_trans_status('<transStatus from token>') # available for Click to Pay
+payment.payment_method_set().add_external_token_ds_trans_id('<dsTransId from token>') # available for Click to Pay
+payment.payment_method_set().add_external_token_acs_trans_id('<acsTransId from token>') # available for Click to Pay
+payment.payment_method_set().add_external_token_cardholder_authenticated(decryptedToken.paymentMethodDetails.assuranceDetails.cardHolderAuthenticated) # for Google Pay
+```
+
 ### Callback validation
 
 ```python
