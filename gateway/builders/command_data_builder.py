@@ -135,3 +135,22 @@ class CommandDataBuilder(object):
             new_key=self.__COMMAND_DATA_KEY,
             new_dict={self.__data_sets.COMMAND_DATA_PAYMENT_METHOD_DATA_TOKEN: token}
         )
+
+    def add_payment_method_type(self, type=None):
+        """
+        Add payment method type
+
+        Args:
+            type (str): payment method type
+                        cc: card data
+                        google_pay: Google Pay token
+                        apple_pay: Apple Pay token
+                        click2pay: Click to Pay token
+        """
+
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__command_data_set,
+            working_dict=self.__command_data_nested_structure,
+            new_key=self.__COMMAND_DATA_KEY,
+            new_dict={self.__data_sets.COMMAND_DATA_PAYMENT_METHOD_TYPE: type}
+        )
