@@ -1,3 +1,7 @@
+##### Version 1.7.9 (2025-11-24)
+
+	Add alternative payment methods support (like Google Pay)
+
 ##### Version 1.7.8 (2023-11-08)
 
 	Added new fields for order data to satisfy AN5524 requirements:
