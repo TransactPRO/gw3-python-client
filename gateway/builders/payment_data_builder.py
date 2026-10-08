@@ -252,6 +252,17 @@ class PaymentDataBuilder(object):
             new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_ECI: eci}
         )
 
+    def add_external_token_cavv(self, cavv=None):
+        """Add CAVV from decrypted token's data."""
+
+        self.__setup_external_token_data()
+        self.__data_structure_util.add_to_dict(
+            source_dict=self.__payment_data_structure[self.__PAYMENT_METHOD_DATA_KEY],
+            working_dict=self.__external_token_data_structure,
+            new_key=self.__EXTERNAL_TOKEN_DATA_KEY,
+            new_dict={self.__data_sets.PAYMENT_METHOD_DATA_EXTERNAL_TOKEN_CAVV: cavv}
+        )
+
     def add_external_token_trans_status(self, trans_status=None):
         """
         Add transStatus from decrypted token's data
