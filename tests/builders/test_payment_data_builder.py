@@ -77,6 +77,7 @@ class TestPaymentDataBuilder(TestCase):
 
         new.add_external_token_cryptogram('AAMI/uGZvlKCygBkcQIlLJeBTPLG')
         new.add_external_token_eci('07')
+        new.add_external_token_cavv('token-cavv')
         new.add_external_token_trans_status('N')
         new.add_external_token_ds_trans_id('33321368-1c3d-4f3c-ba34-2efb76644c320')
         new.add_external_token_acs_trans_id('99921368-1c3d-4f3c-ba34-2efb76644c320')
@@ -105,6 +106,7 @@ class TestPaymentDataBuilder(TestCase):
                 'external-token-data': {
                     'cryptogram': 'AAMI/uGZvlKCygBkcQIlLJeBTPLG',
                     'eci': '07',
+                    'cavv': 'token-cavv',
                     'cardHolderAuthenticated': True,
                     'transStatus': 'N',
                     'dsTransID': '33321368-1c3d-4f3c-ba34-2efb76644c320',
